@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DefaultModule } from './layouts/default/default.module';
-import { RegistrationComponent } from './modules/registration/registration.component';
+import { FullpageModule } from './layouts/fullpage/fullpage.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DefaultModule
+    FullpageModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

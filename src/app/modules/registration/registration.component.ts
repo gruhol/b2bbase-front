@@ -1,10 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
+
+  registerForm!: FormGroup;
+  usernameError!: string;
+  error!: boolean;
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
+    })
+  }
+
+  register() {
+      this.error = true;
+      this.usernameError = "error";
+  }
 
 }
