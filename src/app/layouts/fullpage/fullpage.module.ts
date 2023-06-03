@@ -5,8 +5,7 @@ import { FullpageComponent } from './fullpage.component';
 import { RegistrationComponent } from 'src/app/modules/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-
-
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FormsModule
+    
   ]
 })
 export class FullpageModule { }

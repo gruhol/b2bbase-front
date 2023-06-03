@@ -22,12 +22,16 @@ export class RegistrationComponent implements OnInit {
       username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
+      phone: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
     })
   }
 
   register() {
       this.error = true;
       this.usernameError = "error";
+      
   }
 
 }

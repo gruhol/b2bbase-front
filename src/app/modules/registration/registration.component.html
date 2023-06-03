@@ -10,21 +10,16 @@
 
         <hr class="mt-2 mb-2">
         {{usernameError}}
-        <form [formGroup]="registerForm" (submit)="register()" class="needs-validation" >
-            <div>
-            <mat-form-field class="example-form-field">
-                <mat-label>Imie</mat-label>
-                <input matInput formControlName="firstName">
-              </mat-form-field>
-            </div>
-
-            <div class="row g-3">
-            <div class="col-sm-12 col-lg-6">
-                <label for="firstName" class="form-label">Imię:</label>
-                <input type="text" class="form-control" formControlName="firstName">
-                <div class="invalid-feedback">
-                Valid first name is required.
-                </div>
+        <p>Form value: {{ registerForm.value | json }}</p>
+        <p>Form status: {{ registerForm.status | json }}</p>
+        <p>Errors status: {{ registerForm.errors | json }}</p>
+        <form [formGroup]="registerForm" (submit)="register()">
+            
+            <div class="row g-3">  
+                <mat-form-field class="example-full-width">
+                    <mat-label>Imię</mat-label>
+                    <input formControlName="firstName" matInput placeholder="Ex. Pizza" value="Sushi">
+                </mat-form-field>
             </div>
 
             <div class="col-sm-12 col-lg-6">
@@ -58,7 +53,6 @@
                 </div>
             </div>
             
-            </div>
 
             <div class="row gy-3 mt-3">
                 <div class="col-md-6">
