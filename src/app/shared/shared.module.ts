@@ -5,7 +5,7 @@ import { FooterComponent } from './component/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material.module';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -16,13 +16,14 @@ import { MaterialModule } from './material.module';
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule,
-    MaterialModule
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    MaterialModule
+    MaterialModule,
+    BrowserAnimationsModule
   ]
 })
 export class SharedModule { }
