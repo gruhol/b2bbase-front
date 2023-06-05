@@ -14,7 +14,7 @@
             <div class="row gy-3 mt-3 mb-3">
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">Imię: </label>
-                    <input type="email" class="form-control" [ngClass]="{
+                    <input type="text" class="form-control" [ngClass]="{
                         'is-invalid': firstName.invalid && firstName.touched,
                         'is-valid': firstName.valid && firstName.touched
                       }" formControlName="firstName">
@@ -54,39 +54,52 @@
                         'is-valid': phone.valid && phone.touched
                     }" matInput formControlName="phone">
                     <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole telefon jest wymagane</div>
+                    <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Pole telefon musi zawierać min. 9 cyfr</div>
                     <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Tylko liczby. Bez spacji i myśników</div>
                 </div>
             </div>      
 
             <div class="row gy-3 mt-3 mb-3">
                 <div class="col-md-12 col-lg-6">
-                <label for="cc-name" class="form-label">Hasło</label>
-                <input type="password" class="form-control" formControlName="password">
-                <div class="invalid-feedback">
-                    Name on card is required
+                    <label class="form-label">Hasło</label>
+                    <input type="password" class="form-control" [ngClass]="{
+                        'is-invalid': password.invalid && password.touched,
+                        'is-valid': password.valid && password.touched
+                      }" formControlName="password">
+                    <div *ngIf="password.touched && password.hasError('required')" class="invalid-feedback">Hasło jest wymagane</div>
+                    <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
                 </div>
-                </div>
+                
     
                 <div class="col-md-12 col-lg-6">
-                <label for="cc-number" class="form-label">Powtórz hasło</label>
-                <input type="password" class="form-control" formControlName="repeatPassword">
-                <div class="invalid-feedback">
-                    Credit card number is required
+                    <label for="cc-number" class="form-label">Powtórz hasło</label>
+                    <input type="password" class="form-control" [ngClass]="{
+                        'is-invalid': (repeatPassword.invalid && repeatPassword.touched) || registerForm.errors?.['notsame'],
+                        'is-valid': repeatPassword.valid && repeatPassword.touched
+                      }" formControlName="repeatPassword">
+                    <div *ngIf="registerForm.errors?.['notsame']" class="invalid-feedback">Hasła nie są identyczne</div>
+                    <div *ngIf="repeatPassword.touched && repeatPassword.hasError('required')" class="invalid-feedback">Powtórzenie hasło jest wymagane</div>
                 </div>
-                </div>
+                
             </div>
 
             <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Akceptuje regulamin oraz politykę prywatności</label>
+            <input type="checkbox" class="form-check-input" [ngClass]="{
+                'is-invalid': regulations.invalid && regulations.touched,
+                'is-valid': regulations.valid && regulations.touched && regulations.dirty,
+              }" formControlName="regulations">
+            <label class="form-check-label">Akceptuje regulamin oraz politykę prywatności</label>
             </div>
 
             <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
+            <input type="checkbox" class="form-check-input" [ngClass]="{
+                'is-invalid': marketing.invalid && marketing.touched,
+                'is-valid': marketing.valid && marketing.touched && marketing.dirty,
+              }" formControlName="marketing">
             <label class="form-check-label" for="save-info">Wyrażam zgodę na marketing internetowy</label>
             </div>
 
-            <button class="w-100 btn btn-success btn-lg mt-3">Zarejestruj się</button>
+            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zarejestruj się</button>
         </form>
         </div>
         <div class="col-md-12 col-lg-3"></div>
