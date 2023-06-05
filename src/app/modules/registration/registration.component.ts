@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -9,29 +9,44 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
 
   registerForm!: FormGroup;
-  usernameError!: string;
-  error!: boolean;
+  firstName!: FormControl;
+  lastName!: FormControl;
+  username!: FormControl;
+  password!: FormControl;
+  repeatPassword!: FormControl;
+  phone!: FormControl;
 
   constructor(
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-
-    this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
-      phone: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-    })
+    this.createRegistrationFormControls();
+    this.createForm();
   }
 
   register() {
-      this.error = true;
-      this.usernameError = "error";
       
+  }
+
+  createRegistrationFormControls() {
+    this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.lastName = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.username = new FormControl('', [Validators.required, Validators.email]);
+    this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
+    this.repeatPassword = new FormControl('', Validators.pattern("{{password.value}}"));
+    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9)]);
+  }
+
+  createForm() {
+    this.registerForm = this.formBuilder.group({
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      password: this.password,
+      repeatPassword: this.repeatPassword,
+      phone: this.phone,
+    })
   }
 
 }

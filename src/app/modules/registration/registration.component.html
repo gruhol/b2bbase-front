@@ -8,71 +8,73 @@
             <p>Proszę wpisz swoje dane.</p>
         </div>
 
-        <hr class="mt-2 mb-2">
-        {{usernameError}}
-        <p>Form value: {{ registerForm.value | json }}</p>
-        <p>Form status: {{ registerForm.status | json }}</p>
-        <p>Errors status: {{ registerForm.errors | json }}</p>
+        <hr class="mt-1 mb-4">
+        
         <form [formGroup]="registerForm" (submit)="register()">
-            
-            <div class="row g-3">  
-                <mat-form-field class="example-full-width">
-                    <mat-label>Imię</mat-label>
-                    <input formControlName="firstName" matInput placeholder="Ex. Pizza" value="Sushi">
-                </mat-form-field>
-            </div>
-
-            <div class="col-sm-12 col-lg-6">
-                <label for="lastName" class="form-label">Nazwisko:</label>
-                <input type="text" class="form-control" formControlName="lastName">
-                <div class="invalid-feedback">
-                Valid last name is required.
+            <div class="row gy-3 mt-3 mb-3">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Imię: </label>
+                    <input type="email" class="form-control" [ngClass]="{
+                        'is-invalid': firstName.invalid && firstName.touched,
+                        'is-valid': firstName.valid && firstName.touched
+                      }" formControlName="firstName">
+                    <div *ngIf="firstName.touched && firstName.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
+                    <div *ngIf="firstName.touched && firstName.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Nazwisko: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': lastName.invalid && lastName.touched,
+                        'is-valid': lastName.valid && lastName.touched
+                      }" formControlName="lastName">
+                      <div *ngIf="lastName.touched && lastName.hasError('required')" class="invalid-feedback">Pole Nazwisko jest wymagane</div>
+                      <div *ngIf="lastName.touched && lastName.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 2 znaki</div>
                 </div>
             </div>
 
-            <div class="col-12">
-                <label for="username" class="form-label">Twój adres e-mail:</label>
-                <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" formControlName="username">
-                {{usernameError}}
-                <div *ngIf="error" class="invalid-feedback">
-                    {{usernameError}}
-                </div>
+            <div class="col-12 mb-3">
+                <label class="form-label">Twój adres e-mail:</label>
+                <div class="input-group">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': username.invalid && username.touched,
+                        'is-valid': username.valid && username.touched
+                    }" formControlName="username">
+                    <div *ngIf="username.touched && username.hasError('required')" class="invalid-feedback">Pole e-mail jest wymagane</div>
+                    <div *ngIf="username.touched && username.hasError('email')" class="invalid-feedback">Pole musi zawierać poprawny adres email</div>
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 mb-3">
                 <label for="username" class="form-label">Telefon:</label>
-                <div class="input-group has-validation">
-                <span class="input-group-text">+48</span>
-                <input type="text" class="form-control" formControlName="phone">
-                <div class="invalid-feedback">
-                    Your username is required.
+                <div class="input-group">
+                    <span class="input-group-text">+48</span>
+                    <input type="text" class="form-control" class="form-control" [ngClass]="{
+                        'is-invalid': phone.invalid && phone.touched,
+                        'is-valid': phone.valid && phone.touched
+                    }" matInput formControlName="phone">
+                    <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole telefon jest wymagane</div>
+                    <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Tylko liczby. Bez spacji i myśników</div>
                 </div>
-                </div>
-            </div>
-            
+            </div>      
 
-            <div class="row gy-3 mt-3">
-                <div class="col-md-6">
+            <div class="row gy-3 mt-3 mb-3">
+                <div class="col-md-12 col-lg-6">
                 <label for="cc-name" class="form-label">Hasło</label>
-                <input type="text" class="form-control" formControlName="password">
+                <input type="password" class="form-control" formControlName="password">
                 <div class="invalid-feedback">
                     Name on card is required
                 </div>
                 </div>
     
-                <div class="col-md-6">
+                <div class="col-md-12 col-lg-6">
                 <label for="cc-number" class="form-label">Powtórz hasło</label>
-                <input type="text" class="form-control" formControlName="repeatPassword" >
+                <input type="password" class="form-control" formControlName="repeatPassword">
                 <div class="invalid-feedback">
                     Credit card number is required
                 </div>
                 </div>
             </div>
-
-            <hr class="my-4">
 
             <div class="form-check">
             <input type="checkbox" class="form-check-input" id="same-address">
@@ -84,7 +86,7 @@
             <label class="form-check-label" for="save-info">Wyrażam zgodę na marketing internetowy</label>
             </div>
 
-            <button  mat-flat-button class="w-100 btn btn-primary btn-lg mt-3">Zarejestruj użytkownika</button>
+            <button class="w-100 btn btn-success btn-lg mt-3">Zarejestruj się</button>
         </form>
         </div>
         <div class="col-md-12 col-lg-3"></div>
