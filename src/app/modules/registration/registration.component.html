@@ -9,6 +9,10 @@
         </div>
 
         <hr class="mt-1 mb-4">
+
+        <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('username')}}
+        </div>
         
         <form [formGroup]="registerForm" (submit)="register()">
             <div class="row gy-3 mt-3 mb-3">
@@ -70,7 +74,6 @@
                     <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
                 </div>
                 
-    
                 <div class="col-md-12 col-lg-6">
                     <label for="cc-number" class="form-label">Powtórz hasło</label>
                     <input type="password" class="form-control" [ngClass]="{

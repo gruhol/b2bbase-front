@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -17,9 +18,11 @@ export class RegistrationComponent implements OnInit {
   phone!: FormControl;
   regulations!: FormControl;
   marketing!: FormControl;
+  validationErrors = new Map<string, String>();
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private registrationService: RegistrationService
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +32,24 @@ export class RegistrationComponent implements OnInit {
 
   register() {
     if(this.registerForm.valid) {
-      console.log("Udało się!")
+      
+      this.registrationService.register(this.registerForm.value)
+      .subscribe({
+        next: response => {
+          //this.jwtService.setToken(response.token);
+          //this.router.navigate([this.REDIRECT_ROUTE]);
+        },
+        error: err => {
+          if(err.message) {
+            
+            err.fields.forEach((value: String, key: string) => {
+              this.validationErrors.set(key, value);
+            });
+
+          }
+        }
+      });
+
     } else {
       this.registerForm.markAllAsTouched();
     }
