@@ -13,6 +13,9 @@
         <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
             {{validationErrors.get('username')}}
         </div>
+        <div *ngIf="validationErrors.get('phone')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('phone')}}
+        </div>
         
         <form [formGroup]="registerForm" (submit)="register()">
             <div class="row gy-3 mt-3 mb-3">
@@ -41,7 +44,7 @@
                 <div class="input-group">
                     <span class="input-group-text">@</span>
                     <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': username.invalid && username.touched,
+                        'is-invalid': username.invalid && username.touched || validationErrors.get('username'),
                         'is-valid': username.valid && username.touched
                     }" formControlName="username">
                     <div *ngIf="username.touched && username.hasError('required')" class="invalid-feedback">Pole e-mail jest wymagane</div>
@@ -92,13 +95,11 @@
                 'is-valid': regulations.valid && regulations.touched && regulations.dirty,
               }" formControlName="regulations">
             <label class="form-check-label">Akceptuje regulamin oraz politykę prywatności</label>
+            <div *ngIf="regulations.touched && regulations.dirty && regulations.hasError('required')" class="invalid-feedback">Akceptacja regulaminu serwisu oraz polityki prywatności jest wymagana.</div>
             </div>
 
             <div class="form-check">
-            <input type="checkbox" class="form-check-input" [ngClass]="{
-                'is-invalid': marketing.invalid && marketing.touched,
-                'is-valid': marketing.valid && marketing.touched && marketing.dirty,
-              }" formControlName="marketing">
+            <input type="checkbox" class="form-check-input" formControlName="marketing">
             <label class="form-check-label" for="save-info">Wyrażam zgodę na marketing internetowy</label>
             </div>
 

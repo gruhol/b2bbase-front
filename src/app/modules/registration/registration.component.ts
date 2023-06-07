@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -31,6 +32,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
+    this.validationErrors.clear()
     if(this.registerForm.valid) {
       
       this.registrationService.register(this.registerForm.value)
@@ -40,12 +42,10 @@ export class RegistrationComponent implements OnInit {
           //this.router.navigate([this.REDIRECT_ROUTE]);
         },
         error: err => {
-          if(err.message) {
-            
-            err.fields.forEach((value: String, key: string) => {
-              this.validationErrors.set(key, value);
-            });
-
+          if(err.error.message) {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            }
           }
         }
       });
@@ -63,7 +63,7 @@ export class RegistrationComponent implements OnInit {
     this.repeatPassword = new FormControl('', [Validators.required]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9)]);
     this.regulations = new FormControl('', [Validators.required]);
-    this.marketing = new FormControl('', [Validators.required]);
+    this.marketing = new FormControl('');
   }
 
   createForm() {
