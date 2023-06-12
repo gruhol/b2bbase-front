@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { FullpageModule } from './layouts/fullpage/fullpage.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './modules/login/login.component';
 
 @NgModule({
   declarations: [

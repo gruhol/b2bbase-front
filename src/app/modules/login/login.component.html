@@ -1,0 +1,50 @@
+<div class="container">
+    <main>
+    <div class="row g-5">
+        <div class="col-md-12 col-lg-3"></div>
+        <div class="col-md-12 col-lg-6">
+        <div class="pt-5 pb-1">
+            <h2>Logowanie</h2>
+            <p>Proszę wpisz swoje dane.</p>
+        </div>
+
+        <hr class="mt-1 mb-4">
+
+        <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('username')}}
+        </div>
+        
+        <form [formGroup]="loginForm" (submit)="login()">
+
+            <div class="col-12 mb-3">
+                <label class="form-label">Twój adres e-mail:</label>
+                <div class="input-group">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': username.invalid && username.touched || validationErrors.get('username'),
+                        'is-valid': username.valid && username.touched
+                    }" formControlName="username">
+                    <div *ngIf="username.touched && username.hasError('required')" class="invalid-feedback">Pole e-mail jest wymagane</div>
+                    <div *ngIf="username.touched && username.hasError('email')" class="invalid-feedback">Pole musi zawierać poprawny adres email</div>
+                </div>
+            </div>
+
+            <div class="row gy-3 mt-3 mb-3">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Hasło</label>
+                    <input type="password" class="form-control" [ngClass]="{
+                        'is-invalid': password.invalid && password.touched,
+                        'is-valid': password.valid && password.touched
+                      }" formControlName="password">
+                    <div *ngIf="password.touched && password.hasError('required')" class="invalid-feedback">Hasło jest wymagane</div>
+                    <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
+                </div>
+            </div>
+
+            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zaloguj się</button>
+        </form>
+        </div>
+        <div class="col-md-12 col-lg-3"></div>
+    </div>
+    </main>
+</div>
