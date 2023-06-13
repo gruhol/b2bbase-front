@@ -4,8 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FullpageModule } from './layouts/fullpage/fullpage.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './modules/login/login.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
+import { GlobalAuthorizeGuard } from './modules/common/guard/globalAuthorizeGuard';
+import { LoggedComponent } from './modules/logged/logged.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,10 @@ import { LoginComponent } from './modules/login/login.component';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    GlobalAuthorizeGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
