@@ -45,10 +45,20 @@ export class LoginComponent {
       this.loginService.login(this.loginForm.value)
         .subscribe({
           next: (response) => {
-            this.jwtService.setToken(response.getToken);
+            this.jwtService.setToken(response.token);
+            this.jwtService.setRole(response.role);
+            console.log(response.role)
+            console.log("--")
+            console.log(this.jwtService.getRole());
             this.router.navigate(["/"]);
           },
-          error: () => {}
+          error: err => {
+            if(err.error.message) {
+              for (const errorfield of Object.keys(err.error.fields)) {
+                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+              }
+            }
+          }
         })
     }
   }

@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { JwtService } from "../service/jwt.service";
 import { Injectable } from "@angular/core";
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class GlobalAuthorizeGuard implements CanActivate {
 
     constructor(

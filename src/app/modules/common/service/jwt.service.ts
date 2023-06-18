@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
-import { retry } from 'rxjs';
+import { LoginService } from '../../login/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
 
+  private role!: Array<string>;
+  
   constructor() { }
-
+  
   setToken(token: string) {
     localStorage.setItem("token", token);
   }
@@ -24,5 +26,19 @@ export class JwtService {
   notExpired(token: string): boolean {
     let tokenDecoded = jwtDecode<any>(token);
     return (tokenDecoded.exp * 1000) > new Date().getTime();
+  }
+
+  setRole(roles: Array<string>) {
+    this.role = roles;
+  }
+
+  hasRole(checkRole: string): boolean {
+    console.log("Szukana rola: " + checkRole)
+    console.log("Dostepne role: " + this.role)
+    return this.role?.includes(checkRole);
+  }
+
+  getRole(): string[] {
+    return this.role;
   }
 }

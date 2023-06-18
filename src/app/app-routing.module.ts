@@ -4,11 +4,13 @@ import { RegistrationComponent } from './modules/registration/registration.compo
 import { FullpageComponent } from './layouts/fullpage/fullpage.component';
 import { LoggedComponent } from './modules/logged/logged.component';
 import { GlobalAuthorizeGuard } from './modules/common/guard/globalAuthorizeGuard';
+import { LoginComponent } from './modules/login/login.component';
 
 const routes: Routes = [
   {
     path:'', component: FullpageComponent, children: [
       {path: 'registration', title: 'Rejestracja użytkownika', component: RegistrationComponent},
+      {path: 'login', title: 'Rejestracja użytkownika', component: LoginComponent},
       {path: 'logged', title: 'Zalogowany!', component: LoggedComponent, canActivate: [GlobalAuthorizeGuard]},
     ]
   }
