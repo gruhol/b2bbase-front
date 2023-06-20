@@ -12,7 +12,12 @@ export class GlobalAuthorizeGuard implements CanActivate {
         ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+        
         if (!this.jwtService.isLoggedIn()) {
+            this.router.navigate(["/login"]);
+        }
+
+        if (!this.jwtService.hasRole("ROLE_ADMIN")) {
             this.router.navigate(["/login"]);
         }
         return true;

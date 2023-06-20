@@ -1,15 +1,16 @@
 import { Injectable, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
-import { LoginService } from '../../login/login.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
 
-  private role!: Array<string>;
+  role!: string[];
   
-  constructor() { }
+  constructor(private http: HttpClient) { }
   
   setToken(token: string) {
     localStorage.setItem("token", token);
@@ -28,17 +29,19 @@ export class JwtService {
     return (tokenDecoded.exp * 1000) > new Date().getTime();
   }
 
-  setRole(roles: Array<string>) {
-    this.role = roles;
-  }
-
   hasRole(checkRole: string): boolean {
-    console.log("Szukana rola: " + checkRole)
-    console.log("Dostepne role: " + this.role)
-    return this.role?.includes(checkRole);
+    this.updateRole(this.getToken());
+    return this.role.includes(checkRole);
   }
 
-  getRole(): string[] {
-    return this.role;
+  updateRole(token: string | null): void {
+    if (this.role == null) {
+      this.http.post<string[]>("/api/getRole", token).subscribe({
+        next: (response) => {
+          this.role = response;
+        },
+      });
+      console.log("Aktualizuje role: " +  this.role)
+    }
   }
 }

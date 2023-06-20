@@ -8,11 +8,7 @@ import { JwtService } from '../common/service/jwt.service';
 })
 export class LoggedComponent {
 
-  roles!: Array<String>;
+  constructor() {}
 
-  constructor(private jwtService: JwtService) {}
 
-  ngOnInit(): void {
-    this.roles = this.jwtService.getRole();
-  }
 }

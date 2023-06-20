@@ -46,10 +46,6 @@ export class LoginComponent {
         .subscribe({
           next: (response) => {
             this.jwtService.setToken(response.token);
-            this.jwtService.setRole(response.role);
-            console.log(response.role)
-            console.log("--")
-            console.log(this.jwtService.getRole());
             this.router.navigate(["/"]);
           },
           error: err => {
