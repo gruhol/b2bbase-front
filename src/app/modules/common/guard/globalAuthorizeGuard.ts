@@ -17,7 +17,7 @@ export class GlobalAuthorizeGuard implements CanActivate {
             this.router.navigate(["/login"]);
         }
 
-        if (!this.jwtService.hasRole("ROLE_ADMIN")) {
+        if (!this.jwtService.hasRole("ROLE_USER")) {
             this.router.navigate(["/login"]);
         }
         return true;

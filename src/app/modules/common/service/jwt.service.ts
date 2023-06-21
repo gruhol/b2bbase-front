@@ -1,6 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
+import { LoginService } from '../../login/login.service';
+import { Subject, map } from 'rxjs';
 
 
 @Injectable({
@@ -10,7 +12,9 @@ export class JwtService {
 
   role!: string[];
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private loginService: LoginService) { }
+
   
   setToken(token: string) {
     localStorage.setItem("token", token);
@@ -29,19 +33,13 @@ export class JwtService {
     return (tokenDecoded.exp * 1000) > new Date().getTime();
   }
 
-  hasRole(checkRole: string): boolean {
-    this.updateRole(this.getToken());
-    return this.role.includes(checkRole);
-  }
+  hasRole(rolea: string): boolean {
+    var token = this.getToken();
+    let check!: boolean;
+    this.loginService.getRole(token).pipe(
+       map(response => {check = response.includes(rolea)})
+    )
 
-  updateRole(token: string | null): void {
-    if (this.role == null) {
-      this.http.post<string[]>("/api/getRole", token).subscribe({
-        next: (response) => {
-          this.role = response;
-        },
-      });
-      console.log("Aktualizuje role: " +  this.role)
-    }
+    return check;
   }
 }

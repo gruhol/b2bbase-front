@@ -14,19 +14,23 @@ export class LoginComponent {
   username!: FormControl;
   password!: FormControl;
   loginForm!: FormGroup;
+  
   validationErrors = new Map<string, String>();
+  tak: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private jwtService: JwtService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.createRegistrationFormControls();
     this.createForm();
   }
+
+ 
 
   createRegistrationFormControls() {
     this.username = new FormControl('', [Validators.required, Validators.email]);
