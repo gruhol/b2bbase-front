@@ -6,7 +6,7 @@ import { FullpageModule } from './layouts/fullpage/fullpage.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
-import { GlobalAuthorizeGuard } from './modules/common/guard/globalAuthorizeGuard';
+import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { LoggedComponent } from './modules/logged/logged.component';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { LoggedComponent } from './modules/logged/logged.component';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    GlobalAuthorizeGuard
+    RoleUserAuthorizeGuard
   ],
   bootstrap: [AppComponent]
 })

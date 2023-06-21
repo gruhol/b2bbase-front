@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './modules/registration/registration.component';
 import { FullpageComponent } from './layouts/fullpage/fullpage.component';
 import { LoggedComponent } from './modules/logged/logged.component';
-import { GlobalAuthorizeGuard } from './modules/common/guard/globalAuthorizeGuard';
+import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { LoginComponent } from './modules/login/login.component';
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
     path:'', component: FullpageComponent, children: [
       {path: 'registration', title: 'Rejestracja użytkownika', component: RegistrationComponent},
       {path: 'login', title: 'Rejestracja użytkownika', component: LoginComponent},
-      {path: 'logged', title: 'Zalogowany!', component: LoggedComponent, canActivate: [GlobalAuthorizeGuard]},
+      {path: 'logged', title: 'Zalogowany!', component: LoggedComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];

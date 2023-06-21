@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../../login/login.service';
-import { Subject, map } from 'rxjs';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
 
 
 @Injectable({
@@ -33,13 +33,10 @@ export class JwtService {
     return (tokenDecoded.exp * 1000) > new Date().getTime();
   }
 
-  hasRole(rolea: string): boolean {
+  hasRole(rolea: string): Observable<boolean> {
     var token = this.getToken();
     let check!: boolean;
-    this.loginService.getRole(token).pipe(
-       map(response => {check = response.includes(rolea)})
-    )
-
-    return check;
+    return this.http.get<string[]>(`/api/getRole/${token}`).pipe(
+      map(response => response.includes(rolea)));
   }
 }

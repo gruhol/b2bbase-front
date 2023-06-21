@@ -4,7 +4,7 @@ import { JwtService } from "../service/jwt.service";
 import { Injectable } from "@angular/core";
 
 @Injectable()
-export class GlobalAuthorizeGuard implements CanActivate {
+export class RoleUserAuthorizeGuard implements CanActivate {
 
     constructor(
         private jwtService: JwtService,
@@ -17,9 +17,9 @@ export class GlobalAuthorizeGuard implements CanActivate {
             this.router.navigate(["/login"]);
         }
 
-        if (!this.jwtService.hasRole("ROLE_USER")) {
-            this.router.navigate(["/login"]);
-        }
+        this.jwtService.hasRole("ROLE_USER").subscribe(boolen => {
+            if (!boolen) this.router.navigate(["/login"]); 
+        })
         return true;
     }
 }

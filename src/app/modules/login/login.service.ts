@@ -12,8 +12,4 @@ export class LoginService {
   login(login:any): Observable<any> {
     return this.http.post("/api/login", login);
   }
-
-  getRole(token: string | null): Observable<string[]> {
-    return this.http.get<string[]>(`/api/getRole/${token}`)
-  }
 }
