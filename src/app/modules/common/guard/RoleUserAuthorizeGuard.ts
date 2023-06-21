@@ -17,9 +17,9 @@ export class RoleUserAuthorizeGuard implements CanActivate {
             this.router.navigate(["/login"]);
         }
 
-        this.jwtService.hasRole("ROLE_USER").subscribe(boolen => {
-            if (!boolen) this.router.navigate(["/login"]); 
-        })
+        if (!this.jwtService.hasRole("ROLE_USER")) {
+            this.router.navigate(["/login"]); 
+        }
         return true;
     }
 }

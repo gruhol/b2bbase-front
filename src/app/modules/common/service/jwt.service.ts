@@ -10,7 +10,7 @@ import { Observable, Subject, catchError, map, of } from 'rxjs';
 })
 export class JwtService {
 
-  role!: string[];
+  roles: string[] = [];
   
   constructor(private http: HttpClient,
     private loginService: LoginService) { }
@@ -33,10 +33,14 @@ export class JwtService {
     return (tokenDecoded.exp * 1000) > new Date().getTime();
   }
 
-  hasRole(rolea: string): Observable<boolean> {
-    var token = this.getToken();
-    let check!: boolean;
-    return this.http.get<string[]>(`/api/getRole/${token}`).pipe(
-      map(response => response.includes(rolea)));
+  hasRole(rolea: string): boolean {
+    if (this.roles.length  === 0) {
+      this.saveRole();
+    }
+    return this.roles.includes(rolea);
+  }
+
+  saveRole() {
+    this.http.get<string[]>(`/api/getRole/${this.getToken()}`).pipe().subscribe(role => this.roles = role);
   }
 }
