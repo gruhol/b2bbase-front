@@ -1,31 +1,40 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { JwtService } from "../service/jwt.service";
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 
 @Injectable()
 export class RoleUserAuthorizeGuard implements CanActivate {
 
-    private hasRole?: Boolean = false;
+    private readonly role: string = "ROLE_USER";
 
     constructor(
         private jwtService: JwtService,
         private router: Router
-        ) {
-            this.jwtService.hasRole("ROLE_USER").subscribe(aaa => this.hasRole = aaa);
-        }
+        ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         
-        console.log(this.hasRole)
-
         if (!this.jwtService.isLoggedIn()) {
             this.router.navigate(["/login"]);
         }
 
-        if (!this.hasRole) {
-            this.router.navigate(["/login"]); 
+        if (this.checkRole()) {
+            return true; 
+        } else {
+            return false;
         }
-        return true;
+    }
+
+    private checkRole() {
+        return this.jwtService.hasRole(this.role)
+            .subscribe(hasRole => {
+                if (hasRole) {
+                    return true;
+                } else {
+                    this.router.navigate(["/login"]);
+                    return false;
+                }
+            });
     }
 }

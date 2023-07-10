@@ -30,8 +30,6 @@ export class LoginComponent {
     this.createForm();
   }
 
- 
-
   createRegistrationFormControls() {
     this.username = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);

@@ -14,7 +14,6 @@ export class JwtService {
   constructor(private http: HttpClient,
     private loginService: LoginService) { }
 
-  
   setToken(token: string) {
     localStorage.setItem("token", token);
   }
@@ -32,31 +31,20 @@ export class JwtService {
     return (tokenDecoded.exp * 1000) > new Date().getTime();
   }
 
-  // hasRole(rolea: string): boolean {
-  //   if (this.roles.length  === 0) {
-  //     this.saveRole();
-  //   }
-  //   return this.roles.includes(rolea);
-  // }
-
-  // saveRole() {
-  //   this.http.get<string[]>(`/api/getRole/${this.getToken()}`).pipe().subscribe(role => this.roles = role);
-  // }
-
   hasRole(role: string): Observable<boolean>{
     if (this.roles.length  === 0) {
       return this.saveRole().pipe(
-                 map(roles => roles.includes(role))
-             );
+        map(roles => roles.includes(role))
+      );
     } else {
       return of(this.roles.includes(role));
     }
   }
 
 saveRole(): Observable<string[]> {
-    return this.http.get<string[]> 
-           (`/api/getRole/${this.getToken()}`).pipe(
-             tap(roles => this.roles = roles)
-          );
+  return this.http.get<string[]>(`/api/getRole/${this.getToken()}`)
+    .pipe(
+      tap(roles => this.roles = roles)
+    );
   }
 }
