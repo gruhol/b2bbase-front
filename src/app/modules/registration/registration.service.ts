@@ -10,6 +10,7 @@ export class RegistrationService {
   constructor(private http: HttpClient) { }
 
   register(register:any): Observable<any> {
+    
     return this.http.post("/api/register", register);
   }
 }

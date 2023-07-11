@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
-import { catchError } from 'rxjs';
+import { JwtService } from '../common/service/jwt.service';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +23,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private jwtService: JwtService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(this.registerForm.value)
       .subscribe({
         next: response => {
-          //this.jwtService.setToken(response.token);
+          this.jwtService.setToken(response.token);
           //this.router.navigate([this.REDIRECT_ROUTE]);
         },
         error: err => {

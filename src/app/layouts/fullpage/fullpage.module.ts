@@ -22,7 +22,6 @@ import { LoggedComponent } from 'src/app/modules/logged/logged.component';
     ReactiveFormsModule,
     SharedModule,
     FormsModule
-    
   ]
 })
 export class FullpageModule { }
