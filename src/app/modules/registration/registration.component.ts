@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
 import { JwtService } from '../common/service/jwt.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -20,11 +21,13 @@ export class RegistrationComponent implements OnInit {
   regulations!: FormControl;
   marketing!: FormControl;
   validationErrors = new Map<string, String>();
+  REDIRECT_ROUTE: string = "/registered";
 
   constructor(
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,12 +38,12 @@ export class RegistrationComponent implements OnInit {
   register() {
     this.validationErrors.clear()
     if(this.registerForm.valid) {
-      
+      this.jwtService.deleteToken();
       this.registrationService.register(this.registerForm.value)
       .subscribe({
         next: response => {
           this.jwtService.setToken(response.token);
-          //this.router.navigate([this.REDIRECT_ROUTE]);
+          this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
         },
         error: err => {
           if(err.error.message) {
@@ -62,7 +65,7 @@ export class RegistrationComponent implements OnInit {
     this.username = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
     this.repeatPassword = new FormControl('', [Validators.required]);
-    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9)]);
+    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.max(11)]);
     this.regulations = new FormControl('', [Validators.required]);
     this.marketing = new FormControl('');
   }

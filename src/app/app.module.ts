@@ -8,10 +8,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { LoggedComponent } from './modules/logged/logged.component';
+import { RegisteredComponent } from './modules/registered/registered.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegisteredComponent,
   ],
   imports: [
     BrowserModule,
