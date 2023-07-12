@@ -65,7 +65,7 @@ export class RegistrationComponent implements OnInit {
     this.username = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
     this.repeatPassword = new FormControl('', [Validators.required]);
-    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.max(11)]);
+    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
     this.regulations = new FormControl('', [Validators.required]);
     this.marketing = new FormControl('');
   }
