@@ -9,11 +9,13 @@ import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { LoggedComponent } from './modules/logged/logged.component';
 import { RegisteredComponent } from './modules/registered/registered.component';
+import { LinkveryficationComponent } from './modules/linkveryfication/linkveryfication.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisteredComponent,
+    LinkveryficationComponent,
   ],
   imports: [
     BrowserModule,

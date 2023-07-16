@@ -6,6 +6,7 @@ import { LoggedComponent } from './modules/logged/logged.component';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { LoginComponent } from './modules/login/login.component';
 import { RegisteredComponent } from './modules/registered/registered.component';
+import { LinkveryficationComponent } from './modules/linkveryfication/linkveryfication.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       {path: 'login', title: 'Rejestracja użytkownika', component: LoginComponent},
       {path: 'registered', title: 'Rejestracja zakończona', component: RegisteredComponent},
       {path: 'logged', title: 'Zalogowany!', component: LoggedComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'verify/:token', title: 'Weryfikacja adresu email!', component: LinkveryficationComponent},
     ]
   }
 ];
