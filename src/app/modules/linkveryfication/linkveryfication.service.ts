@@ -10,6 +10,6 @@ export class LinkveryficationService {
   constructor(private http: HttpClient) { }
 
   checktoken(token: string): Observable<boolean> {
-    return this.http.get<boolean>(`api/orders/${token}`);
+    return this.http.get<boolean>(`api/verify/${token}`);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LinkveryficationService } from './linkveryfication.service';
 
 @Component({
   selector: 'app-linkveryfication',
@@ -8,14 +9,23 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LinkveryficationComponent implements OnInit {
 
-  public token!: string;
+  public tokenStatus!: boolean;
 
   constructor(
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private linkveryfication: LinkveryficationService
   ) {}
   
   ngOnInit(): void {
-    this.token = this.router.snapshot.params['token'];
+    let token = this.router.snapshot.params['token'];
+    this.linkveryfication.checktoken(token)
+      .subscribe(result => {
+        if (result === true) {
+          this.tokenStatus = true;
+        } else {
+          this.tokenStatus = false;
+        }
+      })
   }
 
 
