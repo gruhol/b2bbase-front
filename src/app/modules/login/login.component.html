@@ -17,6 +17,10 @@
         <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
             {{validationErrors.get('username')}}
         </div>
+
+        <div *ngIf="loginError!.length > 0" class="alert alert-danger" role="alert">
+            {{loginError}}
+        </div>
         
         <form [formGroup]="loginForm" (submit)="login()">
 

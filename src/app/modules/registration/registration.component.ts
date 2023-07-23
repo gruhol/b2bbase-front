@@ -42,8 +42,9 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(this.registerForm.value)
       .subscribe({
         next: response => {
-          this.jwtService.setToken(response.token);
-          this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
+          if (response) {
+            this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
+          }
         },
         error: err => {
           if(err.error.message) {

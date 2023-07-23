@@ -16,7 +16,8 @@ export class LoginComponent {
   loginForm!: FormGroup;
   
   validationErrors = new Map<string, String>();
-  tak: boolean = false;
+  loginError: String = "";
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,13 +51,7 @@ export class LoginComponent {
             this.jwtService.setToken(response.token);
             this.router.navigate(["/"]);
           },
-          error: err => {
-            if(err.error.message) {
-              for (const errorfield of Object.keys(err.error.fields)) {
-                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
-              }
-            }
-          }
+          error: err => this.loginError = err.error.message
         })
     }
   }
