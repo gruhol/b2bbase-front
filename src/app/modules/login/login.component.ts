@@ -45,6 +45,7 @@ export class LoginComponent {
 
   login() {
     if(this.loginForm.valid) {
+      this.jwtService.deleteToken();
       this.loginService.login(this.loginForm.value)
         .subscribe({
           next: (response) => {
