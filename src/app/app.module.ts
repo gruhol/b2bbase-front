@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
-import { LoggedComponent } from './modules/logged/logged.component';
 import { RegisteredComponent } from './modules/registered/registered.component';
 import { LinkveryficationComponent } from './modules/linkveryfication/linkveryfication.component';
 
@@ -15,7 +14,7 @@ import { LinkveryficationComponent } from './modules/linkveryfication/linkveryfi
   declarations: [
     AppComponent,
     RegisteredComponent,
-    LinkveryficationComponent,
+    LinkveryficationComponent
   ],
   imports: [
     BrowserModule,
