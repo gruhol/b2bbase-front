@@ -1,8 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
-import { LoginService } from '../../login/login.service';
 import { Observable, map, of, tap } from 'rxjs';
+import { LoginService } from '../../user/login/login.service';
 
 @Injectable({
   providedIn: 'root'
