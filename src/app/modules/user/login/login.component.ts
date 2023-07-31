@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
-import { JwtService } from '../common/service/jwt.service';
 import { Router } from '@angular/router';
+import { JwtService } from '../../common/service/jwt.service';
 
 @Component({
   selector: 'app-login',

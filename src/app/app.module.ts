@@ -7,14 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
-import { RegisteredComponent } from './modules/registered/registered.component';
-import { LinkveryficationComponent } from './modules/linkveryfication/linkveryfication.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisteredComponent,
-    LinkveryficationComponent
   ],
   imports: [
     BrowserModule,

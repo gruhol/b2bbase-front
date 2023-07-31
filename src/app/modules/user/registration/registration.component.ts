@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
-import { JwtService } from '../common/service/jwt.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { JwtService } from '../../common/service/jwt.service';
 
 @Component({
   selector: 'app-registration',
