@@ -1,1 +1,97 @@
-<p>edit-user works!</p>
+<div class="container">
+    <main>
+    <div class="row g-5">
+        <div class="col-md-12 col-lg-3"></div>
+        <div class="col-md-12 col-lg-6">
+        <div class="pt-5 pb-1">
+            <h2>Edycja użytkownika</h2>
+        </div>
+
+        <hr class="mt-1 mb-4">
+
+        <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('username')}}
+        </div>
+        <div *ngIf="validationErrors.get('phone')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('phone')}}
+        </div>
+        
+        <form [formGroup]="registerForm" (submit)="register()">
+            <div class="row gy-3 mt-3 mb-3">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Imię: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': firstName.invalid && firstName.touched,
+                        'is-valid': firstName.valid && firstName.touched
+                      }" formControlName="firstName">
+                    <div *ngIf="firstName.touched && firstName.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
+                    <div *ngIf="firstName.touched && firstName.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Nazwisko: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': lastName.invalid && lastName.touched,
+                        'is-valid': lastName.valid && lastName.touched
+                      }" formControlName="lastName">
+                      <div *ngIf="lastName.touched && lastName.hasError('required')" class="invalid-feedback">Pole Nazwisko jest wymagane</div>
+                      <div *ngIf="lastName.touched && lastName.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 2 znaki</div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label class="form-label">Twój adres e-mail:</label>
+                <div class="input-group">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': username.invalid && username.touched || validationErrors.get('username'),
+                        'is-valid': username.valid && username.touched
+                    }" formControlName="username">
+                    <div *ngIf="username.touched && username.hasError('required')" class="invalid-feedback">Pole e-mail jest wymagane</div>
+                    <div *ngIf="username.touched && username.hasError('email')" class="invalid-feedback">Pole musi zawierać poprawny adres email</div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label for="username" class="form-label">Telefon:</label>
+                <div class="input-group">
+                    <span class="input-group-text">+48</span>
+                    <input type="text" class="form-control" class="form-control" [ngClass]="{
+                        'is-invalid': phone.invalid && phone.touched,
+                        'is-valid': phone.valid && phone.touched
+                    }" matInput formControlName="phone">
+                    <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole telefon jest wymagane</div>
+                    <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Pole telefon musi zawierać min. 9 cyfr</div>
+                    <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Tylko liczby. Bez spacji i myśników</div>
+                </div>
+            </div>      
+
+            <div class="row gy-3 mt-3 mb-3">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Hasło</label>
+                    <input type="password" class="form-control" [ngClass]="{
+                        'is-invalid': password.invalid && password.touched,
+                        'is-valid': password.valid && password.touched
+                      }" formControlName="password">
+                    <div *ngIf="password.touched && password.hasError('required')" class="invalid-feedback">Hasło jest wymagane</div>
+                    <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
+                </div>
+                
+                <div class="col-md-12 col-lg-6">
+                    <label for="cc-number" class="form-label">Powtórz hasło</label>
+                    <input type="password" class="form-control" [ngClass]="{
+                        'is-invalid': (repeatPassword.invalid && repeatPassword.touched) || registerForm.errors?.['notsame'],
+                        'is-valid': repeatPassword.valid && repeatPassword.touched
+                      }" formControlName="repeatPassword">
+                    <div *ngIf="registerForm.errors?.['notsame']" class="invalid-feedback">Hasła nie są identyczne</div>
+                    <div *ngIf="repeatPassword.touched && repeatPassword.hasError('required')" class="invalid-feedback">Powtórzenie hasło jest wymagane</div>
+                </div>
+                
+            </div>
+
+            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
+        </form>
+        </div>
+        <div class="col-md-12 col-lg-3"></div>
+    </div>
+    </main>
+</div>

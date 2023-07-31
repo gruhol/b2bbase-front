@@ -9,6 +9,7 @@ import { RegisteredComponent } from './modules/user/registered/registered.compon
 import { LinkveryficationComponent } from './modules/user/linkveryfication/linkveryfication.component';
 import { RememberPasswordComponent } from './modules/user/remember-password/remember-password.component';
 import { SendPasswordComponent } from './modules/user/send-password/send-password.component';
+import { EditUserComponent } from './modules/user/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path: 'verify/:token', title: 'Weryfikacja adresu email!', component: LinkveryficationComponent},
       {path: 'remember-password', title: 'Przypomnienie hasła', component: RememberPasswordComponent},
       {path: 'send-password/:token', title: 'Weryfikacja adresu email', component: SendPasswordComponent},
+      {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];
