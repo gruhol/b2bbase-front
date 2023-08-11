@@ -15,7 +15,7 @@ export class EditUserService {
   }
 
   getUser(token: string) {
-    return this.http.post<User>("/api/getUserByToken", token);
+    return this.http.post<User>("/api/user/get", token);
   }
 
 }

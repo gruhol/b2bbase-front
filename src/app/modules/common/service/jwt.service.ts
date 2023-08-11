@@ -46,7 +46,7 @@ export class JwtService {
   }
 
 saveRole(): Observable<string[]> {
-  return this.http.get<string[]>(`/api/getRole/${this.getToken()}`)
+  return this.http.get<string[]>("/api/user/role")
     .pipe(
       tap(roles => this.roles = roles)
     );
