@@ -3,7 +3,7 @@
     <div class="row g-5">
         <div class="col-md-12 col-lg-3"></div>
         <div class="col-md-12 col-lg-6">
-        <div class="pt-5 pb-1">
+        <div class="pt-2 pb-1">
             <h2>Edycja użytkownika</h2>
         </div>
 
@@ -16,7 +16,7 @@
             {{validationErrors.get('phone')}}
         </div>
         
-        <form [formGroup]="registerForm" (submit)="register()">
+        <form [formGroup]="editUserForm" (submit)="register()">
             <div class="row gy-3 mt-3 mb-3">
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">Imię: </label>
@@ -63,27 +63,41 @@
                     <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Pole telefon musi zawierać min. 9 cyfr</div>
                     <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Tylko liczby. Bez spacji i myśników</div>
                 </div>
-            </div>      
+            </div>
 
-            <div class="row gy-3 mt-3 mb-3">
-                <div class="col-md-12 col-lg-6">
-                    <label class="form-label">Hasło</label>
-                    <input type="password" class="form-control" [ngClass]="{
+            <div class="pt-5 pb-1">
+                <h2>Zmiana hasła</h2>
+                <p>Uzupełnij tylko w przypadki chęci zmiany hasła.</p>
+            </div>
+
+            <div class="row gy-3 mt-3 mb-12">
+                <div class="col-md-12 col-lg-12">
+                    <label class="form-label">Obecne hasło</label>
+                    <input type="oldPassword" class="form-control" [ngClass]="{
                         'is-invalid': password.invalid && password.touched,
                         'is-valid': password.valid && password.touched
                       }" formControlName="password">
                     <div *ngIf="password.touched && password.hasError('required')" class="invalid-feedback">Hasło jest wymagane</div>
-                    <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
+                </div>
+
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Nowe Hasło</label>
+                    <input type="newPassword" class="form-control" [ngClass]="{
+                        'is-invalid': newPassword.invalid && newPassword.touched,
+                        'is-valid': newPassword.valid && newPassword.touched
+                      }" formControlName="newPassword">
+                    <div *ngIf="newPassword.touched && newPassword.hasError('required')" class="invalid-feedback">Hasło jest wymagane</div>
+                    <div *ngIf="newPassword.touched && newPassword.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
                 </div>
                 
                 <div class="col-md-12 col-lg-6">
-                    <label for="cc-number" class="form-label">Powtórz hasło</label>
-                    <input type="password" class="form-control" [ngClass]="{
-                        'is-invalid': (repeatPassword.invalid && repeatPassword.touched) || registerForm.errors?.['notsame'],
-                        'is-valid': repeatPassword.valid && repeatPassword.touched
-                      }" formControlName="repeatPassword">
-                    <div *ngIf="registerForm.errors?.['notsame']" class="invalid-feedback">Hasła nie są identyczne</div>
-                    <div *ngIf="repeatPassword.touched && repeatPassword.hasError('required')" class="invalid-feedback">Powtórzenie hasło jest wymagane</div>
+                    <label for="cc-number" class="form-label">Powtórz nowe hasło</label>
+                    <input type="repeatNewPassword" class="form-control" [ngClass]="{
+                        'is-invalid': (repeatNewPassword.invalid && repeatNewPassword.touched) || editUserForm.errors?.['notsame'],
+                        'is-valid': repeatNewPassword.valid && repeatNewPassword.touched
+                      }" formControlName="repeatNewPassword">
+                    <div *ngIf="editUserForm.errors?.['notsame']" class="invalid-feedback">Hasła nie są identyczne</div>
+                    <div *ngIf="repeatNewPassword.touched && repeatNewPassword.hasError('required')" class="invalid-feedback">Powtórzenie hasło jest wymagane</div>
                 </div>
                 
             </div>

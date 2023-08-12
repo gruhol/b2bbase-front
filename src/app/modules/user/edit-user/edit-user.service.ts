@@ -14,8 +14,8 @@ export class EditUserService {
     return this.http.post<any>("/api/register", register);
   }
 
-  getUser(token: string) {
-    return this.http.post<User>("/api/user/get", token);
+  getUser(): Observable<User> {
+    return this.http.get<User>("/api/user/get");
   }
 
 }

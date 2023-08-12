@@ -10,12 +10,13 @@ import { EditUserService } from './edit-user.service';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent {
-  registerForm!: FormGroup;
+  editUserForm!: FormGroup;
   firstName!: FormControl;
   lastName!: FormControl;
   username!: FormControl;
   password!: FormControl;
-  repeatPassword!: FormControl;
+  newPassword!: FormControl;
+  repeatNewPassword!: FormControl;
   phone!: FormControl;
   validationErrors = new Map<string, String>();
   REDIRECT_ROUTE: string = "/registered";
@@ -28,15 +29,27 @@ export class EditUserComponent {
   ) {}
 
   ngOnInit(): void {
-    this.createRegistrationFormControls();
+    this.createEditUserFormControls();
     this.createForm();
+
+    this.editUserService.getUser()
+    .subscribe({
+      next: user => {
+        this.editUserForm.patchValue({
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone
+        });
+      }
+    });
   }
 
   register() {
     this.validationErrors.clear()
-    if(this.registerForm.valid) {
+    if(this.editUserForm.valid) {
       this.jwtService.deleteToken();
-      this.editUserService.editUser(this.registerForm.value)
+      this.editUserService.editUser(this.editUserForm.value)
       .subscribe({
         next: response => {
           if (response) {
@@ -53,32 +66,35 @@ export class EditUserComponent {
       });
 
     } else {
-      this.registerForm.markAllAsTouched();
+      this.editUserForm.markAllAsTouched();
     }
   }
 
-  createRegistrationFormControls() {
+  createEditUserFormControls() {
+    
     this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.username = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    this.repeatPassword = new FormControl('', [Validators.required]);
+    this.newPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
+    this.repeatNewPassword = new FormControl('', [Validators.required]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
-  
+    
   }
 
   createForm() {
-    this.registerForm = this.formBuilder.group({
+    this.editUserForm = this.formBuilder.group({
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
-      repeatPassword: this.repeatPassword,
+      newPassword: this.newPassword,
+      repeatNewPassword: this.repeatNewPassword,
       phone: this.phone,
     }, {validators: this.validateAreEqual})
   }
 
   public validateAreEqual(c: AbstractControl): {notsame: boolean} | null {
-    return  c.value.password  ===  c.value.repeatPassword ? null : {notsame: true};
+    return  c.value.newPassword  ===  c.value.repeatNewPassword ? null : {notsame: true};
   }
 }
