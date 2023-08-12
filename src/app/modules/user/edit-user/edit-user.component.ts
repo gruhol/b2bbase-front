@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { JwtService } from '../../common/service/jwt.service';
 import { Router } from '@angular/router';
 import { EditUserService } from './edit-user.service';
+import { EditUser } from './dto/edituser';
 
 @Component({
   selector: 'app-edit-user',
@@ -45,16 +46,22 @@ export class EditUserComponent {
     });
   }
 
-  register() {
+  submit() {
     this.validationErrors.clear()
     if(this.editUserForm.valid) {
       this.jwtService.deleteToken();
-      this.editUserService.editUser(this.editUserForm.value)
+      this.editUserService.editUser({
+        firstName: this.editUserForm.get('firstName')?.value,
+        lastName: this.editUserForm.get('lastName')?.value,
+        username: this.editUserForm.get('username')?.value,
+        phone: this.editUserForm.get('phone')?.value,
+        password: this.editUserForm.get('password')?.value,
+        newPassword: this.editUserForm.get('newPassword')?.value,
+        repeatNewPassword: this.editUserForm.get('repeatNewPassword')?.value,
+      } as EditUser)
       .subscribe({
         next: response => {
-          if (response) {
-            this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
-          }
+          
         },
         error: err => {
           if(err.error.message) {
@@ -75,9 +82,9 @@ export class EditUserComponent {
     this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.username = new FormControl('', [Validators.required, Validators.email]);
-    this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    this.newPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    this.repeatNewPassword = new FormControl('', [Validators.required]);
+    this.password = new FormControl('', [Validators.minLength(8)]);
+    this.newPassword = new FormControl('', [Validators.minLength(8)]);
+    this.repeatNewPassword = new FormControl('', [Validators.minLength(8)]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
     
   }
