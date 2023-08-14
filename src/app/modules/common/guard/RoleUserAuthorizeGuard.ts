@@ -28,13 +28,15 @@ export class RoleUserAuthorizeGuard implements CanActivate {
 
     private checkRole() {
         return this.jwtService.hasRole(this.role)
-            .subscribe(hasRole => {
+            .subscribe({next: hasRole => {
                 if (hasRole) {
                     return true;
                 } else {
                     this.router.navigate(["/login"]);
                     return false;
                 }
+            },
+            error: err => this.router.navigate(["/login"])
             });
     }
 }

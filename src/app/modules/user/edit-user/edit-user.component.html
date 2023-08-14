@@ -15,6 +15,15 @@
         <div *ngIf="validationErrors.get('phone')" class="alert alert-danger" role="alert">
             {{validationErrors.get('phone')}}
         </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+
+        <div *ngIf="editUserSucces" class="alert alert-success alert-dismissible fade show" role="alert">
+            Dane zaktualizowane!
+            <button type="button" (click)="closeAlert()" class="btn-close" aria-label="Close"></button>
+          </div>
         
         <form [formGroup]="editUserForm" (submit)="submit()">
             <div class="row gy-3 mt-3 mb-3">
@@ -39,10 +48,10 @@
             </div>
 
             <div class="col-12 mb-3">
-                <label class="form-label">Twój adres e-mail:</label>
+                <label class="form-label">Twój adres e-mail: (Tylko do odczytu)</label>
                 <div class="input-group">
                     <span class="input-group-text">@</span>
-                    <input type="text" class="form-control" [ngClass]="{
+                    <input type="text" class="form-control" readonly [ngClass]="{
                         'is-invalid': username.invalid && username.touched || validationErrors.get('username'),
                         'is-valid': username.valid && username.touched
                     }" formControlName="username">
@@ -65,15 +74,17 @@
                 </div>
             </div>
 
-            <div class="pt-5 pb-1">
-                <h2>Zmiana hasła</h2>
-                <p>Uzupełnij tylko w przypadki chęci zmiany hasła.</p>
-            </div>
+            <button type="button" class="btn btn-secondary" (click)="selectItem=!selectItem" data-toggle="collapse" data-target="#demo1">Zmian hasło</button>
 
-            <div class="row gy-3 mt-3 mb-12">
+            <div class="row gy-3 mt-3 mb-3" id="demo1" class="collapse" [ngClass]="{'show':selectItem===true}">
+                <div class="pt-3 pb-1">
+                    <h2>Zmiana hasła</h2>
+                    <p>Uzupełnij tylko w przypadki chęci zmiany hasła.</p>
+                </div>
+
                 <div class="col-md-12 col-lg-12">
                     <label class="form-label">Obecne hasło</label>
-                    <input type="oldPassword" class="form-control" [ngClass]="{
+                    <input type="password" class="form-control" [ngClass]="{
                         'is-invalid': password.invalid && password.touched,
                         'is-valid': password.valid && password.touched
                       }" formControlName="password">
@@ -82,7 +93,7 @@
 
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">Nowe Hasło</label>
-                    <input type="newPassword" class="form-control" [ngClass]="{
+                    <input type="password" class="form-control" [ngClass]="{
                         'is-invalid': newPassword.invalid && newPassword.touched,
                         'is-valid': newPassword.valid && newPassword.touched
                       }" formControlName="newPassword">
@@ -92,7 +103,7 @@
                 
                 <div class="col-md-12 col-lg-6">
                     <label for="cc-number" class="form-label">Powtórz nowe hasło</label>
-                    <input type="repeatNewPassword" class="form-control" [ngClass]="{
+                    <input type="password" class="form-control" [ngClass]="{
                         'is-invalid': (repeatNewPassword.invalid && repeatNewPassword.touched) || editUserForm.errors?.['notsame'],
                         'is-valid': repeatNewPassword.valid && repeatNewPassword.touched
                       }" formControlName="repeatNewPassword">
@@ -102,7 +113,7 @@
                 
             </div>
 
-            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
+            <button class="w-100 btn btn-success btn-lg mt-4" type="submit">Zapisz zmiany</button>
         </form>
         </div>
         <div class="col-md-12 col-lg-3"></div>
