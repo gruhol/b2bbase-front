@@ -10,6 +10,7 @@ import { LinkveryficationComponent } from './modules/user/linkveryfication/linkv
 import { RememberPasswordComponent } from './modules/user/remember-password/remember-password.component';
 import { SendPasswordComponent } from './modules/user/send-password/send-password.component';
 import { EditUserComponent } from './modules/user/edit-user/edit-user.component';
+import { AddCompanyComponent } from './modules/company/add-company/add-company.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
       {path: 'remember-password', title: 'Przypomnienie hasła', component: RememberPasswordComponent},
       {path: 'send-password/:token', title: 'Weryfikacja adresu email', component: SendPasswordComponent},
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];
