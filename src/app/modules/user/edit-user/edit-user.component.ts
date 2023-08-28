@@ -18,9 +18,12 @@ export class EditUserComponent {
   password!: FormControl;
   newPassword!: FormControl;
   repeatNewPassword!: FormControl;
+  errorMessage!: string;
   phone!: FormControl;
+  editUserSucces: boolean = false;
   validationErrors = new Map<string, String>();
   REDIRECT_ROUTE: string = "/registered";
+  selectItem!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +52,6 @@ export class EditUserComponent {
   submit() {
     this.validationErrors.clear()
     if(this.editUserForm.valid) {
-      this.jwtService.deleteToken();
       this.editUserService.editUser({
         firstName: this.editUserForm.get('firstName')?.value,
         lastName: this.editUserForm.get('lastName')?.value,
@@ -61,14 +63,25 @@ export class EditUserComponent {
       } as EditUser)
       .subscribe({
         next: response => {
-          
+          this.editUserSucces = true;
+          this.editUserForm.patchValue({
+            username: response.username,
+            firstName: response.firstName,
+            lastName: response.lastName,
+            phone: response.phone
+          });
         },
         error: err => {
           if(err.error.message) {
-            for (const errorfield of Object.keys(err.error.fields)) {
-              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            if( typeof(err.error.message) === 'string' ) {
+              this.errorMessage = err.error.message;
+            } else {
+              for (const errorfield of Object.keys(err.error.fields)) {
+                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+              }
             }
           }
+          
         }
       });
 
@@ -78,7 +91,6 @@ export class EditUserComponent {
   }
 
   createEditUserFormControls() {
-    
     this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.username = new FormControl('', [Validators.required, Validators.email]);
@@ -86,7 +98,6 @@ export class EditUserComponent {
     this.newPassword = new FormControl('', [Validators.minLength(8)]);
     this.repeatNewPassword = new FormControl('', [Validators.minLength(8)]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
-    
   }
 
   createForm() {
@@ -103,5 +114,9 @@ export class EditUserComponent {
 
   public validateAreEqual(c: AbstractControl): {notsame: boolean} | null {
     return  c.value.newPassword  ===  c.value.repeatNewPassword ? null : {notsame: true};
+  }
+
+  public closeAlert() {
+    this.editUserSucces = false;
   }
 }

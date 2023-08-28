@@ -11,7 +11,7 @@ export class EditUserService {
   constructor(private http: HttpClient) { }
 
   editUser(register:any): Observable<any> {
-    return this.http.post<any>("/api/register", register);
+    return this.http.post<any>("/api/user/edit", register);
   }
 
   getUser(): Observable<User> {
