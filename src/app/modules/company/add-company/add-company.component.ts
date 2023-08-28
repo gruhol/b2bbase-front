@@ -39,7 +39,11 @@ export class AddCompanyComponent {
     this.slug = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.nip = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.regon = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.krs = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.email = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
+    this.wwwSite = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.wwwStore = new FormControl('', [Validators.required, Validators.minLength(2)]);
   }
 
   createForm() {

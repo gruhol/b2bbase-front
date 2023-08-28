@@ -1,14 +1,14 @@
 <div class="container">
     <main>
     <div class="row g-5">
-        <div class="col-md-12 col-lg-3"></div>
-        <div class="col-md-12 col-lg-6">
-        <div class="pt-5 pb-1">
+        <div class="col-md-12 col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">
+        <div class="pt-2 pb-1">
             <h2>Dodaj firmę</h2>
             <p>Proszę wpisz dane swojej firmy.</p>
         </div>
 
-        <hr class="mt-1 mb-4">
+        <hr class="mt-1 mb-3">
 
         <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
             {{validationErrors.get('username')}}
@@ -42,7 +42,7 @@
             <div class="row gy-1 mt-1 mb-1">
                 <label class="form-label">Typ firmy: </label>
                 <div class="col-md-12 col-lg-6">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card">
                         <div class="card-body">
                             <p class="card-text">Wybierz tą opcję jeśli jesteś dostawcą i ofertujesz sprzedaż hurtową.</p>
                             <div class="form-check form-switch">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card">
                         <div class="card-body">
                             <p class="card-text">Wybierze tą opcje jeśli szukasz nowych dostawców.</p>
                             <div class="form-check form-switch">
@@ -66,8 +66,18 @@
                 
             </div>
 
-            <div class="row gy-1 mt-1 mb-1">
-                <div class="col-md-12 col-lg-10">
+            <div class="row gy-3 mt-1 mb-1">
+                <div class="col-md-12 col-lg-7">
+                    <label class="form-label">NIP firmy: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': nip.invalid && nip.touched,
+                        'is-valid': nip.valid && nip.touched
+                      }" formControlName="nip">
+                    <div *ngIf="nip.touched && nip.hasError('required')" class="invalid-feedback">Pole Nip firmy jest wymagane</div>
+                    <div *ngIf="nip.touched && nip.hasError('minlength')" class="invalid-feedback">Pole Nip musi zawierać min 2 znaki</div>
+                </div>
+
+                <div class="col-md-12 col-lg-5">
                     <label class="form-label">Forma prawna firmy: </label>
 
                     <select class="form-control" formControlName="legalForm">
@@ -81,16 +91,7 @@
             </div>
 
             <div class="row gy-3 mt-1 mb-1">
-                <div class="col-md-12 col-lg-10">
-                    <label class="form-label">NIP firmy: </label>
-                    <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': nip.invalid && nip.touched,
-                        'is-valid': nip.valid && nip.touched
-                      }" formControlName="nip">
-                    <div *ngIf="nip.touched && nip.hasError('required')" class="invalid-feedback">Pole Nip firmy jest wymagane</div>
-                    <div *ngIf="nip.touched && nip.hasError('minlength')" class="invalid-feedback">Pole Nip musi zawierać min 2 znaki</div>
-                </div>
-                <div class="col-md-12 col-lg-10">
+                <div class="col-md-12 col-lg-6">
                     <label class="form-label">Regon: </label>
                     <input type="text" class="form-control" [ngClass]="{
                         'is-invalid': regon.invalid && regon.touched,
@@ -99,12 +100,64 @@
                       <div *ngIf="regon.touched && regon.hasError('required')" class="invalid-feedback">Pole regon jest wymagane</div>
                       <div *ngIf="regon.touched && regon.hasError('minlength')" class="invalid-feedback">Pole regon musi zawierać min 2 znaki</div>
                 </div>
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">KRS: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': krs.invalid && krs.touched,
+                        'is-valid': krs.valid && krs.touched
+                      }" formControlName="krs">
+                      <div *ngIf="krs.touched && krs.hasError('required')" class="invalid-feedback">Pole krs jest wymagane</div>
+                      <div *ngIf="krs.touched && krs.hasError('minlength')" class="invalid-feedback">Pole krs musi zawierać min 2 znaki</div>
+                </div>
             </div>
 
-            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zarejestruj się</button>
+            <div class="row mt-3 mb-1">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Email firmowy: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': email.invalid && email.touched,
+                        'is-valid': email.valid && email.touched
+                      }" formControlName="email">
+                    <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Email firmy jest wymagany</div>
+                    <div *ngIf="email.touched && email.hasError('minlength')" class="invalid-feedback">Email musi zawierać min 2 znaki</div>
+                </div>
+
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Telefon firmowy: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': phone.invalid && phone.touched,
+                        'is-valid': phone.valid && phone.touched
+                      }" formControlName="phone">
+                    <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Telefon do firmy jest wymagany</div>
+                    <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Telefon musi zawierać min 2 znaki</div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-1">
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Adres www: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': wwwSite.invalid && wwwSite.touched,
+                        'is-valid': wwwSite.valid && wwwSite.touched
+                      }" formControlName="wwwSite">
+                      <div *ngIf="wwwSite.touched && wwwSite.hasError('required')" class="invalid-feedback">Pole wwwSite jest wymagane</div>
+                      <div *ngIf="wwwSite.touched && wwwSite.hasError('minlength')" class="invalid-feedback">Pole wwwSite musi zawierać min 2 znaki</div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <label class="form-label">Adres sklepu  www: </label>
+                    <input type="text" class="form-control" [ngClass]="{
+                        'is-invalid': wwwStore.invalid && wwwStore.touched,
+                        'is-valid': wwwStore.valid && wwwStore.touched
+                      }" formControlName="wwwStore">
+                      <div *ngIf="wwwStore.touched && wwwStore.hasError('required')" class="invalid-feedback">Adres sklepu  www jest wymagane</div>
+                      <div *ngIf="wwwStore.touched && wwwStore.hasError('minlength')" class="invalid-feedback">Adres sklepu  www musi zawierać min 2 znaki</div>
+                </div>
+            </div>
+
+            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Dodaj firmę</button>
         </form>
         </div>
-        <div class="col-md-12 col-lg-3"></div>
+        <div class="col-md-12 col-lg-2"></div>
     </div>
     </main>
 </div>
