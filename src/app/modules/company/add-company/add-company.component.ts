@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
 
@@ -41,7 +41,7 @@ export class AddCompanyComponent {
     this.nip = new FormControl('', [Validators.required]);
     this.regon = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.krs = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.email = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.email = new FormControl('', [Validators.required, Validators.email]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
     this.wwwSite = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.wwwStore = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -60,7 +60,7 @@ export class AddCompanyComponent {
       phone: this.phone,
       wwwSite: this.wwwSite,
       wwwStore: this.wwwStore,
-    }, {validators: this.nipIsValid})
+    }, {validators: [this.nipIsValid, this.regonIsValid]})
   }
 
   addCompany() {
@@ -83,5 +83,9 @@ export class AddCompanyComponent {
 
   public nipIsValid(c: AbstractControl): {nipValid: boolean} | null {
     return validatePolish.nip(c.value.nip) ? null : {nipValid: true};
+  }
+
+  public regonIsValid(c: AbstractControl): {regonValid: boolean} | null {
+    return validatePolish.regon(c.value.regon) ? null : {regonValid: true};
   }
 }

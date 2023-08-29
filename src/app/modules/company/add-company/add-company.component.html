@@ -61,12 +61,11 @@
                 <div class="col-md-12 col-lg-7">
                     <label class="form-label">NIP firmy: </label>
                     <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': (nip.invalid && nip.touched) || registerCompanyForm.errors?.['nipValid'],
+                        'is-invalid': (nip.invalid && nip.touched) || (nip.touched && registerCompanyForm.errors?.['nipValid']),
                         'is-valid': nip.valid && nip.touched
                       }" formControlName="nip">
                     <div *ngIf="nip.touched && nip.hasError('required')" class="invalid-feedback">Pole Nip firmy jest wymagane</div>
-                    <div *ngIf="nip.touched && nip.hasError('minlength')" class="invalid-feedback">Pole Nip musi zawierać min 2 znaki</div>
-                    <div *ngIf="registerCompanyForm.errors?.['nipValid']" class="invalid-feedback">Numer NIP nieprawidłowy</div>
+                    <div *ngIf="nip.touched && registerCompanyForm.errors?.['nipValid']" class="invalid-feedback">Numer NIP nieprawidłowy</div>
                 </div>
 
                 <div class="col-md-12 col-lg-5">
@@ -76,7 +75,6 @@
                         <option [ngValue]="null" disabled>Wybierz formę prawną</option>
                         <option *ngFor="let legal of legalFormList | keyvalue" [value]="legal.key">{{legal.value}}</option>
                     </select>
-
                     
                       <div *ngIf="slug.touched && slug.hasError('required')" class="invalid-feedback">Pole slug jest wymagane</div>
                       <div *ngIf="slug.touched && slug.hasError('minlength')" class="invalid-feedback">Pole slug musi zawierać min 2 znaki</div>
@@ -87,11 +85,12 @@
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">Regon: </label>
                     <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': regon.invalid && regon.touched,
+                        'is-invalid': (regon.invalid && regon.touched) || (regon.touched && registerCompanyForm.errors?.['regonValid']),
                         'is-valid': regon.valid && regon.touched
                       }" formControlName="regon">
                       <div *ngIf="regon.touched && regon.hasError('required')" class="invalid-feedback">Pole regon jest wymagane</div>
                       <div *ngIf="regon.touched && regon.hasError('minlength')" class="invalid-feedback">Pole regon musi zawierać min 2 znaki</div>
+                      <div *ngIf="regon.touched && registerCompanyForm.errors?.['regonValid']" class="invalid-feedback">Numer Regon jest nieprawidłowy</div>
                 </div>
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">KRS: </label>
