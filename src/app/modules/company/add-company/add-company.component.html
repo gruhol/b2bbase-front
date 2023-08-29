@@ -19,7 +19,7 @@
         
         <form [formGroup]="registerCompanyForm" (submit)="addCompany()">
             <div class="row gy-3 mt-1 mb-1">
-                <div class="col-md-12 col-lg-10">
+                <div class="col-md-12 col-lg-7">
                     <label class="form-label">Nazwa firmy: </label>
                     <input type="text" class="form-control" [ngClass]="{
                         'is-invalid': name.invalid && name.touched,
@@ -27,15 +27,6 @@
                       }" formControlName="name">
                     <div *ngIf="name.touched && name.hasError('required')" class="invalid-feedback">Pole Nazwa firmy jest wymagane</div>
                     <div *ngIf="name.touched && name.hasError('minlength')" class="invalid-feedback">Pole Nazwa firmy musi zawierać min 2 znaki</div>
-                </div>
-                <div class="col-md-12 col-lg-10">
-                    <label class="form-label">Slug: </label>
-                    <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': slug.invalid && slug.touched,
-                        'is-valid': slug.valid && slug.touched
-                      }" formControlName="slug">
-                      <div *ngIf="slug.touched && slug.hasError('required')" class="invalid-feedback">Pole slug jest wymagane</div>
-                      <div *ngIf="slug.touched && slug.hasError('minlength')" class="invalid-feedback">Pole slug musi zawierać min 2 znaki</div>
                 </div>
             </div>
 
@@ -55,7 +46,7 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-text">Wybierze tą opcje jeśli szukasz nowych dostawców.</p>
+                            <p class="card-text">Wybierze tą opcje jeśli szukasz nowych dostawców.<br /><br /></p>
                             <div class="form-check form-switch">
                                 <input type="checkbox" name="type[]" value="CUSTOMER" class="form-check-input" formControlName="type">
                                 <label class="form-check-label">Szukam dostawców</label>
@@ -70,18 +61,20 @@
                 <div class="col-md-12 col-lg-7">
                     <label class="form-label">NIP firmy: </label>
                     <input type="text" class="form-control" [ngClass]="{
-                        'is-invalid': nip.invalid && nip.touched,
+                        'is-invalid': (nip.invalid && nip.touched) || registerCompanyForm.errors?.['nipValid'],
                         'is-valid': nip.valid && nip.touched
                       }" formControlName="nip">
                     <div *ngIf="nip.touched && nip.hasError('required')" class="invalid-feedback">Pole Nip firmy jest wymagane</div>
                     <div *ngIf="nip.touched && nip.hasError('minlength')" class="invalid-feedback">Pole Nip musi zawierać min 2 znaki</div>
+                    <div *ngIf="registerCompanyForm.errors?.['nipValid']" class="invalid-feedback">Numer NIP nieprawidłowy</div>
                 </div>
 
                 <div class="col-md-12 col-lg-5">
                     <label class="form-label">Forma prawna firmy: </label>
 
                     <select class="form-control" formControlName="legalForm">
-                      <option *ngFor="let legalForm of legalFormList" [value]="legalForm">{{legalForm}}</option>
+                        <option [ngValue]="null" disabled>Wybierz formę prawną</option>
+                        <option *ngFor="let legal of legalFormList | keyvalue" [value]="legal.key">{{legal.value}}</option>
                     </select>
 
                     
