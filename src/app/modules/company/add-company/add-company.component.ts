@@ -12,7 +12,6 @@ export class AddCompanyComponent {
 
   registerCompanyForm!: FormGroup;
   name!: FormControl;
-  slug!: FormControl;
   type!: FormControl;
   legalForm!: FormControl;
   nip!: FormControl;
@@ -36,21 +35,21 @@ export class AddCompanyComponent {
   }
 
   createRegistrationFormControls() {
-    this.name = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.slug = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.name = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(250)]);
+    this.type = new FormControl('', [Validators.required]);
+    this.legalForm = new FormControl('', [Validators.required]);
     this.nip = new FormControl('', [Validators.required]);
-    this.regon = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.krs = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.regon = new FormControl('', [Validators.required]);
+    this.krs = new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern("^[0-9]*$")]);
     this.email = new FormControl('', [Validators.required, Validators.email]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
-    this.wwwSite = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.wwwStore = new FormControl('', [Validators.required, Validators.minLength(2)]);
+    this.wwwSite = new FormControl('', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]);
+    this.wwwStore = new FormControl('', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]);
   }
 
   createForm() {
     this.registerCompanyForm = this.formBuilder.group({
       name: this.name,
-      slug: this.slug,
       type: this.type,
       legalForm: this.legalForm,
       nip: this.nip,
@@ -64,7 +63,13 @@ export class AddCompanyComponent {
   }
 
   addCompany() {
-
+    this.validationErrors.clear()
+    if(this.registerCompanyForm.valid) {
+      console.log(this.registerCompanyForm.value);
+    } else {
+      console.log("Nieudana validacja");
+      console.log(this.registerCompanyForm.value);
+    }
   }
 
   createLegalFormList(): Map<string, string> {
@@ -87,5 +92,10 @@ export class AddCompanyComponent {
 
   public regonIsValid(c: AbstractControl): {regonValid: boolean} | null {
     return validatePolish.regon(c.value.regon) ? null : {regonValid: true};
+  }
+
+  public isCorrectLegalForm(c: AbstractControl): {legalForm: boolean} | null {
+    let list = this.createLegalFormList();
+    return list.has(c.value.legalForm) ? null : {legalForm: true};
   }
 }

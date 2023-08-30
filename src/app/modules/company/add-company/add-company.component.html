@@ -54,7 +54,6 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
 
             <div class="row gy-3 mt-1 mb-1">
@@ -75,9 +74,7 @@
                         <option [ngValue]="null" disabled>Wybierz formę prawną</option>
                         <option *ngFor="let legal of legalFormList | keyvalue" [value]="legal.key">{{legal.value}}</option>
                     </select>
-                    
-                      <div *ngIf="slug.touched && slug.hasError('required')" class="invalid-feedback">Pole slug jest wymagane</div>
-                      <div *ngIf="slug.touched && slug.hasError('minlength')" class="invalid-feedback">Pole slug musi zawierać min 2 znaki</div>
+                    <div *ngIf="legalForm.touched && legalForm.hasError('required')" class="invalid-feedback">Pole slug jest wymagane</div>
                 </div>
             </div>
 
