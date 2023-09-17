@@ -37,7 +37,10 @@
                         <div class="card-body">
                             <p class="card-text">Wybierz tą opcję jeśli jesteś dostawcą i ofertujesz sprzedaż hurtową.</p>
                             <div class="form-check form-switch">
-                                <input type="checkbox" name="type[]" value="WHOLESALER" class="form-check-input" formControlName="type">
+                                <input type="checkbox" name="typeWholesaler" value="WHOLESALER" class="form-check-input" formControlName="typeWholesaler"[ngClass]="{
+                                    'is-invalid': typeWholesaler.touched && registerCompanyForm.errors?.['isTypeSelect'],
+                                    'is-valid': typeWholesaler.valid && typeWholesaler.touched
+                                  }">
                                 <label class="form-check-label">Jestem dostawcą</label>
                             </div>
                         </div>
@@ -48,13 +51,19 @@
                         <div class="card-body">
                             <p class="card-text">Wybierze tą opcje jeśli szukasz nowych dostawców.<br /><br /></p>
                             <div class="form-check form-switch">
-                                <input type="checkbox" name="type[]" value="CUSTOMER" class="form-check-input" formControlName="type">
+                                <input type="checkbox" name="typeCustomer" value="CUSTOMER" class="form-check-input" formControlName="typeCustomer" [ngClass]="{
+                                    'is-invalid': typeCustomer.touched && registerCompanyForm.errors?.['isTypeSelect'],
+                                    'is-valid': typeCustomer.valid && typeCustomer.touched
+                                  }">
                                 <label class="form-check-label">Szukam dostawców</label>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div *ngIf="(typeCustomer.touched || typeWholesaler.touched) && registerCompanyForm.errors?.['isTypeSelect']" class="col-md-12 col-lg-12 is-invalid" 
+                style="font-size: 0.875em; color: var(--bs-form-invalid-color);">Wybierz conajmniej jedną opcję</div>
             </div>
+            
 
             <div class="row gy-3 mt-1 mb-1">
                 <div class="col-md-12 col-lg-7">
@@ -70,11 +79,14 @@
                 <div class="col-md-12 col-lg-5">
                     <label class="form-label">Forma prawna firmy: </label>
 
-                    <select class="form-control" formControlName="legalForm">
+                    <select class="form-control" [ngClass]="{
+                        'is-invalid': legalForm.invalid && legalForm.touched,
+                        'is-valid': legalForm.valid && legalForm.touched
+                      }" formControlName="legalForm">
                         <option [ngValue]="null" disabled>Wybierz formę prawną</option>
                         <option *ngFor="let legal of legalFormList | keyvalue" [value]="legal.key">{{legal.value}}</option>
                     </select>
-                    <div *ngIf="legalForm.touched && legalForm.hasError('required')" class="invalid-feedback">Pole slug jest wymagane</div>
+                    <div *ngIf="legalForm.touched && legalForm.hasError('required')" class="invalid-feedback">Pole forma prawna jest wymagane</div>
                 </div>
             </div>
 
@@ -96,7 +108,7 @@
                         'is-valid': krs.valid && krs.touched
                       }" formControlName="krs">
                       <div *ngIf="krs.touched && krs.hasError('required')" class="invalid-feedback">Pole krs jest wymagane</div>
-                      <div *ngIf="krs.touched && krs.hasError('minlength')" class="invalid-feedback">Pole krs musi zawierać min 2 znaki</div>
+                      <div *ngIf="krs.touched && krs.hasError('minlength')" class="invalid-feedback">Pole krs musi zawierać 10 cyfr</div>
                 </div>
             </div>
 
@@ -108,6 +120,7 @@
                         'is-valid': email.valid && email.touched
                       }" formControlName="email">
                     <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Email firmy jest wymagany</div>
+                    <div *ngIf="email.touched && email.hasError('email')" class="invalid-feedback">Wpisz poprawny adres email</div>
                     <div *ngIf="email.touched && email.hasError('minlength')" class="invalid-feedback">Email musi zawierać min 2 znaki</div>
                 </div>
 
@@ -118,7 +131,8 @@
                         'is-valid': phone.valid && phone.touched
                       }" formControlName="phone">
                     <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Telefon do firmy jest wymagany</div>
-                    <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Telefon musi zawierać min 2 znaki</div>
+                    <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Prosze wprowadź tylko cyfry</div>
+                    <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Telefon musi zawierać min 9 cyfr</div>
                 </div>
             </div>
 
@@ -130,6 +144,7 @@
                         'is-valid': wwwSite.valid && wwwSite.touched
                       }" formControlName="wwwSite">
                       <div *ngIf="wwwSite.touched && wwwSite.hasError('required')" class="invalid-feedback">Pole wwwSite jest wymagane</div>
+                      <div *ngIf="wwwSite.touched && wwwSite.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url</div>
                       <div *ngIf="wwwSite.touched && wwwSite.hasError('minlength')" class="invalid-feedback">Pole wwwSite musi zawierać min 2 znaki</div>
                 </div>
                 <div class="col-md-12 col-lg-6">
@@ -139,6 +154,7 @@
                         'is-valid': wwwStore.valid && wwwStore.touched
                       }" formControlName="wwwStore">
                       <div *ngIf="wwwStore.touched && wwwStore.hasError('required')" class="invalid-feedback">Adres sklepu  www jest wymagane</div>
+                      <div *ngIf="wwwStore.touched && wwwStore.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url</div>
                       <div *ngIf="wwwStore.touched && wwwStore.hasError('minlength')" class="invalid-feedback">Adres sklepu  www musi zawierać min 2 znaki</div>
                 </div>
             </div>

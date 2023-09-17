@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
+import { CompanyServiceService } from './company-service.service';
+import { CompanyDto } from './dto/companyDto';
 
 @Component({
   selector: 'app-add-company',
@@ -12,7 +14,8 @@ export class AddCompanyComponent {
 
   registerCompanyForm!: FormGroup;
   name!: FormControl;
-  type!: FormControl;
+  typeWholesaler!: FormControl;
+  typeCustomer!: FormControl;
   legalForm!: FormControl;
   nip!: FormControl;
   regon!: FormControl;
@@ -24,9 +27,12 @@ export class AddCompanyComponent {
   validationErrors = new Map<string, String>();
   legalFormList: Map<string, string> = this.createLegalFormList();
 
+  REDIRECT_AFTER_ADD = "/";
+
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private companyService: CompanyServiceService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +42,8 @@ export class AddCompanyComponent {
 
   createRegistrationFormControls() {
     this.name = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(250)]);
-    this.type = new FormControl('', [Validators.required]);
+    this.typeWholesaler = new FormControl('');
+    this.typeCustomer = new FormControl('');
     this.legalForm = new FormControl('', [Validators.required]);
     this.nip = new FormControl('', [Validators.required]);
     this.regon = new FormControl('', [Validators.required]);
@@ -50,7 +57,8 @@ export class AddCompanyComponent {
   createForm() {
     this.registerCompanyForm = this.formBuilder.group({
       name: this.name,
-      type: this.type,
+      typeWholesaler: this.typeWholesaler,
+      typeCustomer: this.typeCustomer,
       legalForm: this.legalForm,
       nip: this.nip,
       regon: this.regon,
@@ -59,16 +67,45 @@ export class AddCompanyComponent {
       phone: this.phone,
       wwwSite: this.wwwSite,
       wwwStore: this.wwwStore,
-    }, {validators: [this.nipIsValid, this.regonIsValid]})
+    }, {validators: [this.nipIsValid, this.regonIsValid, this.isCorrectLegalForm, this.isOneTypeSelect]})
   }
 
   addCompany() {
-    this.validationErrors.clear()
+    //this.validationErrors.clear()
+    
     if(this.registerCompanyForm.valid) {
+      const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
       console.log(this.registerCompanyForm.value);
+      this.companyService.addCompany({
+        name: this.name.value,
+        type: requestType,
+        legalForm: this.legalForm.value,
+        nip: this.nip.value,
+        regon: this.regon.value,
+        krs: this.krs.value,
+        email: this.email.value,
+        phone: this.phone.value,
+        wwwSite: this.wwwSite.value,
+        wwwStore: this.wwwStore.value
+      } as CompanyDto)
+      .subscribe({
+        next: response => {
+          if (response) {
+            this.router.navigate([this.REDIRECT_AFTER_ADD]);
+          }
+        },
+        error: err => {
+          if(err.error.message) {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            }
+          }
+        }
+      });
     } else {
       console.log("Nieudana validacja");
       console.log(this.registerCompanyForm.value);
+      this.registerCompanyForm.markAllAsTouched();
     }
   }
 
@@ -86,16 +123,47 @@ export class AddCompanyComponent {
     return legalFormMap;
   }
 
-  public nipIsValid(c: AbstractControl): {nipValid: boolean} | null {
+  nipIsValid(c: AbstractControl): {nipValid: boolean} | null {
     return validatePolish.nip(c.value.nip) ? null : {nipValid: true};
   }
 
-  public regonIsValid(c: AbstractControl): {regonValid: boolean} | null {
+  regonIsValid(c: AbstractControl): {regonValid: boolean} | null {
     return validatePolish.regon(c.value.regon) ? null : {regonValid: true};
   }
 
-  public isCorrectLegalForm(c: AbstractControl): {legalForm: boolean} | null {
-    let list = this.createLegalFormList();
-    return list.has(c.value.legalForm) ? null : {legalForm: true};
+  isCorrectLegalForm(c: AbstractControl): {legalForm: boolean} | null {
+    //let list: Map<string, string> = this.createLegalFormList();
+    let legalFormMap = new Map<string, string>();
+    legalFormMap.set("JDG", "Jednoosobowa działalność gospodarcza");
+    legalFormMap.set("SC", "Spółka cywilna");
+    legalFormMap.set("SJ", "Spółka jawna");
+    legalFormMap.set("SP", "Spółka partnerska");
+    legalFormMap.set("SK", "Spółka komandytowa");
+    legalFormMap.set("SKA", "Spółka komandytowo-akcyjna");
+    legalFormMap.set("ZOO", "Spółka z ograniczoną odpowiedzialnością");
+    legalFormMap.set("PSA", "Prosta spółka akcyjna");
+    legalFormMap.set("SA", "Spółka akcyjna");
+    return legalFormMap.has(c.value.legalForm) ? null : {legalForm: true};
   }
+
+  isOneTypeSelect(c: AbstractControl): {isTypeSelect: boolean} | null {
+    console.log("Wartość type: " +  c.value.typeCustomer + " " + c.value.typeWholesaler);
+    return (c.value.typeCustomer === true || c.value.typeWholesaler === true) ? null : {isTypeSelect: true};
+    
+  }
+
+  createType(customer: boolean, wholeSaler: boolean): string {
+    if (customer === true && wholeSaler === true) {
+      return 'Both';
+    } else if (customer === true) {
+      return 'CUSTOMER';
+    } else if (wholeSaler === true) {
+      return 'WHOLESALER';
+    } else {
+      return '';
+    }
+  }
+
 }
+
+
