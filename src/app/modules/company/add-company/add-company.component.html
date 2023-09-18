@@ -10,11 +10,11 @@
 
         <hr class="mt-1 mb-3">
 
-        <div *ngIf="validationErrors.get('username')" class="alert alert-danger" role="alert">
-            {{validationErrors.get('username')}}
+        <div *ngIf="validationErrors.get('regon')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('regon')}}
         </div>
-        <div *ngIf="validationErrors.get('phone')" class="alert alert-danger" role="alert">
-            {{validationErrors.get('phone')}}
+        <div *ngIf="validationErrors.get('nip')" class="alert alert-danger" role="alert">
+            {{validationErrors.get('nip')}}
         </div>
         
         <form [formGroup]="registerCompanyForm" (submit)="addCompany()">
@@ -109,6 +109,8 @@
                       }" formControlName="krs">
                       <div *ngIf="krs.touched && krs.hasError('required')" class="invalid-feedback">Pole krs jest wymagane</div>
                       <div *ngIf="krs.touched && krs.hasError('minlength')" class="invalid-feedback">Pole krs musi zawierać 10 cyfr</div>
+                      <div *ngIf="krs.touched && krs.hasError('maxLength')" class="invalid-feedback">Pole krs musi zawierać 10 cyfr</div>
+                      <div *ngIf="krs.touched && krs.hasError('pattern')" class="invalid-feedback">Prosze wprowadź tylko cyfry</div>
                 </div>
             </div>
 
