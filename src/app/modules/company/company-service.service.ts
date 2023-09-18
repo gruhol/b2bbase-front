@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CompanyDto } from './dto/companyDto';
+import { CompanyDto } from './add-company/dto/companyDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

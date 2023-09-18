@@ -11,6 +11,9 @@ import { RememberPasswordComponent } from './modules/user/remember-password/reme
 import { SendPasswordComponent } from './modules/user/send-password/send-password.component';
 import { EditUserComponent } from './modules/user/edit-user/edit-user.component';
 import { AddCompanyComponent } from './modules/company/add-company/add-company.component';
+import { EditCompanyComponent } from './modules/company/edit-company/edit-company.component';
+import { CompanyPanelComponent } from './layouts/company-panel/company-panel.component';
+import { BranchComponent } from './modules/company/branch/branch.component';
 
 const routes: Routes = [
   {
@@ -24,6 +27,12 @@ const routes: Routes = [
       {path: 'send-password/:token', title: 'Weryfikacja adresu email', component: SendPasswordComponent},
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
+    ]
+  },
+  {
+    path:'', component: CompanyPanelComponent, children: [
+      {path: 'edit-company', title: 'Edytuj dane firmy', component: EditCompanyComponent},
+      {path: 'branch', title: 'Oddziały firmy', component: BranchComponent},
     ]
   }
 ];

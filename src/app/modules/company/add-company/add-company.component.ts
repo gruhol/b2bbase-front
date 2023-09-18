@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
-import { CompanyServiceService } from './company-service.service';
+import { CompanyServiceService } from '../company-service.service';
 import { CompanyDto } from './dto/companyDto';
 
 @Component({
@@ -71,7 +71,8 @@ export class AddCompanyComponent {
   }
 
   addCompany() {
-    this.validationErrors.clear()
+    //this.validationErrors.clear()
+    
     if(this.registerCompanyForm.valid) {
       const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
       console.log(this.registerCompanyForm.value);
@@ -102,6 +103,8 @@ export class AddCompanyComponent {
         }
       });
     } else {
+      console.log("Nieudana validacja");
+      console.log(this.registerCompanyForm.value);
       this.registerCompanyForm.markAllAsTouched();
     }
   }
@@ -129,6 +132,7 @@ export class AddCompanyComponent {
   }
 
   isCorrectLegalForm(c: AbstractControl): {legalForm: boolean} | null {
+    //let list: Map<string, string> = this.createLegalFormList();
     let legalFormMap = new Map<string, string>();
     legalFormMap.set("JDG", "Jednoosobowa działalność gospodarcza");
     legalFormMap.set("SC", "Spółka cywilna");
@@ -143,12 +147,14 @@ export class AddCompanyComponent {
   }
 
   isOneTypeSelect(c: AbstractControl): {isTypeSelect: boolean} | null {
+    console.log("Wartość type: " +  c.value.typeCustomer + " " + c.value.typeWholesaler);
     return (c.value.typeCustomer === true || c.value.typeWholesaler === true) ? null : {isTypeSelect: true};
+    
   }
 
   createType(customer: boolean, wholeSaler: boolean): string {
     if (customer === true && wholeSaler === true) {
-      return 'BOTH';
+      return 'Both';
     } else if (customer === true) {
       return 'CUSTOMER';
     } else if (wholeSaler === true) {
@@ -157,6 +163,7 @@ export class AddCompanyComponent {
       return '';
     }
   }
+
 }
 
 

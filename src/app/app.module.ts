@@ -7,8 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
-import { AddCompanyComponent } from './modules/company/add-company/add-company.component';
-import { EditCompanyComponent } from './modules/company/edit-company/edit-company.component';
+import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +17,7 @@ import { EditCompanyComponent } from './modules/company/edit-company/edit-compan
     BrowserModule,
     AppRoutingModule,
     FullpageModule,
+    CompanyPanelModule,
     BrowserAnimationsModule,
     HttpClientModule
   ],
