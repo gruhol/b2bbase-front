@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
 import { CompanyServiceService } from '../company-service.service';
+import { CompanyToEditDto } from '../add-company/dto/CompanyToEditDto';
 
 @Component({
   selector: 'app-edit-company',
@@ -23,6 +24,9 @@ export class EditCompanyComponent  {
   phone!: FormControl;
   wwwSite!: FormControl;
   wwwStore!: FormControl;
+  ediCooperation!: FormControl;
+  apiCooperation!: FormControl;
+  productFileCooperation!: FormControl;
   legalFormList: Map<string, string> = this.createLegalFormList();
 
 
@@ -34,10 +38,15 @@ export class EditCompanyComponent  {
 
   ngOnInit(): void {
     this.createRegistrationFormControls();
+    this.getCompany();
     this.createForm();
   }
 
-  editCompany() {}
+  editCompany() {
+    if(this.editCompanyForm.valid) {
+      console.log(this.editCompanyForm.value);
+    }
+  }
 
   createRegistrationFormControls() {
     this.name = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(250)]);
@@ -51,6 +60,15 @@ export class EditCompanyComponent  {
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
     this.wwwSite = new FormControl('', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]);
     this.wwwStore = new FormControl('', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]);
+    this.ediCooperation =  new FormControl('');
+    this.apiCooperation = new FormControl('');
+    this.productFileCooperation = new FormControl('');
+  }
+
+  getCompany() {
+    this.companyService.getCompany()
+      .subscribe(product => this.mapFormValues(product)
+      );
   }
 
   createLegalFormList(): Map<string, string> {
@@ -80,6 +98,9 @@ export class EditCompanyComponent  {
       phone: this.phone,
       wwwSite: this.wwwSite,
       wwwStore: this.wwwStore,
+      ediCooperation: this.ediCooperation,
+      apiCooperation: this.apiCooperation,
+      productFileCooperation: this.productFileCooperation,
     }, {validators: [this.nipIsValid, this.regonIsValid, this.isCorrectLegalForm, this.isOneTypeSelect]})
   }
 
@@ -119,5 +140,33 @@ export class EditCompanyComponent  {
     legalFormMap.set("PSA", "Prosta spółka akcyjna");
     legalFormMap.set("SA", "Spółka akcyjna");
     return legalFormMap.has(c.value.legalForm) ? null : {legalForm: true};
+  }
+
+  private mapFormValues(company: CompanyToEditDto): void {
+    let wholeSaler: boolean = false;
+    let customer: boolean = false;
+    if (company.type === 'WHOLESALER') wholeSaler = true;
+    if (company.type === 'CUSTOMER') customer = true;
+    if (company.type === 'BOTH') {
+      wholeSaler = true;
+      customer = true;
+    }
+
+    this.editCompanyForm.setValue({
+      name: company.name,
+      typeWholesaler: wholeSaler,
+      typeCustomer: customer,
+      legalForm: company.legalForm,
+      nip: company.nip,
+      regon: company.regon,
+      krs: company.krs,
+      email: company.email,
+      phone: company.phone,
+      wwwSite: company.wwwSite,
+      wwwStore: company.wwwStore,
+      ediCooperation: company.ediCooperation,
+      apiCooperation: company.apiCooperation,
+      productFileCooperation: company.productFileCooperation
+    });
   }
 }

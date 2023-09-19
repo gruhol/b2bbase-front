@@ -140,6 +140,47 @@
                 <div *ngIf="wwwStore.touched && wwwStore.hasError('minlength')" class="invalid-feedback">Adres sklepu  www musi zawierać min 2 znaki</div>
         </div>
     </div>
+    <hr class="mt-4">
+    <h3>Dodatkowe informacje na temat oferty</h3>
+    <div class="row mt-3 mb-1">
+        <div class="col-md-12 col-lg-8"> 
+        <p class="card-text">Współpraca w standardzie EDI (ang. Electronic Data Interchange) – Elektroniczna Wymiana Danych 
+            - wymiana dokumentów handlowych i finansowych w postaci standardowego komunikatu elektronicznego,</p>
+        
+        </div>
+        <div class="col-md-12 col-lg-4">
+            <div class="form-check form-switch">
+                <input type="checkbox" name="ediCooperation" class="form-check-input" formControlName="ediCooperation">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-1">
+        <div class="col-md-12 col-lg-8"> 
+        <p class="card-text">Współpraca w standardzie API podczas współpracyu handlowo - finansowej, np. generowanie zamówień, faktur
+            oraz innych dokumentów.
+        </p>
+        
+        </div>
+        <div class="col-md-12 col-lg-4">
+            <div class="form-check form-switch">
+                <input type="checkbox" name="apiCooperation" class="form-check-input" formControlName="apiCooperation">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-1">
+        <div class="col-md-12 col-lg-8"> 
+        <p class="card-text">Współpraca w standardzie plików wymiany danych (CSV, EXCEL) z danymi produktowymi oraz cenami i stanami.
+        </p>
+        
+        </div>
+        <div class="col-md-12 col-lg-4">
+            <div class="form-check form-switch">
+                <input type="checkbox" name="productFileCooperation" class="form-check-input" formControlName="productFileCooperation">
+            </div>
+        </div>
+    </div>
 
     <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
 </form>

@@ -75,7 +75,6 @@ export class AddCompanyComponent {
     
     if(this.registerCompanyForm.valid) {
       const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
-      console.log(this.registerCompanyForm.value);
       this.companyService.addCompany({
         name: this.name.value,
         type: requestType,
