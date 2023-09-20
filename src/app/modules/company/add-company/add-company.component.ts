@@ -153,7 +153,7 @@ export class AddCompanyComponent {
 
   createType(customer: boolean, wholeSaler: boolean): string {
     if (customer === true && wholeSaler === true) {
-      return 'Both';
+      return 'BOTH';
     } else if (customer === true) {
       return 'CUSTOMER';
     } else if (wholeSaler === true) {
