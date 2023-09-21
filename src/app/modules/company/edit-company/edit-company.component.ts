@@ -28,6 +28,9 @@ export class EditCompanyComponent  {
   apiCooperation!: FormControl;
   productFileCooperation!: FormControl;
   legalFormList: Map<string, string> = this.createLegalFormList();
+  validationErrors = new Map<string, String>();
+
+  REDIRECT_AFTER_EDIT = "/edit-company";
 
 
   constructor(
@@ -45,6 +48,36 @@ export class EditCompanyComponent  {
   editCompany() {
     if(this.editCompanyForm.valid) {
       console.log(this.editCompanyForm.value);
+      const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
+      this.companyService.editCompany({
+        name: this.name.value,
+        type: requestType,
+        legalForm: this.legalForm.value,
+        nip: this.nip.value,
+        regon: this.regon.value,
+        krs: this.krs.value,
+        email: this.email.value,
+        phone: this.phone.value,
+        wwwSite: this.wwwSite.value,
+        wwwStore: this.wwwStore.value,
+        ediCooperation: this.ediCooperation.value,
+        apiCooperation: this.apiCooperation.value,
+        productFileCooperation: this.productFileCooperation.value
+      } as CompanyToEditDto)
+      .subscribe({
+        next: response => {
+          if (response) {
+            this.router.navigate([this.REDIRECT_AFTER_EDIT]);
+          }
+        },
+        error: err => {
+          if(err.error.message) {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            }
+          }
+        }
+      });
     }
   }
 

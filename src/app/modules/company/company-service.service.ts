@@ -18,4 +18,8 @@ export class CompanyServiceService {
   getCompany(): Observable<CompanyToEditDto> {
     return this.http.get<CompanyToEditDto>('/api/company/user');
   }
+
+  editCompany(company: CompanyToEditDto): Observable<any> {
+    return this.http.post<CompanyToEditDto>('/api/company/user', company);
+  }
 }

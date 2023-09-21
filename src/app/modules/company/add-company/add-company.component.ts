@@ -102,8 +102,6 @@ export class AddCompanyComponent {
         }
       });
     } else {
-      console.log("Nieudana validacja");
-      console.log(this.registerCompanyForm.value);
       this.registerCompanyForm.markAllAsTouched();
     }
   }
