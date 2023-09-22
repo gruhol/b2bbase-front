@@ -29,6 +29,7 @@ export class EditCompanyComponent  {
   productFileCooperation!: FormControl;
   legalFormList: Map<string, string> = this.createLegalFormList();
   validationErrors = new Map<string, String>();
+  errorMessage!: string;
 
   REDIRECT_AFTER_EDIT = "/edit-company";
 
@@ -72,8 +73,12 @@ export class EditCompanyComponent  {
         },
         error: err => {
           if(err.error.message) {
-            for (const errorfield of Object.keys(err.error.fields)) {
-              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            if( typeof(err.error.message) === 'string' ) {
+              this.errorMessage = err.error.message;
+            } else {
+              for (const errorfield of Object.keys(err.error.fields)) {
+                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+              }
             }
           }
         }

@@ -26,6 +26,7 @@ export class AddCompanyComponent {
   wwwStore!: FormControl;
   validationErrors = new Map<string, String>();
   legalFormList: Map<string, string> = this.createLegalFormList();
+  errorMessage!: string;
 
   REDIRECT_AFTER_ADD = "/";
 
@@ -95,8 +96,12 @@ export class AddCompanyComponent {
         },
         error: err => {
           if(err.error.message) {
-            for (const errorfield of Object.keys(err.error.fields)) {
-              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            if( typeof(err.error.message) === 'string' ) {
+              this.errorMessage = err.error.message;
+            } else {
+              for (const errorfield of Object.keys(err.error.fields)) {
+                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+              }
             }
           }
         }

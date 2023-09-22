@@ -1,3 +1,14 @@
+<div *ngIf="validationErrors.get('regon')" class="alert alert-danger" role="alert">
+    {{validationErrors.get('regon')}}
+</div>
+<div *ngIf="validationErrors.get('nip')" class="alert alert-danger" role="alert">
+    {{validationErrors.get('nip')}}
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+</div>
+
 <form [formGroup]="editCompanyForm" (submit)="editCompany()">
     <div class="row gy-3 mt-1 mb-1">
         <div class="col-md-12 col-lg-7">
