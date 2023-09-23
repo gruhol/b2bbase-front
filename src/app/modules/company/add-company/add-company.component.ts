@@ -95,14 +95,12 @@ export class AddCompanyComponent {
           }
         },
         error: err => {
-          if(err.error.message) {
-            if( typeof(err.error.message) === 'string' ) {
-              this.errorMessage = err.error.message;
-            } else {
-              for (const errorfield of Object.keys(err.error.fields)) {
-                this.validationErrors.set(errorfield, err.error.fields[errorfield]);
-              }
+          if (typeof(err.error.fields) === 'object') {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
             }
+          } else if( typeof(err.error.message) === 'string') {
+            this.errorMessage = err.error.message;
           }
         }
       });
