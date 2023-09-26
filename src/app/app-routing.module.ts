@@ -13,7 +13,7 @@ import { EditUserComponent } from './modules/user/edit-user/edit-user.component'
 import { AddCompanyComponent } from './modules/company/add-company/add-company.component';
 import { EditCompanyComponent } from './modules/company/edit-company/edit-company.component';
 import { CompanyPanelComponent } from './layouts/company-panel/company-panel.component';
-import { BranchComponent } from './modules/company/branch/branch.component';
+import { BranchComponent } from './modules/branch/branch.component';
 
 const routes: Routes = [
   {

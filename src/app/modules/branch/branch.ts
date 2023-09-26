@@ -1,0 +1,16 @@
+export interface Branch {
+    id: number,
+    name: string,
+    headquarter: boolean,
+    slug: string,
+    voivodeship: string,
+    post_code: string,
+    city: string,
+    street: string,
+    house_number: string,
+    office_number: string,
+    email: string,
+    phone: number,
+    latitude: string,
+    longitude: string,
+}
