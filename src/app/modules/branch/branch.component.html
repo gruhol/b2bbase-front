@@ -1,4 +1,29 @@
-<p>branch works!</p>
-<ul *ngFor="let branch of branchs">
-    <li>{{branch.id}} -  {{branch.street}}</li>
-</ul>
+<div *ngFor="let branch of branchs" class="row p-2">
+   
+        <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1">
+            <div class="row">
+                <div class="col-10">
+                    <h3>{{branch.name}} <span *ngIf="branch.headquarter" class="badge text-bg-secondary">Centrala</span></h3>
+                    <table class="table">
+                        <tr>
+                            <td>{{branch.street}} {{branch.house_number}} / {{branch.office_number}}</td>
+                            <td>tel.: {{branch.phone}}</td>
+                        </tr>
+                        <tr>
+                            
+                            <td>{{branch.post_code}} {{branch.city}}</td>
+                            <td>email: {{branch.email}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-2">
+                    <a href="#" class="btn btn-outline-secondary mb-2 w-100">Edytuj</a>
+                    <a href="#" class="btn btn-outline-danger mb-2 w-100">Usuń</a>
+                </div>
+            </div>
+          
+          
+          
+        </div>
+  
+</div>
