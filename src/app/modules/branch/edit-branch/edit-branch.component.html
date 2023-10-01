@@ -1,0 +1,28 @@
+<p>edit-branch works!</p>
+
+<form [formGroup]="editBranchForm" (submit)="editBranch()">
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-12 col-lg-7">
+            <label class="form-label">Nazwa firmy: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': name.invalid && name.touched,
+                'is-valid': name.valid && name.touched
+                }" formControlName="name">
+            <div *ngIf="name.touched && name.hasError('required')" class="invalid-feedback">Nazwa Oddziału firmy jest wymagane</div>
+            <div *ngIf="name.touched && name.hasError('minlength')" class="invalid-feedback">Nazwa Oddziału firmy musi zawierać min 2 znaki</div>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-1">
+        <div class="col-md-12 col-lg-8"> 
+        <p class="card-text">Siedziba główna: 
+        </p>
+        
+        </div>
+        <div class="col-md-12 col-lg-4">
+            <div class="form-check form-switch">
+                <input type="checkbox" name="apiCooperation" class="form-check-input" formControlName="headquarter">
+            </div>
+        </div>
+    </div>
+</form>

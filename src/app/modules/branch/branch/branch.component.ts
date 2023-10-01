@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Branch } from './branch';
-import { BranchService } from './branch.service';
+import { BranchService } from '../branch.service';
+import { Branch } from '../model/branch';
+
 
 @Component({
   selector: 'app-branch',

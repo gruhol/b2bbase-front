@@ -5,13 +5,15 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EditCompanyComponent } from 'src/app/modules/company/edit-company/edit-company.component';
-import { BranchComponent } from 'src/app/modules/branch/branch.component';
+import { EditBranchComponent } from 'src/app/modules/branch/edit-branch/edit-branch.component';
+import { BranchComponent } from 'src/app/modules/branch/branch/branch.component';
 
 @NgModule({
   declarations: [
     CompanyPanelComponent,
     EditCompanyComponent,
-    BranchComponent
+    BranchComponent,
+    EditBranchComponent
   ],
   imports: [
     CommonModule,

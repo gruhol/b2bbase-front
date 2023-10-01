@@ -13,7 +13,8 @@ import { EditUserComponent } from './modules/user/edit-user/edit-user.component'
 import { AddCompanyComponent } from './modules/company/add-company/add-company.component';
 import { EditCompanyComponent } from './modules/company/edit-company/edit-company.component';
 import { CompanyPanelComponent } from './layouts/company-panel/company-panel.component';
-import { BranchComponent } from './modules/branch/branch.component';
+import { BranchComponent } from './modules/branch/branch/branch.component';
+import { EditBranchComponent } from './modules/branch/edit-branch/edit-branch.component';
 
 const routes: Routes = [
   {
@@ -31,8 +32,9 @@ const routes: Routes = [
   },
   {
     path:'', component: CompanyPanelComponent, children: [
-      {path: 'edit-company', title: 'Edytuj dane firmy', component: EditCompanyComponent},
-      {path: 'branch', title: 'Oddziały firmy', component: BranchComponent},
+      {path: 'edit-company', title: 'Edytuj dane firmy', component: EditCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'branch', title: 'Oddziały firmy', component: BranchComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'edit-branch/:id', title: 'Edytuj Oddziały firmy', component: EditBranchComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];

@@ -11,7 +11,7 @@ import { CompanyPanelModule } from './layouts/company-panel/company-panel.module
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
