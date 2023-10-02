@@ -1,5 +1,3 @@
-<p>edit-branch works!</p>
-
 <form [formGroup]="editBranchForm" (submit)="editBranch()">
     <div class="row gy-3 mt-1 mb-1">
         <div class="col-md-12 col-lg-7">
@@ -14,15 +12,109 @@
     </div>
 
     <div class="row mt-3 mb-1">
-        <div class="col-md-12 col-lg-8"> 
-        <p class="card-text">Siedziba główna: 
+        <div class="col-md-12 col-lg-4"> 
+        <p class="card-text">Czy oddział jest siedzibą główną: 
         </p>
         
         </div>
         <div class="col-md-12 col-lg-4">
             <div class="form-check form-switch">
-                <input type="checkbox" name="apiCooperation" class="form-check-input" formControlName="headquarter">
+                <input type="checkbox" name="headquarter" class="form-check-input" formControlName="headquarter">
             </div>
         </div>
     </div>
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-12 col-lg-7">
+            <label class="form-label">Województwo: </label>
+
+            <select class="form-control" [ngClass]="{
+                'is-invalid': voivodeship.invalid && voivodeship.touched,
+                'is-valid': voivodeship.valid && voivodeship.touched
+                }" formControlName="voivodeship">
+                <option [ngValue]="null" disabled>Wybierz</option>
+                <option *ngFor="let vs of voivodeshipList | keyvalue" [value]="vs.key">{{vs.value}}</option>
+            </select>
+            <div *ngIf="voivodeship.touched && voivodeship.hasError('required')" class="invalid-feedback">Województwo jest wymagane</div>
+        </div>
+    </div>
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-3 col-lg-2">
+            <label class="form-label">Kod pocztowy: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': post_code.invalid && post_code.touched,
+                'is-valid': post_code.valid && post_code.touched
+                }" formControlName="post_code">
+            <div *ngIf="post_code.touched && post_code.hasError('required')" class="invalid-feedback">Kod pocztowy jest wymagane</div>
+            <div *ngIf="post_code.touched && post_code.hasError('pattern')" class="invalid-feedback">Wymagany format kodu pocztowego 00-000</div>
+        </div>
+        <div class="col-md-5 col-lg-6">
+            <label class="form-label">Miasto: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': city.invalid && city.touched,
+                'is-valid': city.valid && city.touched
+                }" formControlName="city">
+            <div *ngIf="city.touched && city.hasError('required')" class="invalid-feedback">Pole miasto jest wymagane</div>
+            <div *ngIf="city.touched && city.hasError('maxlength')" class="invalid-feedback">Pole miasto może zawierać max 16 znaków</div>
+            <div *ngIf="city.touched && city.hasError('minlength')" class="invalid-feedback">Pole miasto może zawierać min 3 znaki</div>
+        </div>
+    </div>
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-5 col-lg-4">
+            <label class="form-label">Ulica: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': street.invalid && street.touched,
+                'is-valid': street.valid && street.touched
+                }" formControlName="street">
+            <div *ngIf="street.touched && street.hasError('required')" class="invalid-feedback">Ulica jest wymagane</div>
+            <div *ngIf="street.touched && street.hasError('maxlength')" class="invalid-feedback">Pole ulica może zawierać max 128 znaków</div>
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+            <label class="form-label">Nr domu: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': house_number.invalid && house_number.touched,
+                'is-valid': house_number.valid && house_number.touched
+                }" formControlName="house_number">
+            <div *ngIf="house_number.touched && house_number.hasError('required')" class="invalid-feedback">Nr domu jest wymagane</div>
+            <div *ngIf="house_number.touched && house_number.hasError('maxlength')" class="invalid-feedback">Pole nr domu może zawierać max 16 znaków</div>
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+            <label class="form-label">Nr lokalu: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': office_number.invalid && office_number.touched,
+                'is-valid': office_number.valid && office_number.touched
+                }" formControlName="office_number">
+            <div *ngIf="office_number.touched && office_number.hasError('maxlength')" class="invalid-feedback">Pole nr lokalu może zawierać max 16 znaków</div>
+        </div>
+    </div>
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-6 col-lg-4">
+            <label class="form-label">Email oddziału: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': email.invalid && email.touched,
+                'is-valid': email.valid && email.touched
+                }" formControlName="email">
+            <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Email jest wymagany</div>
+            <div *ngIf="email.touched && email.hasError('email')" class="invalid-feedback">Proszę wpisać poprawny adres email</div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="form-label">Telefon kontakowy: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': phone.invalid && phone.touched,
+                'is-valid': phone.valid && phone.touched
+                }" formControlName="phone">
+            <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole miasto jest wymagane</div>
+            <div *ngIf="phone.touched && phone.hasError('maxlength')" class="invalid-feedback">Pole miasto może zawierać max 11 znaków</div>
+            <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Pole numer kontaktowy może zawierać tylko cyfry</div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-8">
+        <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
+    </div>
+    
 </form>

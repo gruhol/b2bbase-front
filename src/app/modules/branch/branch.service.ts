@@ -14,4 +14,8 @@ export class BranchService {
     return this.http.get<Array<Branch>>("/api/branch/list")
   }
 
+  getBranch(): Observable<Branch> {
+    return this.http.get<Branch>("/api/branch/")
+  }
+
 }
