@@ -1,4 +1,9 @@
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+</div>
+
 <form [formGroup]="editBranchForm" (submit)="editBranch()">
+
     <div class="row gy-3 mt-1 mb-1">
         <div class="col-md-12 col-lg-7">
             <label class="form-label">Nazwa firmy: </label>
@@ -13,9 +18,7 @@
 
     <div class="row mt-3 mb-1">
         <div class="col-md-12 col-lg-4"> 
-        <p class="card-text">Czy oddział jest siedzibą główną: 
-        </p>
-        
+            <p class="card-text">Czy oddział jest siedzibą główną: </p>
         </div>
         <div class="col-md-12 col-lg-4">
             <div class="form-check form-switch">

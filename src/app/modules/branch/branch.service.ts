@@ -14,8 +14,12 @@ export class BranchService {
     return this.http.get<Array<Branch>>("/api/branch/list")
   }
 
-  getBranch(): Observable<Branch> {
-    return this.http.get<Branch>("/api/branch/")
+  getBranch(id: number): Observable<Branch> {
+    return this.http.get<Branch>("/api/branch/" + id)
+  }
+
+  editBranch(branch: Branch): Observable<Branch> {
+    return this.http.put<Branch>("/api/branch", branch)
   }
 
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
 import { CompanyServiceService } from '../company-service.service';
 import { CompanyToEditDto } from '../add-company/dto/CompanyToEditDto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-company',
@@ -37,7 +38,8 @@ export class EditCompanyComponent  {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private companyService: CompanyServiceService
+    private companyService: CompanyServiceService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +70,28 @@ export class EditCompanyComponent  {
       .subscribe({
         next: response => {
           if (response) {
-            this.router.navigate([this.REDIRECT_AFTER_EDIT]);
+            
+            let wholeSaler: boolean = response.type === 'BOTH' || response.type === 'WHOLESALER';
+            let customer: boolean = response.type === 'BOTH' || response.type === 'CUSTOMER';
+
+            this.editCompanyForm.setValue({
+              name: response.name,
+              typeWholesaler: wholeSaler,
+              typeCustomer: customer,
+              legalForm: response.legalForm,
+              nip: response.nip,
+              regon: response.regon,
+              krs: response.krs,
+              email: response.email,
+              phone: response.phone,
+              wwwSite: response.wwwSite,
+              wwwStore: response.wwwStore,
+              ediCooperation: response.ediCooperation,
+              apiCooperation: response.apiCooperation,
+              productFileCooperation: response.productFileCooperation
+            });
+
+            this.snackBar.open("Firma została zaktualizowana", '', { duration: 3000 });
           }
         },
         error: err => {
