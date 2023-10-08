@@ -15,6 +15,7 @@ import { EditCompanyComponent } from './modules/company/edit-company/edit-compan
 import { CompanyPanelComponent } from './layouts/company-panel/company-panel.component';
 import { BranchComponent } from './modules/branch/branch/branch.component';
 import { EditBranchComponent } from './modules/branch/edit-branch/edit-branch.component';
+import { AddBranchComponent } from './modules/branch/add-branch/add-branch/add-branch.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
       {path: 'edit-company', title: 'Edytuj dane firmy', component: EditCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'branch', title: 'Oddziały firmy', component: BranchComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'edit-branch/:id', title: 'Edytuj Oddziały firmy', component: EditBranchComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'add-branch', title: 'Dodaj Oddziały firmy', component: AddBranchComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];

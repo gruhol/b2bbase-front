@@ -7,7 +7,7 @@ import { Branch } from './model/branch';
   providedIn: 'root'
 })
 export class BranchService {
-
+  
   constructor(private http: HttpClient) { }
 
   getBranchs(): Observable<Array<Branch>> {
@@ -22,4 +22,7 @@ export class BranchService {
     return this.http.put<Branch>("/api/branch", branch)
   }
 
+  addBranch(branch: Branch): Observable<Branch> {
+    return this.http.post<Branch>("/api/branch", branch)
+  }
 }
