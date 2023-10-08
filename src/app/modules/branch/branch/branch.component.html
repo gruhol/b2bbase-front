@@ -1,5 +1,13 @@
-<div *ngFor="let branch of branchs" class="row p-2">
-   
+<div *ngFor="let branch of branchs" class="row
+">
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <h2>Oddziały firmy:</h2>
+        </div>
+        <div class="col-md-6 col-lg-6 text-end">
+            <a href="#" class="btn btn-outline-primary mb-2" [routerLink]="['/add-branch']">Dodaj oddział</a>
+        </div>
+    </div>
         <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1">
             <div class="row">
                 <div class="col-10">

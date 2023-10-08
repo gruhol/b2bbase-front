@@ -92,8 +92,14 @@ export class EditBranchComponent implements OnInit {
 
   getBranch() {
     this.branchService.getBranch(this.idBranch)
-      .subscribe(branch => this.mapFormValues(branch)
-      );
+      .subscribe({
+        next: branch => {
+          this.mapFormValues(branch)
+        },
+        error: branch => {
+          this.router.navigate(["/branch"]);
+        }
+      })
   }
 
   createForm() {
