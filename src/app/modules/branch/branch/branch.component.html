@@ -24,8 +24,8 @@
                     </table>
                 </div>
                 <div class="col-2">
-                    <a href="#" class="btn btn-outline-secondary mb-2 w-100" [routerLink]="['/edit-branch/' + branch.id]">Edytuj</a>
-                    <a href="#" class="btn btn-outline-danger mb-2 w-100" [routerLink]="['/delete-branch/' + branch.id]">Usuń</a>
+                    <a class="btn btn-outline-secondary mb-2 w-100" [routerLink]="['/edit-branch/' + branch.id]">Edytuj</a>
+                    <a class="btn btn-outline-danger mb-2 w-100" (click)="confirmDelete(branch)">Usuń</a>
                 </div>
             </div>
         </div>

@@ -25,4 +25,8 @@ export class BranchService {
   addBranch(branch: Branch): Observable<Branch> {
     return this.http.post<Branch>("/api/branch", branch)
   }
+
+  deleteBranch(id: number): Observable<void> {
+    return this.http.delete<void>("api/branch/" + id);
+  }
 }

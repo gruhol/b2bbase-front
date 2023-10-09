@@ -8,6 +8,7 @@ import { EditCompanyComponent } from 'src/app/modules/company/edit-company/edit-
 import { EditBranchComponent } from 'src/app/modules/branch/edit-branch/edit-branch.component';
 import { BranchComponent } from 'src/app/modules/branch/branch/branch.component';
 import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch/add-branch.component';
+import { ConfirmDialogComponent } from 'src/app/modules/common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch
     EditCompanyComponent,
     BranchComponent,
     EditBranchComponent,
-    AddBranchComponent
+    AddBranchComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
