@@ -34,7 +34,6 @@ export class EditCompanyComponent  {
 
   REDIRECT_AFTER_EDIT = "/edit-company";
 
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
