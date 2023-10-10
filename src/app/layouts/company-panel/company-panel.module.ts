@@ -24,7 +24,8 @@ import { ConfirmDialogComponent } from 'src/app/modules/common/confirm-dialog/co
     RouterModule,
     ReactiveFormsModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    
   ]
 })
 export class CompanyPanelModule { }
