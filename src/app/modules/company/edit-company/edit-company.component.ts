@@ -33,6 +33,7 @@ export class EditCompanyComponent  {
   errorMessage!: string;
 
   REDIRECT_AFTER_EDIT = "/edit-company";
+htmlContent: any;
 
   constructor(
     private formBuilder: FormBuilder,
