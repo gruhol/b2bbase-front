@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './edit-company.component.html',
   styleUrls: ['./edit-company.component.scss']
 })
-export class EditCompanyComponent  {
+export class EditCompanyComponent implements OnInit  {
 
   editCompanyForm!: FormGroup;
   name!: FormControl;
@@ -33,11 +33,11 @@ export class EditCompanyComponent  {
   errorMessage!: string;
 
   REDIRECT_AFTER_EDIT = "/edit-company";
-htmlContent: any;
+
+  
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private companyService: CompanyServiceService,
     private snackBar: MatSnackBar,
   ) {}

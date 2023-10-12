@@ -11,5 +11,6 @@ export interface CompanyToEditDto {
     wwwStore: string
     ediCooperation: boolean,
     apiCooperation: boolean,
-    productFileCooperation: boolean;
+    productFileCooperation: boolean,
+    description: string;
 }
