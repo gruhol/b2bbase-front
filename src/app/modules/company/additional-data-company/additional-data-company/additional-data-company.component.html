@@ -1,2 +1,11 @@
-<p>additional-data-company works!</p>
-<angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+<p>Edytuj opis</p>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+</div>
+
+<form [formGroup]="editDescriptionForm" (submit)="editAdditionalData()">
+<angular-editor type="text" formControlName="description" [config]="editorConfig"></angular-editor>
+
+<button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
+<form>

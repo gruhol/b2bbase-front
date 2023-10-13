@@ -50,7 +50,6 @@ export class EditCompanyComponent implements OnInit  {
 
   editCompany() {
     if(this.editCompanyForm.valid) {
-      console.log(this.editCompanyForm.value);
       const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
       this.companyService.editCompany({
         name: this.name.value,
