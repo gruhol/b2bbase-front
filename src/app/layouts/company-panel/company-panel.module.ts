@@ -11,6 +11,7 @@ import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch
 import { ConfirmDialogComponent } from 'src/app/modules/common/confirm-dialog/confirm-dialog.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdditionalDataCompanyComponent } from 'src/app/modules/company/additional-data-company/additional-data-company/additional-data-company.component';
+import { SocialLinkComponent } from 'src/app/modules/company/social-link/social-link.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AdditionalDataCompanyComponent } from 'src/app/modules/company/addition
     EditBranchComponent,
     AddBranchComponent,
     ConfirmDialogComponent,
-    AdditionalDataCompanyComponent
+    AdditionalDataCompanyComponent,
+    SocialLinkComponent
   ],
   imports: [
     CommonModule,
