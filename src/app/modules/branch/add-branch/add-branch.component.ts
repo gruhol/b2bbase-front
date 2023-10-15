@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BranchService } from '../../branch.service';
+import { BranchService } from '../branch.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Branch } from '../../model/branch';
+import { Branch } from '../model/branch';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
@@ -41,8 +41,6 @@ export class AddBranchComponent implements OnInit{
   }
 
   addBranch() {
-    console.log(this.addBranchForm.valid)
-  
     if(this.addBranchForm.valid) {
       this.branchService.addBranch({
         name: this.name.value,

@@ -1,0 +1,42 @@
+<h2>Podaj linku do portalu społecznościowego</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+</div>
+
+<form [formGroup]="addSocialForm" (submit)="addSocial()">
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-12 col-lg-7">
+            <label class="form-label">Adres url: </label>
+            <input type="text" class="form-control" [ngClass]="{
+                'is-invalid': url.invalid && url.touched,
+                'is-valid': url.valid && url.touched
+                }" formControlName="url">
+            <div *ngIf="url.touched && url.hasError('required')" class="invalid-feedback">Adres url jest wymagany</div>
+            <div *ngIf="url.touched && url.hasError('minlength')" class="invalid-feedback">Adres url musi zawierać min 2 znaki</div>
+            <div *ngIf="url.touched && url.hasError('pattern')" class="invalid-feedback">Adres url jest niepoprawny</div>
+        </div>
+    </div>
+
+
+    <div class="row gy-3 mt-1 mb-1">
+        <div class="col-md-12 col-lg-7">
+            <label class="form-label">Typ: </label>
+
+            <select class="form-control" [ngClass]="{
+                'is-invalid': type.invalid && type.touched,
+                'is-valid': type.valid && type.touched
+                }" formControlName="type">
+                
+                <option *ngFor="let t of types | keyvalue" [value]="t.key">{{t.value}}</option>
+            </select>
+            <div *ngIf="type.touched && type.hasError('required')" class="invalid-feedback">Typ social media jest wymagane</div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-lg-8">
+        <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Dodaj link społecznościowy</button>
+    </div>
+    
+</form>

@@ -15,9 +15,11 @@ import { EditCompanyComponent } from './modules/company/edit-company/edit-compan
 import { CompanyPanelComponent } from './layouts/company-panel/company-panel.component';
 import { BranchComponent } from './modules/branch/branch/branch.component';
 import { EditBranchComponent } from './modules/branch/edit-branch/edit-branch.component';
-import { AddBranchComponent } from './modules/branch/add-branch/add-branch/add-branch.component';
+import { AddBranchComponent } from './modules/branch/add-branch/add-branch.component';
 import { AdditionalDataCompanyComponent } from './modules/company/additional-data-company/additional-data-company/additional-data-company.component';
-import { SocialLinkComponent } from './modules/company/social-link/social-link.component';
+import { SocialLinkComponent } from './modules/social-link/social-link/social-link.component';
+import { AddSocialLinkComponent } from './modules/social-link/add-social-link/add-social-link.component';
+import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/edit-social-link.component';
 
 const routes: Routes = [
   {
@@ -40,7 +42,9 @@ const routes: Routes = [
       {path: 'edit-branch/:id', title: 'Edytuj Oddziały firmy', component: EditBranchComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-branch', title: 'Dodaj Oddziały firmy', component: AddBranchComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'additional-data', title: 'Dodaj Oddziały firmy', component: AdditionalDataCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
-      {path: 'social-link', title: 'Linki do social media', component: SocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'social-link', title: 'Linki do social link', component: SocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'edit-social-link/:id', title: 'Edytuj social link', component: EditSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
     ]
   }
 ];

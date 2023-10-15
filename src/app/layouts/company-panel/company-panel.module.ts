@@ -7,11 +7,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EditCompanyComponent } from 'src/app/modules/company/edit-company/edit-company.component';
 import { EditBranchComponent } from 'src/app/modules/branch/edit-branch/edit-branch.component';
 import { BranchComponent } from 'src/app/modules/branch/branch/branch.component';
-import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch/add-branch.component';
+import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch.component';
 import { ConfirmDialogComponent } from 'src/app/modules/common/confirm-dialog/confirm-dialog.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdditionalDataCompanyComponent } from 'src/app/modules/company/additional-data-company/additional-data-company/additional-data-company.component';
-import { SocialLinkComponent } from 'src/app/modules/company/social-link/social-link.component';
+import { SocialLinkComponent } from 'src/app/modules/social-link/social-link/social-link.component';
+import { AddSocialLinkComponent } from 'src/app/modules/social-link/add-social-link/add-social-link.component';
+import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social-link/edit-social-link.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { SocialLinkComponent } from 'src/app/modules/company/social-link/social-
     AddBranchComponent,
     ConfirmDialogComponent,
     AdditionalDataCompanyComponent,
-    SocialLinkComponent
+    SocialLinkComponent,
+    AddSocialLinkComponent,
+    EditSocialLinkComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,8 @@ import { SocialLinkComponent } from 'src/app/modules/company/social-link/social-
     ReactiveFormsModule,
     SharedModule,
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    FontAwesomeModule
   ]
 })
 export class CompanyPanelModule { }

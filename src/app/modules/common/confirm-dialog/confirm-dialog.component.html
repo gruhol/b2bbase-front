@@ -1,7 +1,7 @@
 <div class="p-4">
     <div class="row">
         <div class="col-9">
-            <h2 class="modal-title">Modal title</h2>
+            <h2 class="modal-title">Potwierdzenie operacji</h2>
         </div>
         <div class="col-3 text-end">
             <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" [mat-dialog-close]="false"></button>
@@ -9,11 +9,11 @@
         
     </div>
     <div class="modal-body py-3">
-        <p>Modal body text goes here.</p>
+        <p>Czy chcesz napewno usunąć</p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-secondary me-1" data-bs-dismiss="modal" [mat-dialog-close]="false">Anuluj</button>
-        <button class="btn btn-primary" [mat-dialog-close]="true">Tak Usuń</button>
+        <button class="btn btn-danger" [mat-dialog-close]="true">Tak Usuń</button>
     </div>
 </div>
 
