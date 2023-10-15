@@ -31,6 +31,8 @@ export class AddSocialLinkComponent {
   }
 
   addSocial() {
+    this.errorMessage = '';
+    this.validationErrors = new Map<string, String>();
     if(this.addSocialForm.valid) {
       this.socialLinkService.addSocial({
         type: this.type.value,

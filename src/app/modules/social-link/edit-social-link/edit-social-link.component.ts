@@ -37,6 +37,8 @@ export class EditSocialLinkComponent implements OnInit {
   }
 
   editSocial() {
+    this.errorMessage = '';
+    this.validationErrors = new Map<string, String>();
     if(this.editSocialForm.valid) {
       this.socialLinkService.editSocial({
         id: this.idSocial,

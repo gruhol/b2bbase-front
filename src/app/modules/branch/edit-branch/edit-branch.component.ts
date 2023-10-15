@@ -45,6 +45,8 @@ export class EditBranchComponent implements OnInit {
   }
 
   editBranch() {
+    this.errorMessage = '';
+    this.validationErrors = new Map<string, String>();
     if(this.editBranchForm.valid) {
       this.branchService.editBranch({
         id: this.idBranch,

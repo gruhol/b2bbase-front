@@ -41,6 +41,8 @@ export class AddBranchComponent implements OnInit{
   }
 
   addBranch() {
+    this.errorMessage = '';
+    this.validationErrors = new Map<string, String>();
     if(this.addBranchForm.valid) {
       this.branchService.addBranch({
         name: this.name.value,
