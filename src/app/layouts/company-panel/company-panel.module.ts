@@ -14,7 +14,6 @@ import { AdditionalDataCompanyComponent } from 'src/app/modules/company/addition
 import { SocialLinkComponent } from 'src/app/modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from 'src/app/modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social-link/edit-social-link.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SharedModule,
     FormsModule,
     AngularEditorModule,
-    FontAwesomeModule
   ]
 })
 export class CompanyPanelModule { }
