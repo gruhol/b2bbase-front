@@ -14,6 +14,7 @@ import { AdditionalDataCompanyComponent } from 'src/app/modules/company/addition
 import { SocialLinkComponent } from 'src/app/modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from 'src/app/modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social-link/edit-social-link.component';
+import { TestTreeComponent } from 'src/app/modules/test/test-tree.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social
     AdditionalDataCompanyComponent,
     SocialLinkComponent,
     AddSocialLinkComponent,
-    EditSocialLinkComponent
+    EditSocialLinkComponent,
+    TestTreeComponent
   ],
   imports: [
     CommonModule,

@@ -20,6 +20,7 @@ import { AdditionalDataCompanyComponent } from './modules/company/additional-dat
 import { SocialLinkComponent } from './modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from './modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/edit-social-link.component';
+import { TestTreeComponent } from './modules/test/test-tree.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       {path: 'social-link', title: 'Linki do social link', component: SocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'edit-social-link/:id', title: 'Edytuj social link', component: EditSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'test', title: 'Add social link', component: TestTreeComponent},
     ]
   }
 ];
