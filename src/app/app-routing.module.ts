@@ -16,7 +16,7 @@ import { CompanyPanelComponent } from './layouts/company-panel/company-panel.com
 import { BranchComponent } from './modules/branch/branch/branch.component';
 import { EditBranchComponent } from './modules/branch/edit-branch/edit-branch.component';
 import { AddBranchComponent } from './modules/branch/add-branch/add-branch.component';
-import { AdditionalDataCompanyComponent } from './modules/company/additional-data-company/additional-data-company/additional-data-company.component';
+import { AdditionalDataCompanyComponent } from './modules/company/additional-data-company/additional-data-company.component';
 import { SocialLinkComponent } from './modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from './modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/edit-social-link.component';

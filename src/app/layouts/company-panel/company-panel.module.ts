@@ -10,7 +10,7 @@ import { BranchComponent } from 'src/app/modules/branch/branch/branch.component'
 import { AddBranchComponent } from 'src/app/modules/branch/add-branch/add-branch.component';
 import { ConfirmDialogComponent } from 'src/app/modules/common/confirm-dialog/confirm-dialog.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { AdditionalDataCompanyComponent } from 'src/app/modules/company/additional-data-company/additional-data-company/additional-data-company.component';
+import { AdditionalDataCompanyComponent } from 'src/app/modules/company/additional-data-company/additional-data-company.component';
 import { SocialLinkComponent } from 'src/app/modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from 'src/app/modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social-link/edit-social-link.component';

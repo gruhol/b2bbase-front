@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { CompanyServiceService } from '../../company-service.service';
+import { CompanyServiceService } from '../company-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CompanyToEditDto } from '../../add-company/dto/CompanyToEditDto';
-import { AdditionalData } from '../../add-company/dto/AdditionalData';
+import { CompanyToEditDto } from '../add-company/dto/CompanyToEditDto';
+import { AdditionalData } from '../add-company/dto/AdditionalData';
 
 @Component({
   selector: 'app-additional-data-company',

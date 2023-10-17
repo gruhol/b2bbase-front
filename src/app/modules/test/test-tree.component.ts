@@ -1,6 +1,9 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CategoryService } from '../company/category-service.service';
+import { map } from 'rxjs';
+import { CategoryResponse } from '../company/additional-data-company/dto/CategoryResponse';
 
 interface VehicleNode {
   name: string;
@@ -48,13 +51,20 @@ export class TestTreeComponent {
   public outputDivRef!: ElementRef<HTMLParagraphElement>;
   public searchString = '';
   public showOnlySelected = false;
+  public moje!: CategoryResponse[];
 
-  constructor() {
+  constructor(private http: CategoryService) {
     this.dataSource.data = TREE_DATA;
     this.dataSource.data.forEach(node => {
       this.setParent(node, null);
     });
+    this.http.getCategory()
+      .pipe(map((c) => this.mapVehicleNode(c)))
+      .subscribe(cat => {
+        console.log(cat);
+      })
   }
+
 
   public hasChild = (_: number, node: VehicleNode) =>
     !!(node.children && node.children.length > 0);
@@ -123,5 +133,13 @@ export class TestTreeComponent {
       .getDescendants(node)
       .filter((node) => !node.children || node.children.length === 0)
       .every((node) => this.hideLeafNode(node));
+  }
+
+  mapVehicleNode(cat: CategoryResponse): VehicleNode {
+    let value: VehicleNode = {
+      id: cat.id,
+      name: cat.name
+    }
+    return value;
   }
 }
