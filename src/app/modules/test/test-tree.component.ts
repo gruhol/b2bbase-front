@@ -15,39 +15,20 @@ const TREE_DATA: VehicleNode[] = [
   {
     name: 'Infiniti',
     children: [
-      {
-        name: 'G50',
-        children: [
-          { name: 'Pure AWD', id: 1 },
-          { name: 'Luxe', id: 2 },
-        ],
-      },
-      {
-        name: 'QX50',
-        children: [
-          { name: 'Pure AWD', id: 3 },
-          { name: 'Luxe', id: 4 },
-        ],
-      },
+      { name: 'Pure AWD', id: 1 },
+      { name: 'Luxe', id: 2 },
+      { name: 'Pure AWD', id: 3 },
+      { name: 'Luxe', id: 4 },
     ],
+    id: 222,
   },
   {
     name: 'BMW',
     children: [
-      {
-        name: '2 Series',
-        children: [
-          { name: 'Coupé', id: 5 },
-          { name: 'Gran Coupé', id: 6 },
-        ],
-      },
-      {
-        name: '3 Series',
-        children: [
-          { name: 'Sedan', id: 7 },
-          { name: 'PHEV', id: 8 },
-        ],
-      },
+      { name: 'Coupé', id: 5 },
+      { name: 'Gran Coupé', id: 6 },
+      { name: 'Sedan', id: 7 },
+      { name: 'PHEV', id: 8 },
     ],
   },
 ];
