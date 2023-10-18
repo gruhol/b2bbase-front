@@ -10,7 +10,7 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getCategory(): Observable<CategoryResponse> {
-    return this.http.get<CategoryResponse>('/api/category');
+  getCategory(): Observable<CategoryResponse[]> {
+    return this.http.get<CategoryResponse[]>('/api/category');
   }
 }

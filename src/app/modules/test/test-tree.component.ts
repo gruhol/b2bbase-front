@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../company/category-service.service';
 import { map } from 'rxjs';
 import { CategoryResponse } from '../company/additional-data-company/dto/CategoryResponse';
@@ -41,7 +41,7 @@ const TREE_DATA: VehicleNode[] = [
   templateUrl: 'test-tree.component.html',
   styleUrls: ['test-tree.component.scss'],
 })
-export class TestTreeComponent {
+export class TestTreeComponent implements OnInit {
 
   public treeControl = new NestedTreeControl<VehicleNode>(
     (node) => node.children || []
@@ -51,20 +51,21 @@ export class TestTreeComponent {
   public outputDivRef!: ElementRef<HTMLParagraphElement>;
   public searchString = '';
   public showOnlySelected = false;
-  public moje!: CategoryResponse[];
+  public moje!: VehicleNode[];
 
   constructor(private http: CategoryService) {
     this.dataSource.data = TREE_DATA;
     this.dataSource.data.forEach(node => {
       this.setParent(node, null);
     });
-    this.http.getCategory()
-      .pipe(map((c) => this.mapVehicleNode(c)))
-      .subscribe(cat => {
-        console.log(cat);
-      })
   }
-
+  ngOnInit(): void {
+    this.http.getCategory().pipe(
+        map((categoryResponses: CategoryResponse[]) => {
+          return this.mapCategoryResponsesToVehicleNodes(categoryResponses);
+        })
+      ).subscribe(d => console.log(d))
+  }
 
   public hasChild = (_: number, node: VehicleNode) =>
     !!(node.children && node.children.length > 0);
@@ -135,11 +136,15 @@ export class TestTreeComponent {
       .every((node) => this.hideLeafNode(node));
   }
 
-  mapVehicleNode(cat: CategoryResponse): VehicleNode {
-    let value: VehicleNode = {
-      id: cat.id,
-      name: cat.name
-    }
-    return value;
+  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): VehicleNode[] {
+    return categoryResponses.map(categoryResponse => {
+      const vehicleNode: VehicleNode = {
+        name: categoryResponse.name,
+        id: categoryResponse.id,
+        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || [])
+      };
+      return vehicleNode;
+    });
   }
 }
+
