@@ -51,7 +51,7 @@ export class TestTreeComponent implements OnInit {
   public outputDivRef!: ElementRef<HTMLParagraphElement>;
   public searchString = '';
   public showOnlySelected = false;
-  public moje!: VehicleNode[];
+  public moje: VehicleNode[] = [];
 
   constructor(private http: CategoryService) {
     this.dataSource.data = TREE_DATA;
@@ -62,9 +62,14 @@ export class TestTreeComponent implements OnInit {
   ngOnInit(): void {
     this.http.getCategory().pipe(
         map((categoryResponses: CategoryResponse[]) => {
+          console.log("Pierwsze:" + categoryResponses);
           return this.mapCategoryResponsesToVehicleNodes(categoryResponses);
         })
-      ).subscribe(d => console.log(d))
+      ).subscribe((dd: VehicleNode[]) =>
+      {
+        console.log(dd);
+      }
+      )
   }
 
   public hasChild = (_: number, node: VehicleNode) =>
