@@ -5,7 +5,20 @@ import { CompanyServiceService } from '../company-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CompanyToEditDto } from '../add-company/dto/CompanyToEditDto';
 import { AdditionalData } from '../add-company/dto/AdditionalData';
+import { CategoryService } from '../category-service.service';
+import { map } from 'rxjs';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { CategoryResponse } from './dto/CategoryResponse';
 
+interface CategoryNode {
+  name: string;
+  id?: number;
+  children?: CategoryNode[];
+  selected?: boolean;
+  indeterminate?: boolean;
+  parent?: CategoryNode;
+}
 @Component({
   selector: 'app-additional-data-company',
   templateUrl: './additional-data-company.component.html',
@@ -66,6 +79,14 @@ export class AdditionalDataCompanyComponent implements OnInit {
   validationErrors = new Map<string, String>();
   errorMessage!: string;
 
+  public treeControl = new NestedTreeControl<CategoryNode>(
+    (node) => node.children || []
+  );
+  public dataSource = new MatTreeNestedDataSource<CategoryNode>();
+  public searchString = '';
+  public showOnlySelected = false;
+  result!: number[];
+
   ngOnInit(): void {
     this.createRegistrationFormControls();
     this.getCompany();
@@ -76,7 +97,18 @@ export class AdditionalDataCompanyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private companyService: CompanyServiceService,
     private snackBar: MatSnackBar,
-  ) {}
+    private http: CategoryService
+  ) {
+    this.http.getCategory()
+    .pipe(map((categoryResponses: CategoryResponse[]) => {
+        return this.mapCategoryResponsesToVehicleNodes(categoryResponses);
+      }))
+    .subscribe((dd: CategoryNode[]) =>this.dataSource.data = dd)
+
+    this.dataSource.data.forEach(node => {
+      this.setParent(node, null);
+    });
+  }
 
   createRegistrationFormControls() {
     this.description = new FormControl('');
@@ -91,8 +123,26 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
   editAdditionalData() {
     if(this.editDescriptionForm.valid) {
+
+      this.result = this.dataSource.data.reduce(
+        (acc: number[], node: CategoryNode) =>
+          acc.concat(
+            this.treeControl
+              .getDescendants(node)
+              .filter(
+                (node) =>
+                  (!node.children || node.children.length === 0) &&
+                  node.selected &&
+                  !this.hideLeafNode(node)
+              )
+              .map((descendant) => descendant.id || 0)
+          ),
+        [] as number[]
+      );
+
       this.companyService.editAdditionalData({
         description: this.description.value,
+        category: this.result
       } as AdditionalData)
       .subscribe({
         next: response => {
@@ -127,6 +177,61 @@ export class AdditionalDataCompanyComponent implements OnInit {
   private mapFormValues(company: CompanyToEditDto): void {
     this.editDescriptionForm.setValue({
       description: company.description,
+    });
+  }
+
+  public hasChild = (_: number, node: CategoryNode) =>
+    !!(node.children && node.children.length > 0);
+
+  private setParent(node: CategoryNode, parent: CategoryNode | null) {
+    node.parent = parent!;
+    if (node.children) {
+      node.children.forEach((childNode) => {
+        this.setParent(childNode, node);
+      });
+    }
+  }
+
+  private checkAllParents(node: CategoryNode) {
+    if (node.parent) {
+      const descendants = this.treeControl.getDescendants(node.parent);
+      node.parent.selected = descendants.every((child) => child.selected);
+      node.parent.indeterminate = descendants.some((child) => child.selected);
+      this.checkAllParents(node.parent);
+    }
+  }
+
+  public itemToggle(checked: boolean, node: CategoryNode) {
+    node.selected = checked;
+    if (node.children) {
+      node.children.forEach((child) => {
+        this.itemToggle(checked, child);
+      });
+    }
+    this.checkAllParents(node);
+  }
+
+  public hideLeafNode(node: CategoryNode): boolean {
+    return this.showOnlySelected && !node.selected
+      ? true
+      : !new RegExp(this.searchString, 'i').test(node.name);
+  }
+
+  public hideParentNode(node: CategoryNode): boolean {
+    return this.treeControl
+      .getDescendants(node)
+      .filter((node) => !node.children || node.children.length === 0)
+      .every((node) => this.hideLeafNode(node));
+  }
+
+  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): CategoryNode[] {
+    return categoryResponses.map(categoryResponse => {
+      const vehicleNode: CategoryNode = {
+        name: categoryResponse.name,
+        id: categoryResponse.id,
+        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || [])
+      };
+      return vehicleNode;
     });
   }
 
