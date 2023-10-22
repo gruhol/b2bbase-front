@@ -1,5 +1,6 @@
 export interface CategoryResponse {
     id: number,
     name: string,
-    children: CategoryResponse[];
+    children: CategoryResponse[],
+    selected: boolean;
 }

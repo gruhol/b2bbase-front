@@ -229,7 +229,8 @@ export class AdditionalDataCompanyComponent implements OnInit {
       const vehicleNode: CategoryNode = {
         name: categoryResponse.name,
         id: categoryResponse.id,
-        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || [])
+        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || []),
+        selected: categoryResponse.selected
       };
       return vehicleNode;
     });

@@ -1,9 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { Component } from '@angular/core';
-import { CategoryService } from '../company/category-service.service';
-import { map } from 'rxjs';
-import { CategoryResponse } from '../company/additional-data-company/dto/CategoryResponse';
 
 interface VehicleNode {
   name: string;
@@ -11,8 +8,49 @@ interface VehicleNode {
   children?: VehicleNode[];
   selected?: boolean;
   indeterminate?: boolean;
-  parent?: VehicleNode;
+  parent?: VehicleNode | null | undefined;
 }
+
+const TREE_DATA: VehicleNode[] = [
+  {
+    name: 'Infiniti',
+    children: [
+      {
+        name: 'G50',
+        children: [
+          { name: 'Pure AWD', id: 1 },
+          { name: 'Luxe', id: 2 },
+        ],
+      },
+      {
+        name: 'QX50',
+        children: [
+          { name: 'Pure AWD', id: 3 },
+          { name: 'Luxe', id: 4 },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'BMW',
+    children: [
+      {
+        name: '2 Series',
+        children: [
+          { name: 'Coupé', id: 5 },
+          { name: 'Gran Coupé', id: 6 },
+        ],
+      },
+      {
+        name: '3 Series',
+        children: [
+          { name: 'Sedan', id: 7 },
+          { name: 'PHEV', id: 8 },
+        ],
+      },
+    ],
+  },
+];
 
 @Component({
   selector: 'tree-nested-overview-example',
@@ -20,32 +58,32 @@ interface VehicleNode {
   styleUrls: ['test-tree.component.scss'],
 })
 export class TestTreeComponent {
-
   public treeControl = new NestedTreeControl<VehicleNode>(
-    (node) => node.children || []
+    (node) => node.children
   );
   public dataSource = new MatTreeNestedDataSource<VehicleNode>();
   public searchString = '';
   public showOnlySelected = false;
-  result!: number[];
 
-  constructor(private http: CategoryService) {
-    this.http.getCategory()
-    .pipe(map((categoryResponses: CategoryResponse[]) => {
-        return this.mapCategoryResponsesToVehicleNodes(categoryResponses);
-      }))
-    .subscribe((dd: VehicleNode[]) =>this.dataSource.data = dd)
+  constructor() {
+    this.dataSource.data = TREE_DATA;
+    console.log(this.dataSource.data[0]);
 
-    this.dataSource.data.forEach(node => {
-      this.setParent(node, null);
-    });
+    let value = this.dataSource.data.find((e) => !!e);
+
+    console.log(value);
+    console.log(this.dataSource.data.shift());
+    console.log(this.dataSource.data);
+    for(let i = 0; i < this.dataSource.data.length; i++) {
+      this.setParent(this.dataSource.data[i], null);
+    }
   }
 
   public hasChild = (_: number, node: VehicleNode) =>
-    !!(node.children && node.children.length > 0);
+    !!node.children && node.children.length > 0;
 
   private setParent(node: VehicleNode, parent: VehicleNode | null) {
-    node.parent = parent!;
+    node.parent = parent;
     if (node.children) {
       node.children.forEach((childNode) => {
         this.setParent(childNode, node);
@@ -62,7 +100,7 @@ export class TestTreeComponent {
     }
   }
 
-  public itemToggle(checked: boolean, node: VehicleNode) {
+  itemToggle(checked: boolean, node: VehicleNode) {
     node.selected = checked;
     if (node.children) {
       node.children.forEach((child) => {
@@ -73,46 +111,36 @@ export class TestTreeComponent {
   }
 
   public submit() {
-    this.result = this.dataSource.data.reduce(
-      (acc: number[], node: VehicleNode) =>
+    let result = this.dataSource.data.reduce(
+      (acc: string[], node: VehicleNode) =>
         acc.concat(
           this.treeControl
             .getDescendants(node)
             .filter(
               (node) =>
-                (!node.children || node.children.length === 0) &&
+                (node.children == null || node.children.length === 0) &&
                 node.selected &&
                 !this.hideLeafNode(node)
             )
-            .map((descendant) => descendant.id || 0)
+            .map((descendant) => descendant.name)
         ),
-      [] as number[]
+      [] as string[]
     );
-    
+
+    console.log(result);
   }
 
   public hideLeafNode(node: VehicleNode): boolean {
     return this.showOnlySelected && !node.selected
       ? true
-      : !new RegExp(this.searchString, 'i').test(node.name);
+      : new RegExp(this.searchString, 'i').test(node.name) === false;
   }
 
   public hideParentNode(node: VehicleNode): boolean {
     return this.treeControl
       .getDescendants(node)
-      .filter((node) => !node.children || node.children.length === 0)
+      .filter((node) => node.children == null || node.children.length === 0)
       .every((node) => this.hideLeafNode(node));
-  }
-
-  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): VehicleNode[] {
-    return categoryResponses.map(categoryResponse => {
-      const vehicleNode: VehicleNode = {
-        name: categoryResponse.name,
-        id: categoryResponse.id,
-        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || [])
-      };
-      return vehicleNode;
-    });
   }
 }
 
