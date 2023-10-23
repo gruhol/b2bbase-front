@@ -6,19 +6,61 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CompanyToEditDto } from '../add-company/dto/CompanyToEditDto';
 import { AdditionalData } from '../add-company/dto/AdditionalData';
 import { CategoryService } from '../category-service.service';
-import { map } from 'rxjs';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { CategoryResponse } from './dto/CategoryResponse';
+import { map } from 'rxjs';
 
-interface CategoryNode {
+interface VehicleNode {
   name: string;
   id?: number;
-  children?: CategoryNode[];
+  children?: VehicleNode[];
   selected?: boolean;
   indeterminate?: boolean;
-  parent?: CategoryNode;
+  parent?: VehicleNode | null | undefined;
 }
+
+const TREE_DATA: VehicleNode[] = [
+  {
+    name: 'Infiniti',
+    children: [
+      {
+        name: 'G50',
+        children: [
+          { name: 'Pure AWD', id: 1 },
+          { name: 'Luxe', id: 2 },
+        ],
+      },
+      {
+        name: 'QX50',
+        children: [
+          { name: 'Pure AWD', id: 3 },
+          { name: 'Luxe', id: 4 },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'BMW',
+    children: [
+      {
+        name: '2 Series',
+        children: [
+          { name: 'Coupé', id: 5 },
+          { name: 'Gran Coupé', id: 6 },
+        ],
+      },
+      {
+        name: '3 Series',
+        children: [
+          { name: 'Sedan', id: 7 },
+          { name: 'PHEV', id: 8 },
+        ],
+      },
+    ],
+  },
+];
+
 @Component({
   selector: 'app-additional-data-company',
   templateUrl: './additional-data-company.component.html',
@@ -79,13 +121,11 @@ export class AdditionalDataCompanyComponent implements OnInit {
   validationErrors = new Map<string, String>();
   errorMessage!: string;
 
-  public treeControl = new NestedTreeControl<CategoryNode>(
-    (node) => node.children || []
-  );
-  public dataSource = new MatTreeNestedDataSource<CategoryNode>();
+  public treeControl = new NestedTreeControl<VehicleNode>((node) => node.children);
+  public dataSource = new MatTreeNestedDataSource<VehicleNode>();
+  public dataSource2 = new MatTreeNestedDataSource<VehicleNode>();
   public searchString = '';
   public showOnlySelected = false;
-  result!: number[];
 
   ngOnInit(): void {
     this.createRegistrationFormControls();
@@ -97,23 +137,23 @@ export class AdditionalDataCompanyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private companyService: CompanyServiceService,
     private snackBar: MatSnackBar,
-    private http: CategoryService
+    private categoryService: CategoryService
   ) {
-    this.http.getCategory()
-    .pipe(map((categoryResponses: CategoryResponse[]) => {
-        return this.mapCategoryResponsesToVehicleNodes(categoryResponses);
-      }))
-    .subscribe((dd: CategoryNode[]) =>this.dataSource.data = dd)
 
-    this.dataSource.data.forEach(node => {
-      this.setParent(node, null);
-    });
+    this.categoryService.getCategory()
+      .pipe(map(node => this.mapCategoryResponsesToVehicleNodes(node)))
+      .subscribe(data => this.dataSource.data = data);
+
+    //this.dataSource.data = TREE_DATA;
+    
+    for(let i = 0; i < this.dataSource.data.length; i++) {
+      this.setParent(this.dataSource.data[i], null);
+    }
   }
 
   createRegistrationFormControls() {
     this.description = new FormControl('');
   }
-
 
   getCompany() {
     this.companyService.getCompany()
@@ -122,27 +162,31 @@ export class AdditionalDataCompanyComponent implements OnInit {
   }
 
   editAdditionalData() {
+
+    console.log(this.dataSource.data);
+    console.log(this.dataSource2.data);
+
+    let result = this.dataSource.data.reduce(
+      (acc: string[], node: VehicleNode) =>
+        acc.concat(
+          this.treeControl
+            .getDescendants(node)
+            .filter(
+              (node) =>
+                (node.children == null || node.children.length === 0) &&
+                node.selected &&
+                !this.hideLeafNode(node)
+            )
+            .map((descendant) => descendant.name)
+        ),
+      [] as string[]
+    );
+
+    //console.log(result);
+
     if(this.editDescriptionForm.valid) {
-
-      this.result = this.dataSource.data.reduce(
-        (acc: number[], node: CategoryNode) =>
-          acc.concat(
-            this.treeControl
-              .getDescendants(node)
-              .filter(
-                (node) =>
-                  (!node.children || node.children.length === 0) &&
-                  node.selected &&
-                  !this.hideLeafNode(node)
-              )
-              .map((descendant) => descendant.id || 0)
-          ),
-        [] as number[]
-      );
-
       this.companyService.editAdditionalData({
         description: this.description.value,
-        category: this.result
       } as AdditionalData)
       .subscribe({
         next: response => {
@@ -180,11 +224,27 @@ export class AdditionalDataCompanyComponent implements OnInit {
     });
   }
 
-  public hasChild = (_: number, node: CategoryNode) =>
-    !!(node.children && node.children.length > 0);
+  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): VehicleNode[] {
+    return categoryResponses.map(categoryResponse => {
+      const indeterminate = (categoryResponse.children) ? categoryResponse.children.some(child => child.selected) : false;
 
-  private setParent(node: CategoryNode, parent: CategoryNode | null) {
-    node.parent = parent!;
+      const vehicleNode: VehicleNode = {
+        name: categoryResponse.name,
+        id: categoryResponse.id,
+        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || []),
+        selected: categoryResponse.selected,
+        parent: categoryResponse.parent,
+        indeterminate: indeterminate
+      };
+      return vehicleNode;
+    });
+  }
+
+  public hasChild = (_: number, node: VehicleNode) =>
+    !!node.children && node.children.length > 0;
+
+  private setParent(node: VehicleNode, parent: VehicleNode | null) {
+    node.parent = parent;
     if (node.children) {
       node.children.forEach((childNode) => {
         this.setParent(childNode, node);
@@ -192,7 +252,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
     }
   }
 
-  private checkAllParents(node: CategoryNode) {
+  private checkAllParents(node: VehicleNode) {
     if (node.parent) {
       const descendants = this.treeControl.getDescendants(node.parent);
       node.parent.selected = descendants.every((child) => child.selected);
@@ -201,7 +261,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
     }
   }
 
-  public itemToggle(checked: boolean, node: CategoryNode) {
+  itemToggle(checked: boolean, node: VehicleNode) {
     node.selected = checked;
     if (node.children) {
       node.children.forEach((child) => {
@@ -211,29 +271,16 @@ export class AdditionalDataCompanyComponent implements OnInit {
     this.checkAllParents(node);
   }
 
-  public hideLeafNode(node: CategoryNode): boolean {
+  public hideLeafNode(node: VehicleNode): boolean {
     return this.showOnlySelected && !node.selected
       ? true
-      : !new RegExp(this.searchString, 'i').test(node.name);
+      : new RegExp(this.searchString, 'i').test(node.name) === false;
   }
 
-  public hideParentNode(node: CategoryNode): boolean {
+  public hideParentNode(node: VehicleNode): boolean {
     return this.treeControl
       .getDescendants(node)
-      .filter((node) => !node.children || node.children.length === 0)
+      .filter((node) => node.children == null || node.children.length === 0)
       .every((node) => this.hideLeafNode(node));
   }
-
-  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): CategoryNode[] {
-    return categoryResponses.map(categoryResponse => {
-      const vehicleNode: CategoryNode = {
-        name: categoryResponse.name,
-        id: categoryResponse.id,
-        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || []),
-        selected: categoryResponse.selected
-      };
-      return vehicleNode;
-    });
-  }
-
 }

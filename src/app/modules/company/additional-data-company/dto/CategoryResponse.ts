@@ -2,5 +2,6 @@ export interface CategoryResponse {
     id: number,
     name: string,
     children: CategoryResponse[],
-    selected: boolean;
+    selected: boolean,
+    parent: CategoryResponse;
 }

@@ -45,8 +45,7 @@ const routes: Routes = [
       {path: 'additional-data', title: 'Dodaj Oddziały firmy', component: AdditionalDataCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'social-link', title: 'Linki do social link', component: SocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'edit-social-link/:id', title: 'Edytuj social link', component: EditSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
-      {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
-      {path: 'test', title: 'Add social link', component: TestTreeComponent},
+      {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]}
     ]
   }
 ];
