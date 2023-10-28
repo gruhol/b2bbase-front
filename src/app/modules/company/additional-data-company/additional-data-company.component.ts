@@ -23,38 +23,49 @@ interface VehicleNode {
 const TREE_DATA: VehicleNode[] = [
   {
     name: 'Infiniti',
+    indeterminate: false,
+    selected: false,
     children: [
       {
         name: 'G50',
+        selected: false,
+        indeterminate: false,
         children: [
-          { name: 'Pure AWD', id: 1 },
-          { name: 'Luxe', id: 2 },
+          { name: 'Pure AWD', id: 1, indeterminate: false, selected: false },
+          { name: 'Luxe', id: 2, indeterminate: false, selected: false },
         ],
       },
       {
         name: 'QX50',
+        selected: false,
+        indeterminate: false,
         children: [
-          { name: 'Pure AWD', id: 3 },
-          { name: 'Luxe', id: 4 },
+          { name: 'Pure AWD', id: 3, indeterminate: false, selected: false },
+          { name: 'Luxe', id: 4, indeterminate: false, selected: false },
         ],
       },
     ],
   },
   {
     name: 'BMW',
+    selected: false,
+    indeterminate: false,
     children: [
       {
         name: '2 Series',
+        selected: false,
         children: [
-          { name: 'Coupé', id: 5 },
-          { name: 'Gran Coupé', id: 6 },
+          { name: 'Coupé', id: 5, indeterminate: false, selected: false },
+          { name: 'Gran Coupé', id: 6, indeterminate: false, selected: false },
         ],
       },
       {
         name: '3 Series',
+        selected: false,
+        indeterminate: false,
         children: [
-          { name: 'Sedan', id: 7 },
-          { name: 'PHEV', id: 8 },
+          { name: 'Sedan', id: 7, indeterminate: false, selected: false },
+          { name: 'PHEV', id: 8, indeterminate: false, selected: false },
         ],
       },
     ],
@@ -142,13 +153,12 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
     this.categoryService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToVehicleNodes(node)))
-      .subscribe(data => this.dataSource.data = data);
-
-    //this.dataSource.data = TREE_DATA;
-    
-    for(let i = 0; i < this.dataSource.data.length; i++) {
-      this.setParent(this.dataSource.data[i], null);
-    }
+      .subscribe(data => {
+        this.dataSource.data = data;
+        for(let i = 0; i < this.dataSource.data.length; i++) {
+          this.setParent(this.dataSource.data[i], null);
+        }
+      });
   }
 
   createRegistrationFormControls() {
@@ -226,15 +236,12 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
   private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): VehicleNode[] {
     return categoryResponses.map(categoryResponse => {
-      const indeterminate = (categoryResponse.children) ? categoryResponse.children.some(child => child.selected) : false;
+      //var indeterminateaaa = (categoryResponse.children) ? categoryResponse.children.some(child => child.selected) : false;
 
-      const vehicleNode: VehicleNode = {
+      var vehicleNode: VehicleNode = {
         name: categoryResponse.name,
         id: categoryResponse.id,
-        children: this.mapCategoryResponsesToVehicleNodes(categoryResponse.children || []),
-        selected: categoryResponse.selected,
-        parent: categoryResponse.parent,
-        indeterminate: indeterminate
+        children: (categoryResponse.children) ? this.mapCategoryResponsesToVehicleNodes(categoryResponse.children): [],
       };
       return vehicleNode;
     });
