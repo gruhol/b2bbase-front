@@ -10,7 +10,7 @@
   </label>
   <mat-slide-toggle class="toggle-show-only-selected" [(ngModel)]="showOnlySelected">Show only selected</mat-slide-toggle>
 </p>
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+<mat-tree [dataSource]="categoryDataSource" [treeControl]="treeControl" class="example-tree">
   <!-- This is the tree node template for leaf nodes -->
   <mat-tree-node 
     *matTreeNodeDef="let node" 

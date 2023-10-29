@@ -11,66 +11,14 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { CategoryResponse } from './dto/CategoryResponse';
 import { map } from 'rxjs';
 
-interface VehicleNode {
+interface CategoryNode {
   name: string;
   id?: number;
-  children?: VehicleNode[];
+  children?: CategoryNode[];
   selected?: boolean;
   indeterminate?: boolean;
-  parent?: VehicleNode | null | undefined;
+  parent?: CategoryNode | null | undefined;
 }
-
-const TREE_DATA: VehicleNode[] = [
-  {
-    name: 'Infiniti',
-    indeterminate: false,
-    selected: false,
-    children: [
-      {
-        name: 'G50',
-        selected: false,
-        indeterminate: false,
-        children: [
-          { name: 'Pure AWD', id: 1, indeterminate: false, selected: false },
-          { name: 'Luxe', id: 2, indeterminate: false, selected: false },
-        ],
-      },
-      {
-        name: 'QX50',
-        selected: false,
-        indeterminate: false,
-        children: [
-          { name: 'Pure AWD', id: 3, indeterminate: false, selected: false },
-          { name: 'Luxe', id: 4, indeterminate: false, selected: false },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'BMW',
-    selected: false,
-    indeterminate: false,
-    children: [
-      {
-        name: '2 Series',
-        selected: false,
-        children: [
-          { name: 'Coupé', id: 5, indeterminate: false, selected: false },
-          { name: 'Gran Coupé', id: 6, indeterminate: false, selected: false },
-        ],
-      },
-      {
-        name: '3 Series',
-        selected: false,
-        indeterminate: false,
-        children: [
-          { name: 'Sedan', id: 7, indeterminate: false, selected: false },
-          { name: 'PHEV', id: 8, indeterminate: false, selected: false },
-        ],
-      },
-    ],
-  },
-];
 
 @Component({
   selector: 'app-additional-data-company',
@@ -132,9 +80,8 @@ export class AdditionalDataCompanyComponent implements OnInit {
   validationErrors = new Map<string, String>();
   errorMessage!: string;
 
-  public treeControl = new NestedTreeControl<VehicleNode>((node) => node.children);
-  public dataSource = new MatTreeNestedDataSource<VehicleNode>();
-  public dataSource2 = new MatTreeNestedDataSource<VehicleNode>();
+  public treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
+  public categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
   public searchString = '';
   public showOnlySelected = false;
 
@@ -154,9 +101,9 @@ export class AdditionalDataCompanyComponent implements OnInit {
     this.categoryService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToVehicleNodes(node)))
       .subscribe(data => {
-        this.dataSource.data = data;
-        for(let i = 0; i < this.dataSource.data.length; i++) {
-          this.setParent(this.dataSource.data[i], null);
+        this.categoryDataSource.data = data;
+        for(let i = 0; i < this.categoryDataSource.data.length; i++) {
+          this.setParent(this.categoryDataSource.data[i], null);
         }
       });
   }
@@ -173,11 +120,8 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
   editAdditionalData() {
 
-    console.log(this.dataSource.data);
-    console.log(this.dataSource2.data);
-
-    let result = this.dataSource.data.reduce(
-      (acc: string[], node: VehicleNode) =>
+    let selectCategory = this.categoryDataSource.data.reduce(
+      (acc: number[], node: CategoryNode) =>
         acc.concat(
           this.treeControl
             .getDescendants(node)
@@ -187,16 +131,15 @@ export class AdditionalDataCompanyComponent implements OnInit {
                 node.selected &&
                 !this.hideLeafNode(node)
             )
-            .map((descendant) => descendant.name)
+            .map((descendant) => descendant.id || 0)
         ),
-      [] as string[]
+      [] as number[]
     );
-
-    //console.log(result);
 
     if(this.editDescriptionForm.valid) {
       this.companyService.editAdditionalData({
         description: this.description.value,
+        category: selectCategory
       } as AdditionalData)
       .subscribe({
         next: response => {
@@ -234,23 +177,24 @@ export class AdditionalDataCompanyComponent implements OnInit {
     });
   }
 
-  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): VehicleNode[] {
+  private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): CategoryNode[] {
     return categoryResponses.map(categoryResponse => {
-      //var indeterminateaaa = (categoryResponse.children) ? categoryResponse.children.some(child => child.selected) : false;
 
-      var vehicleNode: VehicleNode = {
+      var category: CategoryNode = {
         name: categoryResponse.name,
         id: categoryResponse.id,
         children: (categoryResponse.children) ? this.mapCategoryResponsesToVehicleNodes(categoryResponse.children): [],
+        selected: categoryResponse.selected,
+        indeterminate: (categoryResponse.children) ? categoryResponse.children.some(child => child.selected) : false
       };
-      return vehicleNode;
+      return category;
     });
   }
 
-  public hasChild = (_: number, node: VehicleNode) =>
+  public hasChild = (_: number, node: CategoryNode) =>
     !!node.children && node.children.length > 0;
 
-  private setParent(node: VehicleNode, parent: VehicleNode | null) {
+  private setParent(node: CategoryNode, parent: CategoryNode | null) {
     node.parent = parent;
     if (node.children) {
       node.children.forEach((childNode) => {
@@ -259,7 +203,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
     }
   }
 
-  private checkAllParents(node: VehicleNode) {
+  private checkAllParents(node: CategoryNode) {
     if (node.parent) {
       const descendants = this.treeControl.getDescendants(node.parent);
       node.parent.selected = descendants.every((child) => child.selected);
@@ -268,7 +212,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
     }
   }
 
-  itemToggle(checked: boolean, node: VehicleNode) {
+  itemToggle(checked: boolean, node: CategoryNode) {
     node.selected = checked;
     if (node.children) {
       node.children.forEach((child) => {
@@ -278,13 +222,13 @@ export class AdditionalDataCompanyComponent implements OnInit {
     this.checkAllParents(node);
   }
 
-  public hideLeafNode(node: VehicleNode): boolean {
+  public hideLeafNode(node: CategoryNode): boolean {
     return this.showOnlySelected && !node.selected
       ? true
       : new RegExp(this.searchString, 'i').test(node.name) === false;
   }
 
-  public hideParentNode(node: VehicleNode): boolean {
+  public hideParentNode(node: CategoryNode): boolean {
     return this.treeControl
       .getDescendants(node)
       .filter((node) => node.children == null || node.children.length === 0)

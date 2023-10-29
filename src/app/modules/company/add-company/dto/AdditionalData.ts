@@ -1,4 +1,4 @@
 export interface AdditionalData {
-    description: string;
+    description: string,
     category: number[]
 }
