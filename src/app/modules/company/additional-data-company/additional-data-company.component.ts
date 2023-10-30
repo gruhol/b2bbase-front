@@ -139,7 +139,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
     if(this.editDescriptionForm.valid) {
       this.companyService.editAdditionalData({
         description: this.description.value,
-        category: selectCategory
+        categories: selectCategory
       } as AdditionalData)
       .subscribe({
         next: response => {
