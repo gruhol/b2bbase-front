@@ -45,10 +45,22 @@
 
 <hr>
 
+<h3>Edytuj logo firmy</h3>
+
+<img *ngIf="logo" src="{{'/api/company/logoImages/' + logo}}">
+
+<form [formGroup]="imageForm" (submit)="uploadFile()">
+  <input type="file" [accept]="requiredFileTypes" (change)="onFileChange($event)">
+  <button>Dodaj logo</button>
+</form>
+
+<hr>
+
 <h3>Edytuj opis</h3>
 
 <form [formGroup]="editDescriptionForm" (submit)="editAdditionalData()">
 <angular-editor type="text" formControlName="description" [config]="editorConfig"></angular-editor>
 
 <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zapisz zmiany</button>
+
 <form>

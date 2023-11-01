@@ -12,5 +12,6 @@ export interface CompanyToEditDto {
     ediCooperation: boolean,
     apiCooperation: boolean,
     productFileCooperation: boolean,
-    description: string;
+    description: string,
+    logo: string;
 }

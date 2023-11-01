@@ -1,4 +1,5 @@
 export interface AdditionalData {
     description: string,
-    categories: number[]
+    categories: number[],
+    logo: string 
 }

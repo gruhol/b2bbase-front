@@ -4,13 +4,18 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CompanyToEditDto } from './add-company/dto/CompanyToEditDto';
 import { AdditionalData } from './add-company/dto/AdditionalData';
+import { UploadResponse } from './additional-data-company/dto/UploadResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyServiceService {
-
+  
   constructor(private http: HttpClient) { }
+
+  uploadImage(formData: FormData): Observable<UploadResponse> {
+    return this.http.post<UploadResponse>('api/company/uploadLogo', formData);
+  }
 
   addCompany(company: CompanyDto): Observable<CompanyDto>{
     return this.http.post<CompanyDto>("/api/company/add", company);

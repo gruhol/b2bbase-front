@@ -76,9 +76,12 @@ export class AdditionalDataCompanyComponent implements OnInit {
   }
   
   description!: FormControl;
+  imageForm!: FormGroup;
   editDescriptionForm!: FormGroup;
   validationErrors = new Map<string, String>();
   errorMessage!: string;
+  requiredFileTypes = "image/jpeg, image/png";
+  logo: string | null = null;
 
   public treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
   public categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
@@ -139,7 +142,8 @@ export class AdditionalDataCompanyComponent implements OnInit {
     if(this.editDescriptionForm.valid) {
       this.companyService.editAdditionalData({
         description: this.description.value,
-        categories: selectCategory
+        categories: selectCategory,
+        logo: this.logo
       } as AdditionalData)
       .subscribe({
         next: response => {
@@ -169,12 +173,33 @@ export class AdditionalDataCompanyComponent implements OnInit {
     this.editDescriptionForm = this.formBuilder.group({
       description: this.description,
     })
+
+    this.imageForm = this.formBuilder.group({
+      file: ['']
+    })
+  }
+
+  uploadFile() {
+    let formData = new FormData();
+    formData.append('file', this.imageForm.get('file')?.value);
+    this.companyService.uploadImage(formData)
+    .subscribe(result => this.logo = result.filename)
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.imageForm.patchValue({
+        file: event.target.files[0]
+      })
+    }
   }
 
   private mapFormValues(company: CompanyToEditDto): void {
     this.editDescriptionForm.setValue({
       description: company.description,
     });
+
+    this.logo = company.logo;
   }
 
   private mapCategoryResponsesToVehicleNodes(categoryResponses: CategoryResponse[]): CategoryNode[] {
