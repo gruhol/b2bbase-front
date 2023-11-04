@@ -10,6 +10,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { CategoryResponse } from './dto/CategoryResponse';
 import { map } from 'rxjs';
+import { ImageService } from '../image-service.service';
 
 interface CategoryNode {
   name: string;
@@ -98,7 +99,8 @@ export class AdditionalDataCompanyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private companyService: CompanyServiceService,
     private snackBar: MatSnackBar,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private imageService: ImageService
   ) {
 
     this.categoryService.getCategory()
@@ -117,8 +119,10 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
   getCompany() {
     this.companyService.getCompany()
-      .subscribe(product => this.mapFormValues(product)
-      );
+      .subscribe(product => {
+        this.mapFormValues(product);
+        this.logo = product.logo;
+      });
   }
 
   editAdditionalData() {
@@ -182,7 +186,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
   uploadFile() {
     let formData = new FormData();
     formData.append('file', this.imageForm.get('file')?.value);
-    this.companyService.uploadImage(formData)
+    this.imageService.uploadImage(formData)
     .subscribe(result => this.logo = result.filename)
   }
 

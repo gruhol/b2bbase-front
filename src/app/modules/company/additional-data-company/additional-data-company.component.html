@@ -47,7 +47,7 @@
 
 <h3>Edytuj logo firmy</h3>
 
-<img *ngIf="logo" src="{{'/api/company/logoImages/' + logo}}">
+<img *ngIf="logo" src="{{'/api/img/get/logos/' + logo}}">
 
 <form [formGroup]="imageForm" (submit)="uploadFile()">
   <input type="file" [accept]="requiredFileTypes" (change)="onFileChange($event)">
