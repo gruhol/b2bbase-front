@@ -47,12 +47,22 @@
 
 <h3>Edytuj logo firmy</h3>
 
-<img *ngIf="logo" src="{{'/api/img/get/logos/' + logo}}">
-
-<form [formGroup]="imageForm" (submit)="uploadFile()">
-  <input type="file" [accept]="requiredFileTypes" (change)="onFileChange($event)">
-  <button>Dodaj logo</button>
-</form>
+<div class="row">
+  <div class="col-6">
+    <img *ngIf="logo" src="{{'/api/img/get/logos/' + logo}}">
+  </div>
+  <div class="col-6">
+    <ul>
+      <li>Logo może być w formacie jpg lub png.</li>
+      <li>Max. wysokość obrazka oraz szerokość to 1000px.</li>
+      <li>Proporcje obrazka to 2:1</li>
+    </ul>
+    <form [formGroup]="imageForm" (submit)="uploadFile()">
+      <input type="file" [accept]="requiredFileTypes" (change)="onFileChange($event)">
+      <button>Dodaj logo</button>
+    </form>
+  </div>
+</div>
 
 <hr>
 
