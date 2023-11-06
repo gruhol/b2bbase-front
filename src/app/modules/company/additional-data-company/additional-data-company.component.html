@@ -49,12 +49,13 @@
 
 <div class="row">
   <div class="col-6">
-    <img *ngIf="logo" src="{{'/api/img/get/logos/' + logo}}">
+    <img *ngIf="logo" src="{{'/api/img/get/logos/' + logo}}" class="img-thumbnail">
   </div>
   <div class="col-6">
     <ul>
       <li>Logo może być w formacie jpg lub png.</li>
       <li>Max. wysokość obrazka oraz szerokość to 1000px.</li>
+      <li>Max. szerokość obrazka oraz szerokość to 500px.</li>
       <li>Proporcje obrazka to 2:1</li>
     </ul>
     <form [formGroup]="imageForm" (submit)="uploadFile()">
