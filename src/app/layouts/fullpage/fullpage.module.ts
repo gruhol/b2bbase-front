@@ -13,6 +13,7 @@ import { LoginComponent } from 'src/app/modules/user/login/login.component';
 import { LinkveryficationComponent } from 'src/app/modules/user/linkveryfication/linkveryfication.component';
 import { RegisteredComponent } from 'src/app/modules/user/registered/registered.component';
 import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-company.component';
+import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-com
     SendPasswordComponent,
     LinkveryficationComponent,
     RegisteredComponent,
-    AddCompanyComponent
+    AddCompanyComponent,
+    CompanyCatalogComponent
   ],
   imports: [
     CommonModule,
