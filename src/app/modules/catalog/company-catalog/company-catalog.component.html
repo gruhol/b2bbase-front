@@ -1,6 +1,6 @@
 <div class="container">
 
-    <div *ngFor="let company of companies" class="row">
+    <div *ngFor="let company of page?.content" class="row">
         <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
             <div class="row">
                 <div class="col-10">
@@ -12,5 +12,13 @@
             </div>
         </div>
     </div>
+
+    <mat-paginator *ngIf="page && page.totalElements > 0"
+              [length]="page.totalElements"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25]"
+              aria-label="Wybierz stronę"
+              (page)="onPageEvent($event)">
+    </mat-paginator>
 
 </div>

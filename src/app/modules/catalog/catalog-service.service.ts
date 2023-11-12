@@ -11,7 +11,7 @@ export class CatalogServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getCompany(): Observable<Page<CompanyCatalog>> {
-    return this.http.get<Page<CompanyCatalog>>("api/catalog");
+  getCompany(page: number, size: number): Observable<Page<CompanyCatalog>> {
+    return this.http.get<Page<CompanyCatalog>>(`api/catalog?page=${page}&size=${size}`);
   }
 }

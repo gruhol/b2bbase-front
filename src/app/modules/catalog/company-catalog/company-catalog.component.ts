@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyCatalog } from '../dto/CompanyCatalog';
 import { CatalogServiceService } from '../catalog-service.service';
+import { Page } from '../../common/model/page';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-company-catalog',
@@ -9,7 +11,7 @@ import { CatalogServiceService } from '../catalog-service.service';
 })
 export class CompanyCatalogComponent implements OnInit {
 
-  companies!: CompanyCatalog[];
+  page!: Page<CompanyCatalog>;
 
   constructor(private companyCatalogService: CatalogServiceService) { }
   
@@ -18,7 +20,17 @@ export class CompanyCatalogComponent implements OnInit {
   }
 
   getCompanies() {
-    this.companyCatalogService.getCompany().subscribe(company => this.companies = company.content);
+    this.getCompanyPage(0, 5);
+
+    
+  }
+
+  private getCompanyPage(page: number, size: number) {
+    this.companyCatalogService.getCompany(page, size).subscribe(page => this.page = page);
+  }
+
+  onPageEvent(event: PageEvent) {
+    this.getCompanyPage(event.pageIndex, event.pageSize);
   }
 
 }
