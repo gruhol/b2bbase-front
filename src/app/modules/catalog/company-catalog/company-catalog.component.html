@@ -1,13 +1,23 @@
 <div class="container">
-
-    <div *ngFor="let company of page?.content" class="row">
-        <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
-            <div class="row">
-                <div class="col-10">
-                    <h3>{{company.name}}</h3>
-                    <p>{{company.nip}}</p>
-                </div>
-                <div class="col-2">
+    <div class="row">
+        <div class="col-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
+            <h3>Regiony:</h3>
+            <ul *ngFor="let region of voivodeship | keyvalue" class="ms-3">
+                <li><a href="">{{region.value}}</a></li>
+            </ul>
+        </div>
+        <div class="col-9">
+            <div *ngFor="let company of page?.content" class="ms-3">
+                <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{company.name}}</h3>
+                            <p>{{company.nip}}</p>
+                        </div>
+                        <div class="col-2">
+                            <img *ngIf="company.logo" src="{{'/api/img/get/logos/' + company.logo}}" class="img-thumbnail">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

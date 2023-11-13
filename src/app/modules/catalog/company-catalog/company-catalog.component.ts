@@ -11,12 +11,14 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class CompanyCatalogComponent implements OnInit {
 
+  voivodeship!: Map<string, string>;
   page!: Page<CompanyCatalog>;
 
   constructor(private companyCatalogService: CatalogServiceService) { }
   
   ngOnInit(): void {
     this.getCompanies()
+    this.voivodeship = this.createVoivodeshipList();
   }
 
   getCompanies() {
@@ -31,6 +33,27 @@ export class CompanyCatalogComponent implements OnInit {
 
   onPageEvent(event: PageEvent) {
     this.getCompanyPage(event.pageIndex, event.pageSize);
+  }
+
+  createVoivodeshipList(): Map<string, string> {
+    let voivodeshipMap = new Map<string, string>();
+    voivodeshipMap.set("DS","dolnośląskie"),
+    voivodeshipMap.set("KP", "kujawsko-pomorskie"),
+    voivodeshipMap.set("LU", "lubelskie"),
+    voivodeshipMap.set("LB", "lubuskie"),
+    voivodeshipMap.set("LD", "łódzkie"),
+    voivodeshipMap.set("MA", "małopolskie"),
+    voivodeshipMap.set("MZ", "mazowieckie"),
+    voivodeshipMap.set("OP", "opolskie"),
+    voivodeshipMap.set("PK", "podkarpackie"),
+    voivodeshipMap.set("PD", "podlaskie"),
+    voivodeshipMap.set("PM", "pomorskie"),
+    voivodeshipMap.set("SL", "śląskie"),
+    voivodeshipMap.set("SK", "świętokrzyskie"),
+    voivodeshipMap.set("WN", "warmińsko-mazurskie"),
+    voivodeshipMap.set("WP", "wielkopolskie"),
+    voivodeshipMap.set("ZP", "zachodniopomorskie");
+    return voivodeshipMap;
   }
 
 }

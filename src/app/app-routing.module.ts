@@ -20,7 +20,6 @@ import { AdditionalDataCompanyComponent } from './modules/company/additional-dat
 import { SocialLinkComponent } from './modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from './modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/edit-social-link.component';
-import { TestTreeComponent } from './modules/test/test-tree.component';
 import { CompanyCatalogComponent } from './modules/catalog/company-catalog/company-catalog.component';
 
 const routes: Routes = [
