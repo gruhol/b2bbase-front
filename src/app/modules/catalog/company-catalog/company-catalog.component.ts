@@ -3,6 +3,37 @@ import { CompanyCatalog } from '../dto/CompanyCatalog';
 import { CatalogServiceService } from '../catalog-service.service';
 import { Page } from '../../common/model/page';
 import { PageEvent } from '@angular/material/paginator';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+
+interface CompanyNode {
+  name: string;
+  children?: CompanyNode[];
+}
+
+const TREE_DATA: CompanyNode[] = [
+  {
+    name: 'Fruit',
+    children: [
+      {name: 'Apple'}, 
+      {name: 'Banana'}, 
+      {name: 'Fruit loops'}
+    ],
+  },
+  {
+    name: 'Vegetables',
+    children: [
+      {name: 'Green',},
+      {name: 'Orange'},
+    ],
+  },
+];
+
+interface FlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 
 @Component({
   selector: 'app-company-catalog',
@@ -14,7 +45,9 @@ export class CompanyCatalogComponent implements OnInit {
   voivodeship!: Map<string, string>;
   page!: Page<CompanyCatalog>;
 
-  constructor(private companyCatalogService: CatalogServiceService) { }
+  constructor(private companyCatalogService: CatalogServiceService) { 
+    this.dataSource.data = TREE_DATA;
+  }
   
   ngOnInit(): void {
     this.getCompanies()
@@ -55,5 +88,29 @@ export class CompanyCatalogComponent implements OnInit {
     voivodeshipMap.set("ZP", "zachodniopomorskie");
     return voivodeshipMap;
   }
+
+  private _transformer = (node: CompanyNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+    };
+  };
+
+  treeControl = new FlatTreeControl<FlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  hasChild = (_: number, node: FlatNode) => node.expandable;
 
 }
