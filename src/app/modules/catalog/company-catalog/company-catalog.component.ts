@@ -1,30 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { CompanyCatalog } from '../dto/CompanyCatalog';
-import { CatalogServiceService } from '../catalog-service.service';
+import { CatalogService } from '../catalog-service';
 import { Page } from '../../common/model/page';
 import { PageEvent } from '@angular/material/paginator';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { CategoryToCatalog } from '../dto/categoryToCatalog';
 
 interface CompanyNode {
   name: string;
+  slug: string;
   children?: CompanyNode[];
 }
 
 const TREE_DATA: CompanyNode[] = [
   {
     name: 'Fruit',
+    slug: 'fruit',
     children: [
-      {name: 'Apple'}, 
-      {name: 'Banana'}, 
-      {name: 'Fruit loops'}
+      {name: 'Apple', slug: 'apple'}, 
+      {name: 'Banana', slug: 'banana'}, 
+      {name: 'Fruit loops', slug: 'fruit-loops'}
     ],
   },
   {
-    name: 'Vegetables',
+    name: 'Vegetables', slug: 'vegetables',
     children: [
-      {name: 'Green',},
-      {name: 'Orange'},
+      {name: 'Green', slug: 'green'},
+      {name: 'Orange', slug: 'orange'},
     ],
   },
 ];
@@ -45,8 +48,11 @@ export class CompanyCatalogComponent implements OnInit {
   voivodeship!: Map<string, string>;
   page!: Page<CompanyCatalog>;
 
-  constructor(private companyCatalogService: CatalogServiceService) { 
+  constructor(private catalogService: CatalogService) { 
     this.dataSource.data = TREE_DATA;
+    console.log(this.dataSource.data)
+    this.catalogService.getCategory().subscribe(cat => this.dataSource.data = cat)
+    console.log(this.dataSource.data)
   }
   
   ngOnInit(): void {
@@ -55,13 +61,11 @@ export class CompanyCatalogComponent implements OnInit {
   }
 
   getCompanies() {
-    this.getCompanyPage(0, 5);
-
-    
+    this.getCompanyPage(0, 5);    
   }
 
   private getCompanyPage(page: number, size: number) {
-    this.companyCatalogService.getCompany(page, size).subscribe(page => this.page = page);
+    this.catalogService.getCompany(page, size).subscribe(page => this.page = page);
   }
 
   onPageEvent(event: PageEvent) {
@@ -89,7 +93,7 @@ export class CompanyCatalogComponent implements OnInit {
     return voivodeshipMap;
   }
 
-  private _transformer = (node: CompanyNode, level: number) => {
+  private _transformer = (node: CategoryToCatalog, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
@@ -110,6 +114,8 @@ export class CompanyCatalogComponent implements OnInit {
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 

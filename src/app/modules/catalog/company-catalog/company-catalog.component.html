@@ -5,7 +5,7 @@
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                     <button mat-icon-button disabled></button>
-                    {{node.name}}
+                    <a href={{node.slug}}>{{node.name}}</a>
                 </mat-tree-node>
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
@@ -13,7 +13,7 @@
                       {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                     </button>
-                    {{node.name}}
+                    <a href={{node.slug}}>{{node.name}}</a>
                 </mat-tree-node>
             </mat-tree>
 
