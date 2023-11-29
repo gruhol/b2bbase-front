@@ -14,6 +14,7 @@ import { LinkveryficationComponent } from 'src/app/modules/user/linkveryfication
 import { RegisteredComponent } from 'src/app/modules/user/registered/registered.component';
 import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-company.component';
 import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
+import { CompanyCatalog2Component } from 'src/app/modules/catalog/company-catalog2/company-catalog2.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog
     LinkveryficationComponent,
     RegisteredComponent,
     AddCompanyComponent,
-    CompanyCatalogComponent
+    CompanyCatalogComponent,
+    CompanyCatalog2Component
   ],
   imports: [
     CommonModule,
