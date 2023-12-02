@@ -28,23 +28,24 @@ interface CategoryNode {
 })
 export class CompanyCatalog2Component {
 
-  public treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
-  public categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
-  public searchString = '';
-  public showOnlySelected = false;
+  treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
+  categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
+  searchString = '';
+  showOnlySelected = false;
   page!: Page<CompanyCatalog>;
   voivodeship!: Map<string, string>;
   voivodeshipCheckedList: string[] = [];
-  public isEdiCooperation: boolean | undefined;
-  public isApiCooperation: boolean | undefined;
-  public isProductFileCooperation: boolean | undefined;
+  isEdiCooperation: boolean | undefined;
+  isApiCooperation: boolean | undefined;
+  isProductFileCooperation: boolean | undefined;
+  selectCategory: number[] = [];
 
   constructor(
     private snackBar: MatSnackBar,
     private categoryService: CategoryService,
     private catalogService: CatalogService
   ) {
-    this.catalogService.getCategory2()
+    this.catalogService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
       .subscribe(data => {
         this.categoryDataSource.data = data;
@@ -64,7 +65,7 @@ export class CompanyCatalog2Component {
   }
 
   private getCompanyPage(page: number, size: number) {
-    this.catalogService.getCompany(page, size).subscribe(page => this.page = page);
+    this.catalogService.getCompanies(page, size, this.selectCategory, this.voivodeshipCheckedList).subscribe(page => this.page = page);
   }
 
   onPageEvent(event: PageEvent) {
@@ -152,7 +153,7 @@ export class CompanyCatalog2Component {
   tescik() {
     console.log(this.categoryDataSource);
     console.log(this.voivodeshipCheckedList);
-    let selectCategory = this.categoryDataSource.data.reduce(
+    this.selectCategory = this.categoryDataSource.data.reduce(
       (acc: number[], node: CategoryNode) =>
         acc.concat(
           this.treeControl
@@ -167,10 +168,13 @@ export class CompanyCatalog2Component {
         ),
       [] as number[]
     );
-    console.log(selectCategory);
+    console.log(this.selectCategory);
     console.log("Edi: " + this.isEdiCooperation);
     console.log("Api: " + this.isApiCooperation);
     console.log("File: " + this.isProductFileCooperation);
+
+    this.catalogService.getCompanies(0, 5, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+    .subscribe(page => this.page = page);
   }
 
   toggleVoivodeship(key: string, isChecked: boolean) {
@@ -185,9 +189,21 @@ export class CompanyCatalog2Component {
   }
 
   toggleCooperation(fieldName: string, event: any) {
-    if (fieldName === 'isEdiCooperation') this.isEdiCooperation = event.checked;
-    if (fieldName === 'isApiCooperation') this.isApiCooperation = event.checked;
-    if (fieldName === 'isProductFileCooperation') this.isProductFileCooperation = event.checked;
+    if (fieldName === 'isEdiCooperation' && event.checked) { 
+      this.isEdiCooperation = event.checked;
+    } else {
+      this.isEdiCooperation = undefined;
+    }
+    if (fieldName === 'isApiCooperation' && event.checked) {
+      this.isApiCooperation = event.checked;
+    } else {
+      this.isApiCooperation = undefined;
+    }
+    if (fieldName === 'isProductFileCooperation' && event.checked) {
+      this.isProductFileCooperation = event.checked;
+    } else { 
+      this.isProductFileCooperation = undefined;
+    }
   }
 
 }
