@@ -2,17 +2,9 @@
     <div class="row">
         <div class="col-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
             <h3>Kategorie:</h3>
-            <p>
-                <label>Filter by:
-                <input [(ngModel)]="searchString" />
-                </label>
-                <mat-slide-toggle class="toggle-show-only-selected" [(ngModel)]="showOnlySelected">Show only selected</mat-slide-toggle>
-            </p>
             <mat-tree [dataSource]="categoryDataSource" [treeControl]="treeControl" class="example-tree">
                 <!-- This is the tree node template for leaf nodes -->
-                <mat-tree-node 
-                *matTreeNodeDef="let node" 
-                matTreeNodeToggle
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle
                 [style.display]="showOnlySelected && !node.selected || this.searchString && hideLeafNode(node) ? 'none' : 'block'">
                 <li class="mat-tree-node">
                     <mat-checkbox class="checklist-leaf-node" (change)="itemToggle($event.checked,node)" [checked]="node.selected">{{node.name}}</mat-checkbox>
@@ -24,22 +16,36 @@
                 [style.display]="(showOnlySelected && !(node.selected || node.indeterminate)) || this.searchString && hideParentNode(node) ? 'none' : 'block'">
                 <li>
                     <div class="mat-tree-node">
-                    <button mat-icon-button matTreeNodeToggle
-                            [attr.aria-label]="'toggle ' + node.name">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror">
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
                     </button>
-                        <mat-checkbox [checked]="node.selected"
-                                [indeterminate]="node.indeterminate && !node.selected"
-                                (change)="itemToggle($event.checked,node)">{{node.name}}</mat-checkbox>
+                        <mat-checkbox [checked]="node.selected" [indeterminate]="node.indeterminate && !node.selected" (change)="itemToggle($event.checked,node)">
+                            {{node.name}}
+                        </mat-checkbox>
                     </div>
                     <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
-                    <ng-container matTreeNodeOutlet></ng-container>
+                        <ng-container matTreeNodeOutlet></ng-container>
                     </ul>
                 </li>
                 </mat-nested-tree-node>
             </mat-tree>
+
+            <h3>Województwo: </h3>
+            <div *ngFor="let vs of voivodeship | keyvalue">
+                <mat-checkbox name="voivo"  [value]="vs.key" (change)="toggleVoivodeship(vs.key, $event.checked)">{{vs.value}}</mat-checkbox><br />
+            </div>
+
+            <h3>Forma współpracy poprzez:</h3>
+            <div>
+                <mat-checkbox name="isEdiCooperation" (change)="toggleCooperation('isEdiCooperation', $event)">EDI</mat-checkbox><br />
+                <mat-checkbox name="isApiCooperation" (change)="toggleCooperation('isApiCooperation', $event)">REST/SOAP API</mat-checkbox><br />
+                <mat-checkbox name="isProductFileCooperation" (change)="toggleCooperation('isProductFileCooperation', $event)"> Pliki wymiany danych</mat-checkbox>
+            </div>
+
+            <button (click)="tescik()">Filtruj</button>
+
         </div>
         <div class="col-9">
             <div *ngFor="let company of page?.content" class="ms-3">
