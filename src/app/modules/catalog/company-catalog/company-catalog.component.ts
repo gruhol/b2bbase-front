@@ -31,7 +31,7 @@ export class CompanyCatalogComponent {
   categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
   searchString = '';
   showOnlySelected = false;
-  page!: Page<CompanyCatalog>;
+  page?: Page<CompanyCatalog>;
   voivodeship!: Map<string, string>;
   voivodeshipCheckedList: string[] = [];
   isEdiCooperation: boolean | undefined;

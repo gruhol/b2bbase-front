@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
-            <h3>Kategorie:</h3>
+            <h3 class="mt-2"><strong>Kategorie:</strong></h3>
             <mat-tree [dataSource]="categoryDataSource" [treeControl]="treeControl" class="example-tree">
                 <!-- This is the tree node template for leaf nodes -->
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle
@@ -32,30 +32,36 @@
                 </mat-nested-tree-node>
             </mat-tree>
 
-            <h3>Województwo: </h3>
+            <h3 class="mt-2"><strong>Województwo: </strong></h3>
             <div *ngFor="let vs of voivodeship | keyvalue">
                 <mat-checkbox name="voivo"  [value]="vs.key" (change)="toggleVoivodeship(vs.key, $event.checked)">{{vs.value}}</mat-checkbox><br />
             </div>
 
-            <h3>Forma współpracy poprzez:</h3>
+            <h3 class="mt-2"><strong>Forma współpracy poprzez:</strong></h3>
             <div>
                 <mat-checkbox name="isEdiCooperation" (change)="toggleCooperation('isEdiCooperation', $event)">EDI</mat-checkbox><br />
                 <mat-checkbox name="isApiCooperation" (change)="toggleCooperation('isApiCooperation', $event)">REST/SOAP API</mat-checkbox><br />
                 <mat-checkbox name="isProductFileCooperation" (change)="toggleCooperation('isProductFileCooperation', $event)"> Pliki wymiany danych</mat-checkbox>
             </div>
 
-            <div>
-                <button (click)="filter()">Filtruj</button>
+            <div class="mt-3">
+                <button class="btn btn-success" (click)="filter()">Filtruj</button>
             </div>
 
         </div>
         <div class="col-9">
+            <p class="text-right px-4">Znaleziono {{page?.totalElements}} firm.</p>
+
             <div *ngFor="let company of page?.content" class="ms-3">
                 <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
                     <div class="row">
                         <div class="col-10">
-                            <h3>{{company.name}}</h3>
+                            <h3><strong>{{company.name}}</strong></h3>
                             <p>{{company.nip}}</p>
+                            <p>{{company.regon}}</p>
+                            <p *ngIf="company.branch != undefined">
+                                {{company.branch.street}} {{company.branch.house_number}}, {{company.branch.post_code}} - {{company.branch.city}}
+                            </p>
                         </div>
                         <div class="col-2">
                             <img *ngIf="company.logo" src="{{'/api/img/get/logos/' + company.logo}}" class="img-thumbnail">
@@ -63,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="page.content.length === 0">
+            <div class="row" *ngIf="page?.content?.length === 0">
                 <div class="col-12">
                     <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
                         <p>Brak firm dla podanych kryterów wyszukiwania</p>

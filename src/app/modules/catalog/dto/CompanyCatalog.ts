@@ -1,3 +1,5 @@
+import { Branch } from "../../branch/model/branch";
+
 export interface CompanyCatalog {
     name: string,
     slug: string,
@@ -14,4 +16,5 @@ export interface CompanyCatalog {
     apiCooperation: boolean,
     productFileCooperation: string,
     logo: string;
+    branch: Branch | undefined;
 }
