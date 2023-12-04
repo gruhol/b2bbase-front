@@ -13,29 +13,31 @@ import { LoginComponent } from 'src/app/modules/user/login/login.component';
 import { LinkveryficationComponent } from 'src/app/modules/user/linkveryfication/linkveryfication.component';
 import { RegisteredComponent } from 'src/app/modules/user/registered/registered.component';
 import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-company.component';
+import { CompaniesCatalogComponent } from 'src/app/modules/catalog/companies-catalog/companies-catalog.component';
 import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
 
 @NgModule({
-  declarations: [
-    FullpageComponent,
-    RegistrationComponent,
-    LoggedComponent,
-    LoginComponent,
-    RememberPasswordComponent,
-    SendPasswordComponent,
-    EditUserComponent,
-    SendPasswordComponent,
-    LinkveryficationComponent,
-    RegisteredComponent,
-    AddCompanyComponent,
-    CompanyCatalogComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    SharedModule,
-    FormsModule
-  ]
+    declarations: [
+        FullpageComponent,
+        RegistrationComponent,
+        LoggedComponent,
+        LoginComponent,
+        RememberPasswordComponent,
+        SendPasswordComponent,
+        EditUserComponent,
+        SendPasswordComponent,
+        LinkveryficationComponent,
+        RegisteredComponent,
+        AddCompanyComponent,
+        CompaniesCatalogComponent,
+        CompanyCatalogComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        SharedModule,
+        FormsModule
+    ]
 })
 export class FullpageModule { }

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CompanyMenuComponent } from './component/company-menu/company-menu.component';
+import { NameCompanyPipe } from '../modules/catalog/pipe/name-company-pipe';
 
 
 @NgModule({
@@ -18,14 +19,16 @@ import { CompanyMenuComponent } from './component/company-menu/company-menu.comp
     CommonModule,
     RouterModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NameCompanyPipe
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     CompanyMenuComponent,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NameCompanyPipe
   ]
 })
 export class SharedModule { }

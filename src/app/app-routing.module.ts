@@ -20,7 +20,7 @@ import { AdditionalDataCompanyComponent } from './modules/company/additional-dat
 import { SocialLinkComponent } from './modules/social-link/social-link/social-link.component';
 import { AddSocialLinkComponent } from './modules/social-link/add-social-link/add-social-link.component';
 import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/edit-social-link.component';
-import { CompanyCatalogComponent } from './modules/catalog/company-catalog/company-catalog.component';
+import { CompaniesCatalogComponent } from './modules/catalog/companies-catalog/companies-catalog.component';
 
 const routes: Routes = [
   {
@@ -34,7 +34,8 @@ const routes: Routes = [
       {path: 'send-password/:token', title: 'Weryfikacja adresu email', component: SendPasswordComponent},
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
-      {path: 'catalog', title: 'Hurtownie', component: CompanyCatalogComponent}
+      {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
+      {path: 'hurtownia/:slug', title: 'Hurtownia', component: CompanyPanelComponent}
     ]
   },
   {
