@@ -1,1 +1,27 @@
-<p>company-catalog works!</p>
+<div class="container">
+<div>
+    <h1>{{company.name}}</h1>
+</div>
+<div class="row">
+    <div class="col-7">
+        <table>
+            <tr>
+                <td>
+                    <img *ngIf="company.logo" src="{{'/api/img/get/logos/' + company.logo}}">
+                    <img style="width: 200px;" *ngIf="company.logo == undefined" src="./assets/nophoto.png">
+                </td>
+                <td>
+                    <p>NIP: {{company.nip}}</p>
+                    <p>Regon: {{company.regon}}</p>
+                    <p *ngIf="company.branch !== null">
+                        Adres: {{company.branch?.street}} {{company.branch?.house_number}} <span *ngIf="company.branch?.office_number">/ {{company.branch?.office_number}}</span>, 
+                        {{company.branch?.post_code}} - {{company.branch?.city}}
+                    </p>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    <div class="col-5"></div>
+</div>    
+</div>

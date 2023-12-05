@@ -16,6 +16,7 @@ import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-com
 import { CompaniesCatalogComponent } from 'src/app/modules/catalog/companies-catalog/companies-catalog.component';
 import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
 
+
 @NgModule({
     declarations: [
         FullpageComponent,

@@ -58,7 +58,7 @@
                         <div class="col-10">
                             <figure>
                                 <blockquote class="blockquote">
-                                  <p>{{company.name}}</p>
+                                  <p><a href="" [routerLink]="['/company/' + company.slug]">{{company.name}}</a></p>
                                 </blockquote>
                                 <figcaption class="blockquote-footer">
                                     {{company.legalForm | legalform}}

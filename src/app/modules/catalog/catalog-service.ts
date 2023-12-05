@@ -12,16 +12,17 @@ export class CatalogService {
 
   constructor(private http: HttpClient) { }
 
-  getCompany(page: number, size: number): Observable<Page<CompanyCatalog>> {
-    return this.http.get<Page<CompanyCatalog>>(`api/catalog/?page=${page}&size=${size}`);
+  getCompany(slug: string): Observable<CompanyCatalog> {
+    return this.http.get<CompanyCatalog>(`api/catalog/company/${slug}`);
   }
 
   getCategory(): Observable<CategoryCatalog[]> {
     return this.http.get<CategoryCatalog[]>("api/catalog/category");
   }
 
-  getCompanies(page: number, size: number, categories: number[], voivodeshipSlugs: string[], isEdiCooperation?: boolean, isApiCooperation?: boolean, isProductFileCooperation?: boolean)
-  : Observable<Page<CompanyCatalog>> 
+  getCompanies(page: number, size: number, categories: number[], voivodeshipSlugs: string[], 
+    isEdiCooperation?: boolean, isApiCooperation?: boolean, isProductFileCooperation?: boolean)
+    : Observable<Page<CompanyCatalog>> 
   {
     let params = new HttpParams()
       .set('page', page.toString())

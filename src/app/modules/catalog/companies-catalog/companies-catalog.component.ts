@@ -19,7 +19,7 @@ interface CategoryNode {
 }
 
 @Component({
-  selector: 'app-company-catalog',
+  selector: 'app-companies-catalog',
   templateUrl: './companies-catalog.component.html',
   styleUrls: ['./companies-catalog.component.scss']
 })
