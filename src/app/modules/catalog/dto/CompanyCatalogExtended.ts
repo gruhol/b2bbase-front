@@ -1,6 +1,7 @@
 import { Branch } from "../../branch/model/branch";
 
 export interface CompanyCatalogExtended {
+    id: number,
     name: string,
     slug: string,
     type: string,

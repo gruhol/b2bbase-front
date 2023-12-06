@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CompanyMenuComponent } from './component/company-menu/company-menu.component';
 import { NameCompanyPipe } from '../modules/catalog/pipe/name-company-pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NameCompanyPipe } from '../modules/catalog/pipe/name-company-pipe';
     RouterModule,
     MaterialModule,
     BrowserAnimationsModule,
-    NameCompanyPipe
+    NameCompanyPipe,
+    FontAwesomeModule
   ],
   exports: [
     HeaderComponent,
@@ -28,7 +30,8 @@ import { NameCompanyPipe } from '../modules/catalog/pipe/name-company-pipe';
     CompanyMenuComponent,
     MaterialModule,
     BrowserAnimationsModule,
-    NameCompanyPipe
+    NameCompanyPipe,
+    FontAwesomeModule
   ]
 })
 export class SharedModule { }

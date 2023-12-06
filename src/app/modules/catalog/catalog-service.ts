@@ -5,6 +5,7 @@ import { CompanyCatalog } from './dto/CompanyCatalog';
 import { Page } from '../common/model/page';
 import { CategoryCatalog } from './dto/CategoryCatalog';
 import { CompanyCatalogExtended } from './dto/CompanyCatalogExtended';
+import { SocialToCatalog } from './dto/SocalToCatalog';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class CatalogService {
 
   getCategory(): Observable<CategoryCatalog[]> {
     return this.http.get<CategoryCatalog[]>("api/catalog/category");
+  }
+
+  getSocial(id: number): Observable<SocialToCatalog[]> {
+    return this.http.get<SocialToCatalog[]>("api/catalog/company/social/" + id)
   }
 
   getCompanies(page: number, size: number, categories: number[], voivodeshipSlugs: string[], 

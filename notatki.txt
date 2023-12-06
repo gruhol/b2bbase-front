@@ -1,7 +1,0 @@
-https://kursy.nullpointerexception.pl/kurs-aplikacji/modul-8-obsluga-uzytkownikow-i-spring-security/rejestracja-i-logowanie-klientow-sklepu/
-
-28:00
-
-DOdamy pole do jwt z rolami
-
-potem guard sprawa czy jest taka rola. Dla każdego moduly inny aktywate quard.+
