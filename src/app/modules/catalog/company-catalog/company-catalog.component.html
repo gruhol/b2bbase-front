@@ -1,27 +1,123 @@
-<div class="container">
-<div>
-    <h1>{{company.name}}</h1>
-</div>
-<div class="row">
-    <div class="col-7">
-        <table>
-            <tr>
-                <td>
-                    <img *ngIf="company.logo" src="{{'/api/img/get/logos/' + company.logo}}">
-                    <img style="width: 200px;" *ngIf="company.logo == undefined" src="./assets/nophoto.png">
-                </td>
-                <td>
-                    <p>NIP: {{company.nip}}</p>
-                    <p>Regon: {{company.regon}}</p>
-                    <p *ngIf="company.branch !== null">
-                        Adres: {{company.branch?.street}} {{company.branch?.house_number}} <span *ngIf="company.branch?.office_number">/ {{company.branch?.office_number}}</span>, 
-                        {{company.branch?.post_code}} - {{company.branch?.city}}
-                    </p>
-                </td>
-            </tr>
-        </table>
-        
+<div class="container" *ngIf="company">
+    <div>
+        <h1>{{company!.name}}</h1>
     </div>
-    <div class="col-5"></div>
-</div>    
+    <div class="row border shadow-sm p-3 mb-3 rounded">
+        <div class="col-2"> 
+            <table class="table-responsive w-100">
+                <tr>
+                    <td>
+                        <img *ngIf="company!.logo" src="{{'/api/img/get/logos/' + company!.logo}}">
+                        <img style="width: 200px;" *ngIf="company!.logo == undefined" src="./assets/nophoto.png">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-7">
+            <table class="table-responsive w-100">
+                <tr>
+                    <td>
+                        <p>Dane podstawowe:</p>
+                        <hr>
+                        <table class="table-responsive">
+                            <tr>
+                                <td class="p-2 w-50">NIP:</td>
+                                <td class="p-2">{{company!.nip}}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Regon:</td>
+                                <td class="p-2">{{company!.regon}}</td>
+                            </tr>
+                            <tr *ngIf="company.branch != null">
+                                <td class="p-2">Adres:</td>
+                                <td class="p-2">
+                                    {{company.branch.street}} {{company.branch.house_number}} <span *ngIf="company.branch?.office_number">/ {{company.branch.office_number}}</span>,<br /> 
+                                    {{company.branch.post_code}} - {{company.branch.city}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Telefon:</td>
+                                <td class="p-2">{{company.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">E-mail:</td>
+                                <td class="p-2">{{company.email}}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Strona WWW: </td>
+                                <td class="p-2">{{company.wwwSite}}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Sklep Online: </td>
+                                <td class="p-2">{{company.wwwStore}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-3">
+            <p>Dostępna integracje:</p>
+            <hr>
+            <table class="table-responsive w-100">
+                <tr>
+                    <td>WEB API:</td>
+                    <td>
+                        <span *ngIf="company.apiCooperation">TAK</span>
+                        <span *ngIf="!company.apiCooperation">NIE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>EDI</td>
+                    <td>
+                        <span *ngIf="company.ediCooperation">TAK</span>
+                        <span *ngIf="!company.ediCooperation">NIE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pliki danych (CSV,XML)</td>
+                    <td>
+                        <span *ngIf="company.productFileCooperation">TAK</span>
+                        <span *ngIf="!company.productFileCooperation">NIE</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7" [innerHTML]="company.description"></div>
+        <div class="col-1"></div>
+        <div class="col-4 border shadow-sm p-3 mb-3 rounded">
+
+            <form class="needs-validation p-3">
+                <div class="row g-3">
+
+                    <h4>Formularz kontaktowy</h4>
+        
+                    <div class="col-12">
+                    <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" data-ddg-inputtype="identities.emailAddress" data-ddg-autofill="true" style="background-size: auto 24px !important; background-position: right center !important; background-repeat: no-repeat !important; background-origin: content-box !important; background-image: url(&quot;chrome-extension://bkdgflcldnnnapblkhphbgpggdiikppg/img/logo-small.svg&quot;) !important; transition: background 0s ease 0s !important;">
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                    </div>
+        
+                    <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+        
+                </div>
+        
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="same-address">
+                    <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+                </div>
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                </form>
+
+        </div>
+    </div> 
 </div>

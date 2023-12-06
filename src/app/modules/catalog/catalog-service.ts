@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { CompanyCatalog } from './dto/CompanyCatalog';
 import { Page } from '../common/model/page';
 import { CategoryCatalog } from './dto/CategoryCatalog';
+import { CompanyCatalogExtended } from './dto/CompanyCatalogExtended';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class CatalogService {
 
   constructor(private http: HttpClient) { }
 
-  getCompany(slug: string): Observable<CompanyCatalog> {
-    return this.http.get<CompanyCatalog>(`api/catalog/company/${slug}`);
+  getCompany(slug: string): Observable<CompanyCatalogExtended> {
+    return this.http.get<CompanyCatalogExtended>(`api/catalog/company/${slug}`);
   }
 
   getCategory(): Observable<CategoryCatalog[]> {

@@ -1,27 +1,33 @@
-import { Component } from '@angular/core';
-import { CompanyCatalog } from '../dto/CompanyCatalog';
+import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog-service';
 import { ActivatedRoute } from '@angular/router';
+import { CompanyCatalogExtended } from '../dto/CompanyCatalogExtended';
 
 @Component({
   selector: 'app-company-catalog',
   templateUrl: './company-catalog.component.html',
   styleUrls: ['./company-catalog.component.scss']
 })
-export class CompanyCatalogComponent {
+export class CompanyCatalogComponent implements OnInit {
 
-  company!: CompanyCatalog;
+  company!: CompanyCatalogExtended;
 
   constructor(
     private router: ActivatedRoute,
-    private catalogService: CatalogService
-  ) {
+    private catalogService: CatalogService,
+  ) {}
+
+  ngOnInit(): void {
     let slug = this.router.snapshot.params['slug'];
     this.catalogService.getCompany(slug)
-      .subscribe(data => {
-        this.company = data;
-        console.log(this.company)
+      .subscribe({
+        next: response => {
+          this.company = response;
+          console.log(response);
+        },
+        error: error => {
+          
+        }
       });
-    
   }
 }
