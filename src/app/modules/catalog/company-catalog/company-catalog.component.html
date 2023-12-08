@@ -88,7 +88,7 @@
             <hr class="border border-1 opacity-75">
             <div *ngIf="socials" class="row">
                 <div *ngFor="let social of socials" class="col">
-                    <a href="{{social.url}}"><fa-icon class="fa-2xl" [icon]="getIcon(social.type)"></fa-icon></a>
+                    <a href="{{social.url}}"><fa-icon class="fa-2xl text-success" [icon]="getIcon(social.type)"></fa-icon></a>
                 </div>
             </div>
 
