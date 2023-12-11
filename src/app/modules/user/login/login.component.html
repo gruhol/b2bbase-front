@@ -1,8 +1,8 @@
 <div class="container">
     <main>
     <div class="row g-5">
-        <div class="col-md-12 col-lg-4"></div>
-        <div class="col-md-12 col-lg-4">
+        <div class="col-md-12 col-lg-1"></div>
+        <div class="col-md-12 col-lg-5">
         <div class="pt-5 pb-1">
             <h2>Logowanie</h2>
             <p>Proszę wpisz swoje dane.</p>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="col-md-12 col-lg-12 mb-3">
-                <label class="form-label">Hasło</label>
+                <label class="form-label">Hasło:</label>
                 <input type="password" class="form-control" [ngClass]="{
                     'is-invalid': password.invalid && password.touched,
                     'is-valid': password.valid && password.touched
@@ -49,8 +49,16 @@
 
             <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zaloguj się</button>
         </form>
+        <p class="mt-4"><a routerLink="/remember-password">Nie pamiętasz hasła? Kliknij tutaj.</a></p>
         </div>
-        <div class="col-md-12 col-lg-4"></div>
+        <div class="col-md-12 col-lg-5 position-relative">
+            <div class="position-absolute top-50 start-50 text-center">
+                <h2>Nie masz jeszcze konta?</h2>
+                <p>Załóż je teraz za darmo</p>
+                <p><a routerLink="/registration" class="btn btn-lg btn-success">Zarejestruj się</a></p>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-1"></div>
     </div>
     </main>
 </div>
