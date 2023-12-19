@@ -9,11 +9,13 @@ import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
+import { UserPanelComponent } from './modules/user/user-panel/user-panel/user-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserPanelComponent
   ],
   imports: [
     BrowserModule,

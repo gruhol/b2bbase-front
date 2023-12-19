@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="col" *ngIf="user">
+            <h2>Użytkownik</h2>
+            <p>Imię i nazwisko: {{user.firstName}} {{user.lastName}}</p>
+            <p>Adres kontaktowy: {{user.username}}</p>
+            <p>Telefon: {{user.phone}}</p>
+        </div>
+        <div class="col" *ngIf="company === undefined">
+            <h2>Firma użytkownika</h2>
+            <p>Brak zarejestrowanej firmy</p>
+            <p><a [routerLink]="['/registration']">Zarejestruj nową firmę</a></p>
+        </div>
+        <div class="col" *ngIf="company">
+            <h2>Firma użytkownika</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{company.name}}</h3>
+                    <p class="card-text">NIP: {{company.nip}}, REGON: {{company.regon}}
+                    <br>Typ: {{getType(company.type)}}
+                    </p>
+                    <a [routerLink]="['/edit-company']">Edutuj firmę</a>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
