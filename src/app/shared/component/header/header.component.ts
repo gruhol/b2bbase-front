@@ -17,17 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private jwtService: JwtService,
     private editUserService: EditUserService
-  ) {
-    
-  }
-  // ngDoCheck(): void {
-  //   this.editUserService.getUser()
-  //    .subscribe({
-  //      next: user => {
-  //          this.username = user.username;
-  //      }
-  //   });
-  // }
+  ) {}
   
   ngOnInit(): void {
     this.logged = this.jwtService.isLoggedIn();
@@ -38,7 +28,5 @@ export class HeaderComponent implements OnInit {
           this.username = user.username;
       }
     });
-
-    console.log(this.logged);
   }
 }
