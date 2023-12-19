@@ -8,10 +8,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
+import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
