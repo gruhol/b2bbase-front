@@ -22,8 +22,8 @@ export class CatalogService {
     return this.http.get<CategoryCatalog[]>("api/catalog/category");
   }
 
-  getLastCompanies(howMany: number): Observable<CompanyCatalog> {
-    return this.http.get<CompanyCatalog>("api/catalog/company/last/" + howMany);
+  getLastCompanies(howMany: number): Observable<Array<CompanyCatalogExtended>> {
+    return this.http.get<Array<CompanyCatalogExtended>>("api/catalog/company/last/" + howMany);
   }
 
   getSocial(id: number): Observable<SocialToCatalog[]> {

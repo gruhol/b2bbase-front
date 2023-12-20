@@ -1,4 +1,5 @@
 import { Branch } from "../../branch/model/branch";
+import { CategoryToCatalog } from "./CategoryToCatalog";
 
 export interface CompanyCatalogExtended {
     id: number,
@@ -19,4 +20,5 @@ export interface CompanyCatalogExtended {
     productFileCooperation: string,
     logo: string;
     branch: Branch | undefined;
+    categories: Array<CategoryToCatalog>;
 }
