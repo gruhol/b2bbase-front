@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CompanyCatalogExtended } from '../dto/CompanyCatalogExtended';
 import { SocialToCatalog } from '../dto/SocalToCatalog';
 import { faFacebook, faLinkedin, faInstagram, faYoutube, faTwitter, faTiktok, IconDefinition } from '@fortawesome/free-brands-svg-icons';
+import { Meta, Title } from '@angular/platform-browser';
+import { commonValues } from 'src/app/shared/common-values';
 
 @Component({
   selector: 'app-company-catalog',
@@ -25,6 +27,8 @@ export class CompanyCatalogComponent implements OnInit {
   constructor(
     private router: ActivatedRoute,
     private catalogService: CatalogService,
+    private titleService: Title,
+    private meta: Meta
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +38,14 @@ export class CompanyCatalogComponent implements OnInit {
         next: response => {
           this.company = response;
           this.getSocials(response.id)
+          this.titleService.setTitle('Hurtownia '  + this.company.name + " - " + commonValues.userSite);
+
+          const parser = new DOMParser();
+          const decodedString = parser.parseFromString(`<!doctype html><body>${this.company.description}`, 'text/html').body.textContent;
+
+          this.meta.updateTag({ name: 'description', content: decodedString!.substring(0, 170) });
         }
-      });   
+      }); 
   }
 
   getSocials(id: number): void {
