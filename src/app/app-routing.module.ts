@@ -24,10 +24,12 @@ import { CompaniesCatalogComponent } from './modules/catalog/companies-catalog/c
 import { CompanyCatalogComponent } from './modules/catalog/company-catalog/company-catalog.component';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { UserPanelComponent } from './modules/user/user-panel/user-panel/user-panel.component';
+import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
 
 const routes: Routes = [
   {
     path:'', component: FullpageComponent, children: [
+      {path: '', title: 'Twoje centrum sprzedaży b2b - B2BPoint.pl', component: HomePageComponent},
       {path: 'registration', title: 'Rejestracja użytkownika', component: RegistrationComponent},
       {path: 'login', title: 'Rejestracja użytkownika', component: LoginComponent},
       {path: 'registered', title: 'Rejestracja zakończona', component: RegisteredComponent},

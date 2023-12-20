@@ -10,12 +10,14 @@ import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorize
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { UserPanelComponent } from './modules/user/user-panel/user-panel/user-panel.component';
+import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogoutComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
