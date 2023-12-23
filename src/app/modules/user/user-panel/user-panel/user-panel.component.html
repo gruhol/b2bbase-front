@@ -16,6 +16,8 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">{{company.name}}</h3>
+                    <p class="badge text-bg-success" *ngIf="company.active">Firma aktywna</p>
+                    <p class="badge text-bg-danger" *ngIf="!company.active">Firma nieaktywna</p>
                     <p class="card-text">NIP: {{company.nip}}, REGON: {{company.regon}}
                     <br>Typ: {{getType(company.type)}}
                     </p>

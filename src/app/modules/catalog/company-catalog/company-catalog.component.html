@@ -1,3 +1,6 @@
+<div class="container" *ngIf="notFound">
+    <p>Firmy nie znaleziono lub jest ona nieaktywna</p>
+</div>
 <div class="container" *ngIf="company">
     <div>
         <h1>{{company!.name}}</h1>

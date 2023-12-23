@@ -15,6 +15,7 @@ import { RegisteredComponent } from 'src/app/modules/user/registered/registered.
 import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-company.component';
 import { CompaniesCatalogComponent } from 'src/app/modules/catalog/companies-catalog/companies-catalog.component';
 import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
+import { UserPanelComponent } from 'src/app/modules/user/user-panel/user-panel/user-panel.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog
         RegisteredComponent,
         AddCompanyComponent,
         CompaniesCatalogComponent,
-        CompanyCatalogComponent
+        CompanyCatalogComponent,
+        UserPanelComponent
     ],
     imports: [
         CommonModule,

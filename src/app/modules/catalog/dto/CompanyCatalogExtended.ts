@@ -20,5 +20,6 @@ export interface CompanyCatalogExtended {
     productFileCooperation: string,
     logo: string;
     branch: Branch | undefined;
-    categories: Array<CategoryToCatalog>;
+    categories: Array<CategoryToCatalog>,
+    active: boolean;
 }

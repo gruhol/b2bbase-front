@@ -41,6 +41,7 @@ export class UserPanelComponent implements OnInit{
       .subscribe({
         next: product => { 
           this.company = product;
+          console.log(this.company)
         },
         error:  () => {
           this.company = undefined;
