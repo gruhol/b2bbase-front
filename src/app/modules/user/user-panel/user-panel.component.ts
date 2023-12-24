@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { UserPanelService } from './user-panel.service';
 import { CompanyToEditDto } from 'src/app/modules/company/add-company/dto/CompanyToEditDto';
-import { EditUserService } from '../../edit-user/edit-user.service';
-import { User } from '../../edit-user/dto/user';
+import { EditUserService } from '../edit-user/edit-user.service';
+import { User } from '../edit-user/dto/user';
+import { PackageOrderToCatalog } from './dto/PackageOrderToCatalog';
 
 @Component({
   selector: 'app-user-panel',
@@ -13,6 +14,7 @@ export class UserPanelComponent implements OnInit{
 
   company!: CompanyToEditDto | undefined;
   user!:  User | undefined;
+  orders!: PackageOrderToCatalog[] | undefined;
 
   constructor(
     private userPanelService: UserPanelService,
@@ -22,6 +24,7 @@ export class UserPanelComponent implements OnInit{
   ngOnInit(): void {
     this.getUser();
     this.getCompany();
+    this.getOrders();
   }
 
   getUser() {
@@ -39,14 +42,25 @@ export class UserPanelComponent implements OnInit{
   getCompany() {
     this.userPanelService.getCompany()
       .subscribe({
-        next: product => { 
-          this.company = product;
-          console.log(this.company)
+        next: companyResponse => { 
+          this.company = companyResponse;
         },
         error:  () => {
           this.company = undefined;
         }
     });
+  }
+
+  getOrders() {
+    this.userPanelService.getOrders()
+      .subscribe({
+        next: orders => {
+          this.orders = orders;
+        },
+        error: () => {
+          this.orders = undefined;
+        }
+      })
   }
 
   private mapFormValues(companyDto: CompanyToEditDto): void {

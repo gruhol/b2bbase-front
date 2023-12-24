@@ -23,7 +23,21 @@
                     </p>
                     <a [routerLink]="['/edit-company']">Edutuj firmę</a>
                 </div>
-              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="orders">
+        <div class="col">
+            <h2>Aktualne zamówione abonamenty</h2>
+            <table *ngFor="let order of orders" class="table table-bordered">
+                <tr>
+                    <td>Abonament {{order.packageType}}</td>
+                    <td>{{order.startDate | date}}</td>
+                    <td>{{order.endDate | date}}</td>
+                    <td>{{order.paymentType}}</td>
+                    <td>{{order.paymentStatus}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

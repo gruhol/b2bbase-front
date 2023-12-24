@@ -23,7 +23,7 @@ import { EditSocialLinkComponent } from './modules/social-link/edit-social-link/
 import { CompaniesCatalogComponent } from './modules/catalog/companies-catalog/companies-catalog.component';
 import { CompanyCatalogComponent } from './modules/catalog/company-catalog/company-catalog.component';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
-import { UserPanelComponent } from './modules/user/user-panel/user-panel/user-panel.component';
+import { UserPanelComponent } from './modules/user/user-panel/user-panel.component';
 import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
 
 const routes: Routes = [
