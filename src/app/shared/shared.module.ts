@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CompanyMenuComponent } from './component/company-menu/company-menu.component';
-import { NameCompanyPipe } from '../modules/catalog/pipe/name-company-pipe';
+import { NameCompanyPipe } from './pipe/name-company-pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 

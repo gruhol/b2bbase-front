@@ -1,4 +1,5 @@
 <div class="container">
+
     <div class="row">
         <div class="col" *ngIf="user">
             <h2>Użytkownik</h2>
@@ -26,6 +27,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row" *ngIf="orders">
         <div class="col">
             <h2>Aktualne zamówione abonamenty</h2>
@@ -34,10 +36,11 @@
                     <td>Abonament {{order.packageType}}</td>
                     <td>{{order.startDate | date}}</td>
                     <td>{{order.endDate | date}}</td>
-                    <td>{{order.paymentType}}</td>
-                    <td>{{order.paymentStatus}}</td>
+                    <td>{{order.paymentType | paymenttype}}</td>
+                    <td>{{order.paymentStatus | paymentstatus}}</td>
                 </tr>
             </table>
         </div>
     </div>
+    
 </div>
