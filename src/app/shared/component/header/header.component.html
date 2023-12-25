@@ -9,8 +9,9 @@
           <li><button href="#" class="nav-link px-2 link-body-emphasis" [routerLink]="['/catalog']">Hurtownie</button></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" [formGroup]="searchForm" (ngSubmit)="search()">
+          <input  class="form-control" placeholder="Szukaj..." type="text" formControlName="keyword">
+          <button type="submit" style="display: none;"></button>
         </form>
 
         <button *ngIf="logged === true" mat-button [matMenuTriggerFor]="aboveMenu">{{username}}</button>

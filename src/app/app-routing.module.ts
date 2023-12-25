@@ -25,6 +25,7 @@ import { CompanyCatalogComponent } from './modules/catalog/company-catalog/compa
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { UserPanelComponent } from './modules/user/user-panel/user-panel.component';
 import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
+import { SearchComponent } from './modules/search/search/search.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
       {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
-      {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent}
+      {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent},
+      {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent}
     ]
   },
   {
