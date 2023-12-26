@@ -11,11 +11,13 @@ export class SearchComponent implements OnInit {
   keyword: string = '';
 
   constructor(
-    private activatedRouter: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.keyword = this.activatedRouter.snapshot.params['keyword'];
+    this.activatedRoute.params.subscribe(params => {
+      this.keyword = params['keyword'];
+    });
   }
 
 

@@ -26,7 +26,12 @@ export class HeaderComponent implements OnInit {
     private loginStatusService: LoginStatusService,
     private formBuilder: FormBuilder,
     private router: Router,
-  ) {}
+  ) {
+    if (!this.searchForm) {
+      this.createSearchFormControls();
+      this.createSearchForm();
+    }
+  }
   
   ngOnInit(): void {
     this.logged = this.jwtService.isLoggedIn();
@@ -46,9 +51,6 @@ export class HeaderComponent implements OnInit {
         this.ngOnInit();
       }
     });
-
-    this.createSearchFormControls();
-    this.createSearchForm();
   }
 
   createSearchForm() {
@@ -68,5 +70,6 @@ export class HeaderComponent implements OnInit {
     }
     this.searchForm.clearValidators();
     this.router.navigate(["/search/" + keyword]);
+    this.searchForm.reset();
   }
 }
