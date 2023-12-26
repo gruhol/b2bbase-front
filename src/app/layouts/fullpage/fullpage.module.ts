@@ -18,6 +18,7 @@ import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog
 import { UserPanelComponent } from 'src/app/modules/user/user-panel/user-panel.component';
 import { PaymentTypePipe } from "../../shared/pipe/payment-type";
 import { PaymentStatusPipe } from "../../shared/pipe/payment-status";
+import { SearchComponent } from 'src/app/modules/search/search/search.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PaymentStatusPipe } from "../../shared/pipe/payment-status";
         AddCompanyComponent,
         CompaniesCatalogComponent,
         CompanyCatalogComponent,
-        UserPanelComponent
+        UserPanelComponent,
+        SearchComponent
     ],
     imports: [
         CommonModule,
