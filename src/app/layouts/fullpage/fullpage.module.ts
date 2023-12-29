@@ -16,9 +16,9 @@ import { AddCompanyComponent } from 'src/app/modules/company/add-company/add-com
 import { CompaniesCatalogComponent } from 'src/app/modules/catalog/companies-catalog/companies-catalog.component';
 import { CompanyCatalogComponent } from 'src/app/modules/catalog/company-catalog/company-catalog.component';
 import { UserPanelComponent } from 'src/app/modules/user/user-panel/user-panel.component';
-import { PaymentTypePipe } from "../../shared/pipe/payment-type";
-import { PaymentStatusPipe } from "../../shared/pipe/payment-status";
 import { SearchComponent } from 'src/app/modules/search/search/search.component';
+import { PaymentTypePipe } from 'src/app/shared/pipe/payment-type';
+import { PaymentStatusPipe } from 'src/app/shared/pipe/payment-status';
 
 
 @NgModule({
