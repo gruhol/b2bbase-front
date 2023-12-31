@@ -43,8 +43,13 @@ export class SearchComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private catalogService: CatalogService
   ) {
-    this.catalogService.getCategory()
-      .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
+
+    this.activatedRoute.params.subscribe(params => {
+      this.keyword = params['keyword'];
+    });
+
+    this.catalogService.getSearchResult(this.keyword, 0, 10)
+      .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node.categoryListForCompany)))
       .subscribe(data => {
         this.categoryDataSource.data = data;
         for(let i = 0; i < this.categoryDataSource.data.length; i++) {
@@ -54,44 +59,19 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.keyword = params['keyword'];
-    });
-    this.getCompanies()
-    this.voivodeship = this.createVoivodeshipList();
+    this.getCompanyPageByKeyword(this.keyword, 0, 10);
   }
 
-  getCompanies() {
-    this.getCompanyPage(0, 10);    
-  }
-
-  private getCompanyPage(page: number, size: number) {
-    this.catalogService.getCompanies(page, size, this.selectCategory, this.voivodeshipCheckedList).subscribe(page => this.page = page);
+  private getCompanyPageByKeyword(keyword: string, page: number, size: number) {
+    this.catalogService.getSearchResult(this.keyword, page, size)
+      .subscribe(result => {
+        this.page = result.companies
+        this.voivodeship = result.voivodeshipEnumList
+      })
   }
 
   onPageEvent(event: PageEvent) {
-    this.getCompanyPage(event.pageIndex, event.pageSize);
-  }
-
-  createVoivodeshipList(): Map<string, string> {
-    let voivodeshipMap = new Map<string, string>();
-    voivodeshipMap.set("dolnoslaskie","dolnośląskie"),
-    voivodeshipMap.set("kujawsko-pomorskie", "kujawsko-pomorskie"),
-    voivodeshipMap.set("lubelskie", "lubelskie"),
-    voivodeshipMap.set("lubuskie", "lubuskie"),
-    voivodeshipMap.set("lodzkie", "łódzkie"),
-    voivodeshipMap.set("malopolskie", "małopolskie"),
-    voivodeshipMap.set("mazowieckie", "mazowieckie"),
-    voivodeshipMap.set("opolskie", "opolskie"),
-    voivodeshipMap.set("podkarpackie", "podkarpackie"),
-    voivodeshipMap.set("podlaskie", "podlaskie"),
-    voivodeshipMap.set("pomorskie", "pomorskie"),
-    voivodeshipMap.set("slaskie", "śląskie"),
-    voivodeshipMap.set("swietokrzyskie", "świętokrzyskie"),
-    voivodeshipMap.set("warminsko-mazurskie", "warmińsko-mazurskie"),
-    voivodeshipMap.set("wielkopolskie", "wielkopolskie"),
-    voivodeshipMap.set("zachodniopomorskie", "zachodniopomorskie");
-    return voivodeshipMap;
+    this.getCompanyPageByKeyword(this.keyword, event.pageIndex, event.pageSize);
   }
 
   private mapCategoryResponsesToCategoryNode(category: CategoryCatalog[]): CategoryNode[] {
@@ -167,7 +147,7 @@ export class SearchComponent implements OnInit {
         ),
       [] as number[]
     );
-
+    //TODO Zmienić na wyszukiwania po keyword i kategorii oraz wojewódzctwach
     this.catalogService.getCompanies(0, 10, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
       .subscribe(page => this.page = page);
   }

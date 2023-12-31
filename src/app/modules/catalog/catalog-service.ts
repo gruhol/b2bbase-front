@@ -6,6 +6,7 @@ import { Page } from '../common/model/page';
 import { CategoryCatalog } from './dto/CategoryCatalog';
 import { CompanyCatalogExtended } from './dto/CompanyCatalogExtended';
 import { SocialToCatalog } from './dto/SocalToCatalog';
+import { SearchCompanyResult } from '../search/dto/searchCompanyResult';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +56,12 @@ export class CatalogService {
     }
 
     return this.http.get<Page<CompanyCatalog>>("api/catalog/wholesales", { params });
+  }
+
+  getSearchResult(keyword: string, page: number, size: number): Observable<SearchCompanyResult> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<SearchCompanyResult>("api/search/" + keyword, {params});
   }
 }
