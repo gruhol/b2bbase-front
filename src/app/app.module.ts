@@ -10,7 +10,6 @@ import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorize
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
-import { SearchComponent } from './modules/search/search/search.component';
 
 @NgModule({
   declarations: [

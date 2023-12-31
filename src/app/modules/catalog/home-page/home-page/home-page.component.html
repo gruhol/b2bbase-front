@@ -8,9 +8,6 @@
                 <div class="card-body">
                 <h3 class="card-title">{{company.name}}</h3>
                 <p class="card-text">{{company.description}}</p>
-                <p class="card-text" *ngFor="let category of company.categories">
-                    <span class="btn btn-success btn-sm">{{category.name}}</span>
-                </p>
                 <a class="card-link" [routerLink]="['/company/' + company.slug]">Zobacz więcej</a>
                 </div>
             </div>

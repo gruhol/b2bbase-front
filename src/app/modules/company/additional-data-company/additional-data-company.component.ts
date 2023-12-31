@@ -127,26 +127,29 @@ export class AdditionalDataCompanyComponent implements OnInit {
 
   editAdditionalData() {
 
-    let selectCategory = this.categoryDataSource.data.reduce(
-      (acc: number[], node: CategoryNode) =>
-        acc.concat(
-          this.treeControl
-            .getDescendants(node)
-            .filter(
-              (node) =>
-                (node.children == null || node.children.length === 0) &&
-                node.selected &&
-                !this.hideLeafNode(node)
-            )
-            .map((descendant) => descendant.id || 0)
-        ),
+    let allselectCategory = this.categoryDataSource.data.reduce(
+      (acc: number[], node: CategoryNode) => {
+        const selectedDescendants = this.treeControl
+          .getDescendants(node)
+          .filter(
+            (node) =>
+              (node.children == null || node.children.length === 0) &&
+              node.selected &&
+              !this.hideLeafNode(node)
+          );
+        const categoryIds = selectedDescendants.map((descendant) => descendant.id || 0);
+        const parentIds = selectedDescendants.map((descendant) => descendant.parent?.id || 0);
+        return acc.concat(categoryIds, parentIds);
+      },
       [] as number[]
     );
+    let uniqueAllSelectCategory = Array.from(new Set(allselectCategory));
+
 
     if(this.editDescriptionForm.valid) {
       this.companyService.editAdditionalData({
         description: this.description.value,
-        categories: selectCategory,
+        categories: uniqueAllSelectCategory,
         logo: this.logo
       } as AdditionalData)
       .subscribe({
@@ -157,7 +160,7 @@ export class AdditionalDataCompanyComponent implements OnInit {
               description: response.description,
             });
 
-            this.snackBar.open("Opis został zaktualizowany", '', { duration: 3000 });
+            this.snackBar.open("Dane zostały zaktualizowane", '', { duration: 3000 });
           }
         },
         error: err => {
