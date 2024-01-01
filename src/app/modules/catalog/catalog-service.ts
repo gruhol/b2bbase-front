@@ -58,10 +58,32 @@ export class CatalogService {
     return this.http.get<Page<CompanyCatalog>>("api/catalog/wholesales", { params });
   }
 
-  getSearchResult(keyword: string, page: number, size: number): Observable<SearchCompanyResult> {
-    let params = new HttpParams()
+  getSearchResult(keyword: string, 
+                  page: number, size: number, 
+                  categories: number[], voivodeshipSlugs: string[], 
+                  isEdiCooperation?: boolean, isApiCooperation?: boolean, isProductFileCooperation?: boolean)
+                  : Observable<SearchCompanyResult> {
+    
+      let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
+
+    if (categories.length > 0) {
+      params = params.set('categories', categories.join(','));
+    }
+    if (voivodeshipSlugs.length > 0) {
+      params = params.set('voivodeshipSlugs', voivodeshipSlugs.join(','));
+    }
+    if (isEdiCooperation !== undefined) {
+      params = params.set('isEdiCooperation', isEdiCooperation.toString());
+    }
+    if (isApiCooperation !== undefined) {
+      params = params.set('isApiCooperation', isApiCooperation.toString());
+    }
+    if (isProductFileCooperation !== undefined) {
+      params = params.set('isProductFileCooperation', isProductFileCooperation.toString());
+    }
+
     return this.http.get<SearchCompanyResult>("api/search/" + keyword, {params});
   }
 }

@@ -1,4 +1,4 @@
-<p>{{keyword}}</p>
+
 <div class="container">
     <div class="row">
         <div class="col-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
@@ -51,7 +51,7 @@
 
         </div>
         <div class="col-9">
-            <p class="text-right px-4">Znaleziono {{page?.totalElements}} firm.</p>
+            <p class="text-right px-4">Znaleziono {{page?.totalElements}} firm dla zapytania: <strong>{{keyword}}</strong></p>
 
             <div *ngFor="let company of page?.content" class="ms-3">
                 <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">

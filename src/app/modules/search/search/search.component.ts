@@ -48,7 +48,7 @@ export class SearchComponent implements OnInit {
       this.keyword = params['keyword'];
     });
 
-    this.catalogService.getSearchResult(this.keyword, 0, 10)
+    this.catalogService.getSearchResult(this.keyword, 0, 10, this.selectCategory, this.voivodeshipCheckedList)
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node.categoryListForCompany)))
       .subscribe(data => {
         this.categoryDataSource.data = data;
@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
   }
 
   private getCompanyPageByKeyword(keyword: string, page: number, size: number) {
-    this.catalogService.getSearchResult(this.keyword, page, size)
+    this.catalogService.getSearchResult(keyword, page, size,  this.selectCategory, this.voivodeshipCheckedList)
       .subscribe(result => {
         this.page = result.companies
         this.voivodeship = result.voivodeshipEnumList
@@ -147,9 +147,21 @@ export class SearchComponent implements OnInit {
         ),
       [] as number[]
     );
-    //TODO Zmienić na wyszukiwania po keyword i kategorii oraz wojewódzctwach
-    this.catalogService.getCompanies(0, 10, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
-      .subscribe(page => this.page = page);
+    
+    this.catalogService.getSearchResult(this.keyword, 0, 10, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+      .subscribe(result => {
+        this.page = result.companies
+        this.voivodeship = result.voivodeshipEnumList
+      })
+
+    this.catalogService.getSearchResult(this.keyword, 0, 10, this.selectCategory, this.voivodeshipCheckedList)
+      .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node.categoryListForCompany)))
+      .subscribe(data => {
+        this.categoryDataSource.data = data;
+        for(let i = 0; i < this.categoryDataSource.data.length; i++) {
+          this.setParent(this.categoryDataSource.data[i], null);
+        }
+      });
   }
 
   toggleVoivodeship(key: string, isChecked: boolean) {
