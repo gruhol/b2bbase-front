@@ -13,7 +13,7 @@ FROM nginx:latest
 COPY --from=build /app/dist/* /usr/share/nginx/html/
 
 # Kopiuj plik konfiguracyjny proxy
-COPY proxy.conf.json /etc/nginx/conf.d/default.conf
+COPY proxy.config.json /etc/nginx/conf.d/default.conf
 
 # Dodaj konfigurację proxy do pliku NGINX
 RUN echo "location /api/ {" >> /etc/nginx/conf.d/default.conf
