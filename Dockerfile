@@ -17,7 +17,7 @@ COPY proxy.conf.json /etc/nginx/conf.d/default.conf
 
 # Dodaj konfigurację proxy do pliku NGINX
 RUN echo "location /api/ {" >> /etc/nginx/conf.d/default.conf
-RUN echo "    proxy_pass http://$TINYAPI/;" >> /etc/nginx/conf.d/default.conf
+RUN echo "    proxy_pass http://$BACKENDIP/;" >> /etc/nginx/conf.d/default.conf
 RUN echo "}" >> /etc/nginx/conf.d/default.conf
 
 # Uruchom NGINX
