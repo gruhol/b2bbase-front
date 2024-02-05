@@ -1,16 +1,10 @@
-# Etap 1: Budowanie aplikacji Angular
-FROM node:14 as builder
+FROM node:latest as build
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm install
 RUN npm run build
-# Etap 2: Uruchomienie aplikacji na Nginx
-FROM nginx:alpine
-# Skopiuj skompilowane pliki z etapu 1
-COPY --from=builder /app/dist /usr/share/nginx/html
-# Skopiuj plik proxy.config.json do katalogu /usr/share/nginx/html
+FROM nginx:latest
+COPY --from=build /app/dist/* /usr/share/nginx/html/
 COPY proxy.config.json /usr/share/nginx/html
-
-# Komenda startowa - bez dodatkowych ustawień Nginx
+EXPOSE 4200
 CMD ["nginx", "-g", "daemon off;"]
