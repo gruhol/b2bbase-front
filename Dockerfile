@@ -12,6 +12,5 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Skopiuj plik proxy.config.json do katalogu /usr/share/nginx/html
 COPY proxy.config.json /usr/share/nginx/html
 
-EXPOSE 4200
 # Komenda startowa - bez dodatkowych ustawień Nginx
 CMD ["nginx", "-g", "daemon off;"]
