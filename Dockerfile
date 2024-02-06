@@ -15,10 +15,5 @@ COPY --from=build /app/dist/* /usr/share/nginx/html/
 # Kopiuj plik konfiguracyjny proxy
 COPY proxy.config.json /etc/nginx/conf.d/default.conf
 
-# Dodaj konfigurację proxy do pliku NGINX
-RUN echo "location /api/ {" > /etc/nginx/conf.d/default.conf \
-    && echo "    proxy_pass http://$BACKENDIP/;" >> /etc/nginx/conf.d/default.conf \
-    && echo "}" >> /etc/nginx/conf.d/default.conf
-
 # Uruchom NGINX
 CMD ["nginx", "-g", "daemon off;"]
