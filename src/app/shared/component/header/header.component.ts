@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatMenuPanel } from '@angular/material/menu';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { EditUserService } from 'src/app/modules/user/edit-user/edit-user.servic
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewChecked {
 
   logged: boolean = false;
   menu!: MatMenuPanel<any>|null;
@@ -32,6 +32,13 @@ export class HeaderComponent implements OnInit {
       this.createSearchForm();
     }
   }
+  ngAfterViewChecked(): void {
+    this.loginStatusService.getLoginStatus().subscribe((status: boolean) => {
+      if (status) {
+        this.ngOnInit();
+      }
+    });
+  }
   
   ngOnInit(): void {
     this.logged = this.jwtService.isLoggedIn();
@@ -43,12 +50,6 @@ export class HeaderComponent implements OnInit {
       },
       error: user => {
         this.username = 'Niezalogowany';
-      }
-    });
-
-    this.loginStatusService.getLoginStatus().subscribe((status: boolean) => {
-      if (status) {
-        this.ngOnInit();
       }
     });
   }

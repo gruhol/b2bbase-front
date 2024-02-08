@@ -43,7 +43,7 @@ const routes: Routes = [
       {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
-      {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent},
+      {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent}
     ]
   },
