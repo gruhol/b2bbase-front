@@ -1,5 +1,5 @@
 FROM node:latest AS build
-WORKDIR /ap
+WORKDIR /app
 RUN npm cache clean --force
 COPY . .
 RUN npm install
