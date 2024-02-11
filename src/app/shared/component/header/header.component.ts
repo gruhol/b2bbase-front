@@ -1,8 +1,7 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatMenuPanel } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { JwtService } from 'src/app/modules/common/service/jwt.service';
 import { LoginStatusService } from 'src/app/modules/common/service/login-status.service';
 import { EditUserService } from 'src/app/modules/user/edit-user/edit-user.service';
 
@@ -11,7 +10,7 @@ import { EditUserService } from 'src/app/modules/user/edit-user/edit-user.servic
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewChecked {
+export class HeaderComponent implements OnInit {
 
   logged: boolean = false;
   menu!: MatMenuPanel<any>|null;
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   searchForm!: FormGroup;
 
   constructor(
-    private jwtService: JwtService,
     private editUserService: EditUserService,
     private loginStatusService: LoginStatusService,
     private formBuilder: FormBuilder,
@@ -32,24 +30,31 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       this.createSearchForm();
     }
   }
-  ngAfterViewChecked(): void {
+  
+  ngOnInit(): void {
+    this.loadUserData();
+
     this.loginStatusService.getLoginStatus().subscribe((status: boolean) => {
       if (status) {
-        this.ngOnInit();
+        this.loadUserData();
+        this.logged = true;
+      } else {
+        this.username = 'Niezalogowany';
+        this.logged = false;
       }
     });
   }
-  
-  ngOnInit(): void {
-    this.logged = this.jwtService.isLoggedIn();
 
+  loadUserData() {
     this.editUserService.getUser()
     .subscribe({
       next: user => {
         this.username = user.username;
+        this.logged = true;
       },
       error: user => {
         this.username = 'Niezalogowany';
+        this.logged = false;
       }
     });
   }
