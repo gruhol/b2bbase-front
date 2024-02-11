@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatMenuPanel } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { JwtService } from 'src/app/modules/common/service/jwt.service';
 import { LoginStatusService } from 'src/app/modules/common/service/login-status.service';
 import { EditUserService } from 'src/app/modules/user/edit-user/edit-user.service';
 
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit {
   searchForm!: FormGroup;
 
   constructor(
-    private jwtService: JwtService,
     private editUserService: EditUserService,
     private loginStatusService: LoginStatusService,
     private formBuilder: FormBuilder,
@@ -34,21 +32,29 @@ export class HeaderComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.logged = this.jwtService.isLoggedIn();
+    this.loadUserData();
 
+    this.loginStatusService.getLoginStatus().subscribe((status: boolean) => {
+      if (status) {
+        this.loadUserData();
+        this.logged = true;
+      } else {
+        this.username = 'Niezalogowany';
+        this.logged = false;
+      }
+    });
+  }
+
+  loadUserData() {
     this.editUserService.getUser()
     .subscribe({
       next: user => {
         this.username = user.username;
+        this.logged = true;
       },
       error: user => {
         this.username = 'Niezalogowany';
-      }
-    });
-
-    this.loginStatusService.getLoginStatus().subscribe((status: boolean) => {
-      if (status) {
-        this.ngOnInit();
+        this.logged = false;
       }
     });
   }
