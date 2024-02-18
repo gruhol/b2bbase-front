@@ -9,8 +9,5 @@ FROM nginx:latest AS ngi
 COPY --from=build /app/dist/* /usr/share/nginx/html/
 COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 
-COPY fullchain.pem /etc/letsencrypt/live/b2bpoint.pl/fullchain.pem
-COPY privkey.pem /etc/letsencrypt/live/b2bpoint.pl/privkey.pem
-
 EXPOSE 80
 EXPOSE 443
