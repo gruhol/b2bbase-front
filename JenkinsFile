@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "maven"
+    }
+    
+    environment {
+        BACKENDIP = credentials('BACKENDIP')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/gruhol/b2bbase-front.git'
+            }
+        }
+
+        stage('Stop and remove container') {
+            steps {
+                script {
+                    try {
+                        sh 'docker stop b2bpointfront && docker rm b2bpointfront'
+                    } catch (Exception e) {
+                        echo "Kontener nie istnieje. Pominięcie etapu."
+                    }
+                }
+            }
+        }
+
+        stage('Remove image') {
+            steps {
+                script {
+                    try {
+                        sh 'docker rmi b2bpointfront:b2bpointfront'
+                    } catch (Exception e) {
+                        echo "Obraz nie istnieje. Pominięcie etapu."
+                    }
+                }
+            }
+        }
+
+        stage('Build docker') {
+            steps {
+                script {
+                    sh 'docker build -t b2bpointfront:b2bpointfront .'
+                }
+            }
+        }
+
+        stage('Run docker') {
+            steps {
+                script {
+                    sh 'docker run -p 80:80 -p 443:80 ' +
+                    '-v /etc/letsencrypt/live/b2bpoint.pl/:/key/ '
+                    '-e BACKENDIP=${BACKENDIP} ' + 
+                    '-d --name b2bpointfront b2bpointfront:b2bpointfront'
+                }
+            }
+        }
+    }
+}
