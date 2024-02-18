@@ -51,8 +51,8 @@ pipeline {
         stage('Run docker') {
             steps {
                 script {
-                    sh 'docker run -p 80:80 -p 443:80 ' +
-                    '-v /etc/letsencrypt/live/b2bpoint.pl/:/key/ '
+                    sh 'docker run -p 80:80 -p 443:443 ' +
+                    '-v /etc/letsencrypt/live/b2bpoint.pl/:/key/ ' +
                     '-e BACKENDIP=${BACKENDIP} ' + 
                     '-d --name b2bpointfront b2bpointfront:b2bpointfront'
                 }
