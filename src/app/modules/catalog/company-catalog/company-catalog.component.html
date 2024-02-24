@@ -10,7 +10,7 @@
             <table class="table-responsive w-100">
                 <tr>
                     <td>
-                        <img *ngIf="company!.logo" src="{{'/api/img/get/logos/' + company!.logo}}">
+                        <img *ngIf="company!.logo" src="{{'/api/img/get/logos/' + company!.logo}}" class="img-fluid">
                         <img style="width: 200px;" *ngIf="company!.logo == undefined" src="./assets/nophoto.png">
                     </td>
                 </tr>
