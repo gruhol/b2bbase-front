@@ -26,6 +26,7 @@ import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { UserPanelComponent } from './modules/user/user-panel/user-panel.component';
 import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
 import { SearchComponent } from './modules/search/search/search.component';
+import { ViewpageComponent } from './modules/catalog/viewpage/viewpage.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,8 @@ const routes: Routes = [
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
       {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},
-      {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent}
+      {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent},
+      {path: 'page/:slug', title: 'Wyszukiwarka', component: ViewpageComponent}
     ]
   },
   {
