@@ -94,7 +94,7 @@
                 'is-invalid': regulations.invalid && regulations.touched,
                 'is-valid': regulations.valid && regulations.touched && regulations.dirty,
               }" formControlName="regulations">
-            <label class="form-check-label">Akceptuje regulamin oraz politykę prywatności</label>
+            <label class="form-check-label">Akceptuje <a [routerLink]="['/page/regulamin-strony']">regulamin</a> oraz <a [routerLink]="['/page/polityka-prywatnosci']">politykę prywatności</a></label>
             <div *ngIf="regulations.touched && regulations.dirty && regulations.hasError('required')" class="invalid-feedback">Akceptacja regulaminu serwisu oraz polityki prywatności jest wymagana.</div>
             </div>
 

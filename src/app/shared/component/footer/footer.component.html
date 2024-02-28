@@ -4,17 +4,20 @@
 
       <div class="row py-4 d-flex flex-column flex-sm-row justify-content-between  my-4 border-top">
 
-        <div class="col-8">
+        <div class="col-6">
           <p>© 2023 <strong>B2B</strong>Point.pl, All rights reserved.</p>
-          <ul class="list-unstyled d-flex">
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-          </ul>
+        </div>
+        
+        <div class="col-2">
+          <p><a [routerLink]="['/page/regulamin-strony']" class="fw-light text-secondary">Regulamin strony</a></p>
         </div>
 
         <div class="col-2">
-          <a href="#" class="termly-display-preferences fw-light text-secondary">Ustawienia Trybu zgody</a>
+          <p><a [routerLink]="['/page/polityka-prywatnosci']" class="fw-light text-secondary">Polityka prywatności</a></p>
+        </div>
+        
+        <div class="col-2">
+          <p><a href="#" class="termly-display-preferences fw-light text-secondary">Ustawienia Trybu zgody</a></p>
         </div>
 
       </div>

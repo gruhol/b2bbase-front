@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ViewpageService } from './viewpage.service';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { commonValues } from 'src/app/shared/common-values';
 
 @Component({
@@ -21,7 +21,8 @@ export class ViewpageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private service: ViewpageService,
-    private titleService: Title
+    private titleService: Title,
+    private meta: Meta,
   ) {
 
     this.activatedRoute.params.subscribe(params => {
@@ -42,6 +43,9 @@ export class ViewpageComponent implements OnInit {
         this.editDate = response.editDate;
 
         this.titleService.setTitle( response.title + " - " + commonValues.userSite);
+        const parser = new DOMParser();
+        const decodedString = parser.parseFromString(`<!doctype html><body>${this.content}`, 'text/html').body.textContent;
+        this.meta.updateTag({ name: 'description', content: decodedString!.substring(0, 170) });
 
       },
       error: () => this.notFound = true
