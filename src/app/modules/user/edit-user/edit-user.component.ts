@@ -4,6 +4,7 @@ import { JwtService } from '../../common/service/jwt.service';
 import { Router } from '@angular/router';
 import { EditUserService } from './edit-user.service';
 import { EditUser } from './dto/edituser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-user',
@@ -20,7 +21,9 @@ export class EditUserComponent {
   repeatNewPassword!: FormControl;
   errorMessage!: string;
   phone!: FormControl;
-  editUserSucces: boolean = false;
+  emailAgreement!: FormControl;
+  smsAgreement!: FormControl;
+
   validationErrors = new Map<string, String>();
   REDIRECT_ROUTE: string = "/registered";
   selectItem!: boolean;
@@ -28,8 +31,7 @@ export class EditUserComponent {
   constructor(
     private formBuilder: FormBuilder,
     private editUserService: EditUserService,
-    private jwtService: JwtService,
-    private router: Router
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +45,9 @@ export class EditUserComponent {
           username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
-          phone: user.phone
+          phone: user.phone,
+          emailAgreement: user.emailAgreement,
+          smsAgreement: user.smsAgreement
         });
       }
     });
@@ -60,16 +64,20 @@ export class EditUserComponent {
         password: this.editUserForm.get('password')?.value,
         newPassword: this.editUserForm.get('newPassword')?.value,
         repeatNewPassword: this.editUserForm.get('repeatNewPassword')?.value,
+        emailAgreement: this.editUserForm.get('emailAgreement')?.value,
+        smsAgreement: this.editUserForm.get('smsAgreement')?.value,
       } as EditUser)
       .subscribe({
         next: response => {
-          this.editUserSucces = true;
           this.editUserForm.patchValue({
             username: response.username,
             firstName: response.firstName,
             lastName: response.lastName,
-            phone: response.phone
+            phone: response.phone,
+            emailAgreement: response.emailAgreement,
+            smsAgreement: response.smsAgreement
           });
+          this.snackBar.open("Dane użytkownika zaaktualizowane", '', { duration: 3000 });
         },
         error: err => {
           if(err.error.message) {
@@ -98,6 +106,8 @@ export class EditUserComponent {
     this.newPassword = new FormControl('', [Validators.minLength(8)]);
     this.repeatNewPassword = new FormControl('', [Validators.minLength(8)]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
+    this.emailAgreement = new FormControl('');
+    this.smsAgreement = new FormControl('');
   }
 
   createForm() {
@@ -109,6 +119,8 @@ export class EditUserComponent {
       newPassword: this.newPassword,
       repeatNewPassword: this.repeatNewPassword,
       phone: this.phone,
+      emailAgreement: this.emailAgreement,
+      smsAgreement: this.smsAgreement
     }, {validators: this.validateAreEqual})
   }
 
@@ -116,7 +128,4 @@ export class EditUserComponent {
     return  c.value.newPassword  ===  c.value.repeatNewPassword ? null : {notsame: true};
   }
 
-  public closeAlert() {
-    this.editUserSucces = false;
-  }
 }

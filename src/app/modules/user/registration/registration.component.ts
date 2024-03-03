@@ -18,8 +18,9 @@ export class RegistrationComponent implements OnInit {
   password!: FormControl;
   repeatPassword!: FormControl;
   phone!: FormControl;
-  regulations!: FormControl;
-  marketing!: FormControl;
+  regulationsAgreement!: FormControl;
+  emailAgreement!: FormControl;
+  smsAgreement!: FormControl;
   validationErrors = new Map<string, String>();
   REDIRECT_ROUTE: string = "/registered";
 
@@ -67,8 +68,9 @@ export class RegistrationComponent implements OnInit {
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
     this.repeatPassword = new FormControl('', [Validators.required]);
     this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
-    this.regulations = new FormControl('', [Validators.required]);
-    this.marketing = new FormControl('');
+    this.regulationsAgreement = new FormControl('', [Validators.required]);
+    this.emailAgreement = new FormControl('');
+    this.smsAgreement = new FormControl('');
   }
 
   createForm() {
@@ -79,8 +81,9 @@ export class RegistrationComponent implements OnInit {
       password: this.password,
       repeatPassword: this.repeatPassword,
       phone: this.phone,
-      regulations: this.regulations,
-      marketing: this.marketing
+      regulationsAgreement: this.regulationsAgreement,
+      emailAgreement: this.emailAgreement,
+      smsAgreement: this.smsAgreement
     }, {validators: this.validateAreEqual})
   }
 

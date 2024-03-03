@@ -19,11 +19,6 @@
         <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
             {{errorMessage}}
         </div>
-
-        <div *ngIf="editUserSucces" class="alert alert-success alert-dismissible fade show" role="alert">
-            Dane zaktualizowane!
-            <button type="button" (click)="closeAlert()" class="btn-close" aria-label="Close"></button>
-          </div>
         
         <form [formGroup]="editUserForm" (submit)="submit()">
             <div class="row gy-3 mt-3 mb-3">
@@ -111,6 +106,16 @@
                     <div *ngIf="repeatNewPassword.touched && repeatNewPassword.hasError('required')" class="invalid-feedback">Powtórzenie hasło jest wymagane</div>
                 </div>
                 
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" name="emailAgreement" [(ngModel)]="emailAgreement" class="form-check-input" formControlName="emailAgreement">
+                <label class="form-check-label">Zgoda na email marketing</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" name="smsAgreement" [(ngModel)]="smsAgreement" class="form-check-input" formControlName="smsAgreement">
+                <label class="form-check-label">Zgoda na sms marketing</label>
             </div>
 
             <button class="w-100 btn btn-success btn-lg mt-4" type="submit">Zapisz zmiany</button>

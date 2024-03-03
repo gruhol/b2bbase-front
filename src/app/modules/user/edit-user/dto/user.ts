@@ -3,4 +3,6 @@ export interface User {
     lastName: string,
     username: string,
     phone: string
+    emailAgreement: boolean,
+    smsAgreement: boolean
 }
