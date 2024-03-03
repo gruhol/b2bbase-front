@@ -108,14 +108,21 @@
                 
             </div>
 
-            <div class="form-check">
+            <div class="form-check mt-3">
                 <input type="checkbox" name="emailAgreement" [(ngModel)]="emailAgreement" class="form-check-input" formControlName="emailAgreement">
-                <label class="form-check-label">Zgoda na email marketing</label>
+                <label class="form-check-label">Wyrażam zgodę na otrzymywanie informacji handlowych przesyłanych przez właściciela B2BPoint.pl drogą 
+                    elektroniczną na podany przeze mnie adres poczty elektronicznej zgodnie z ustawą z dnia 18 lipca 2002 r. o świadczeniu usług 
+                    drogą elektroniczną. Wyrażenie zgody jest dobrowolne, a zgoda może zostać odwołana w każdym czasie.
+                </label>
             </div>
 
-            <div class="form-check">
+            <div class="form-check mt-3">
                 <input type="checkbox" name="smsAgreement" [(ngModel)]="smsAgreement" class="form-check-input" formControlName="smsAgreement">
-                <label class="form-check-label">Zgoda na sms marketing</label>
+                <label class="form-check-label">
+                    Wyrażam zgodę na wykorzystywanie mojego numeru telefonu przez właściciela B2BPoint.pl dla celów marketingu bezpośredniego 
+                    w rozumieniu przepisów Ustawy z dnia 16 lipca 2004 r. – Prawo telekomunikacyjne. Wyrażenie zgody jest dobrowolne, 
+                    a zgoda może zostać odwołana w każdym czasie.
+                </label>
             </div>
 
             <button class="w-100 btn btn-success btn-lg mt-4" type="submit">Zapisz zmiany</button>

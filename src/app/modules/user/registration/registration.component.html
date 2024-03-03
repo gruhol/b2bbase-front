@@ -99,20 +99,22 @@
             <div *ngIf="regulationsAgreement.touched && regulationsAgreement.dirty && regulationsAgreement.hasError('required')" class="invalid-feedback">Akceptacja regulaminu serwisu oraz polityki prywatności jest wymagana.</div>
             </div>
 
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" [ngClass]="{
-                    'is-invalid': emailAgreement.invalid && emailAgreement.touched,
-                    'is-valid': emailAgreement.valid && emailAgreement.touched && emailAgreement.dirty,
-                  }" formControlName="emailAgreement">
-                <label class="form-check-label">Zgoda na email marketing</label>
+            <div class="form-check mt-3">
+                <input type="checkbox" class="form-check-input" formControlName="emailAgreement">
+                <label class="form-check-label">
+                    Wyrażam zgodę na otrzymywanie informacji handlowych przesyłanych przez właściciela B2BPoint.pl drogą 
+                    elektroniczną na podany przeze mnie adres poczty elektronicznej zgodnie z ustawą z dnia 18 lipca 2002 r. o świadczeniu usług 
+                    drogą elektroniczną. Wyrażenie zgody jest dobrowolne, a zgoda może zostać odwołana w każdym czasie.
+                </label>
             </div>
 
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" [ngClass]="{
-                    'is-invalid': smsAgreement.invalid && smsAgreement.touched,
-                    'is-valid': smsAgreement.valid && smsAgreement.touched && smsAgreement.dirty,
-                  }" formControlName="smsAgreement">
-                <label class="form-check-label">Zgoda na sms marketing</label>
+            <div class="form-check mt-3">
+                <input type="checkbox" class="form-check-input" formControlName="smsAgreement">
+                <label class="form-check-label">
+                    Wyrażam zgodę na wykorzystywanie mojego numeru telefonu przez właściciela B2BPoint.pl dla celów marketingu bezpośredniego 
+                    w rozumieniu przepisów Ustawy z dnia 16 lipca 2004 r. – Prawo telekomunikacyjne. Wyrażenie zgody jest dobrowolne, 
+                    a zgoda może zostać odwołana w każdym czasie.
+                </label>
             </div>
 
             <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zarejestruj się</button>
