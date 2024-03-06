@@ -10,7 +10,7 @@ import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorize
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//import { GoogleTagManagerService } from 'angular-google-tag-manager';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @NgModule({
   declarations: [
@@ -28,9 +28,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    RoleUserAuthorizeGuard//,
-    //{provide: 'googleTagManagerId', useValue: "GTM-P2VWLBKX"},
-    //GoogleTagManagerService
+    RoleUserAuthorizeGuard,
+    {provide: 'googleTagManagerId', useValue: "GTM-P2VWLBKX"},
+    GoogleTagManagerService
   ],
   bootstrap: [AppComponent]
 })
