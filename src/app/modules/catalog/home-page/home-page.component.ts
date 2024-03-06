@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CatalogService } from '../../catalog-service';
-import { CompanyCatalogExtended } from '../../dto/CompanyCatalogExtended';
+import { CatalogService } from '../catalog-service';
+import { CompanyCatalogExtended } from '../dto/CompanyCatalogExtended';
 
 @Component({
   selector: 'app-home-page',
