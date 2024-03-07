@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col" *ngIf="companies.length > 0">
+        <div class="col" *ngIf="companies !== undefined && companies.length > 0">
             <h2>Ostatnie dodane firmy</h2>
             <div *ngFor="let company of companies">
                 <p></p>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="col" *ngIf="companies.length == 0">
+        <div class="col" *ngIf="companies !== undefined && companies.length == 0">
             <h2>Ostatnie dodane firmy</h2>
             <p>Nie dodano jeszcze żadnej nowej firmy. <a [routerLink]="['/add-company']">Dodaj ją pierwszy</a></p>
         </div>
