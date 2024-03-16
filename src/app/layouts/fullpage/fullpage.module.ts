@@ -20,6 +20,7 @@ import { SearchComponent } from 'src/app/modules/search/search/search.component'
 import { PaymentTypePipe } from 'src/app/shared/pipe/payment-type';
 import { PaymentStatusPipe } from 'src/app/shared/pipe/payment-status';
 import { ViewpageComponent } from 'src/app/modules/catalog/viewpage/viewpage.component';
+import { HomePageComponent } from 'src/app/modules/catalog/home-page/home-page.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { ViewpageComponent } from 'src/app/modules/catalog/viewpage/viewpage.com
         CompanyCatalogComponent,
         UserPanelComponent,
         SearchComponent,
-        ViewpageComponent
+        ViewpageComponent,
+        HomePageComponent
     ],
     imports: [
         CommonModule,

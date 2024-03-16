@@ -1,10 +1,10 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { JwtService } from "../service/jwt.service";
 import { Injectable, OnInit } from "@angular/core";
 
 @Injectable()
-export class RoleUserAuthorizeGuard implements CanActivate {
+export class RoleUserAuthorizeGuard  {
 
     private readonly role: string = "ROLE_USER";
 
