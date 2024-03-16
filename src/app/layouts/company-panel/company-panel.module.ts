@@ -26,7 +26,7 @@ import { EditSocialLinkComponent } from 'src/app/modules/social-link/edit-social
     AdditionalDataCompanyComponent,
     SocialLinkComponent,
     AddSocialLinkComponent,
-    EditSocialLinkComponent
+    EditSocialLinkComponent,
   ],
   imports: [
     CommonModule,

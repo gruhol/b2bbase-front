@@ -9,14 +9,13 @@ import { JwtInterceptor } from './modules/common/interceptor/jwt.interceptor';
 import { RoleUserAuthorizeGuard } from './modules/common/guard/RoleUserAuthorizeGuard';
 import { CompanyPanelModule } from './layouts/company-panel/company-panel.module';
 import { LogoutComponent } from './modules/user/logout/logout/logout.component';
-import { HomePageComponent } from './modules/catalog/home-page/home-page/home-page.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogoutComponent,
-    HomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +23,8 @@ import { GoogleTagManagerService } from 'angular-google-tag-manager';
     FullpageModule,
     CompanyPanelModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
