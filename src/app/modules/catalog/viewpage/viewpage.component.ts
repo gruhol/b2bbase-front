@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ViewpageService } from './viewpage.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { commonValues } from 'src/app/shared/common-values';
@@ -23,15 +23,13 @@ export class ViewpageComponent implements OnInit {
     private service: ViewpageService,
     private titleService: Title,
     private meta: Meta,
-  ) {
-
-    this.activatedRoute.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.getPage();
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      this.slug = params.get('slug') || ''; // Get slug from paramMap
+      this.getPage(); // Call getPage() whenever slug changes
+    });
   }
 
   getPage() {
@@ -51,6 +49,5 @@ export class ViewpageComponent implements OnInit {
       error: () => this.notFound = true
     })
   }
-
 
 }
