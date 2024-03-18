@@ -6,6 +6,8 @@ import { SocialToCatalog } from '../dto/SocalToCatalog';
 import { faFacebook, faLinkedin, faInstagram, faYoutube, faTwitter, faTiktok, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { Meta, Title } from '@angular/platform-browser';
 import { commonValues } from 'src/app/shared/common-values';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EmailSenderService } from '../../common/service/email-sender.service';
 
 @Component({
   selector: 'app-company-catalog',
@@ -14,6 +16,11 @@ import { commonValues } from 'src/app/shared/common-values';
 })
 export class CompanyCatalogComponent implements OnInit {
 
+  sendMassageForm!: FormGroup;
+  name!: FormControl;
+  email!: FormControl;
+  phone!: FormControl;
+  message!: FormControl;
   company!: CompanyCatalogExtended;
   socials!: SocialToCatalog[];
   notFound: boolean = false;
@@ -24,13 +31,14 @@ export class CompanyCatalogComponent implements OnInit {
   faYouTube = faYoutube;
   faTwitter = faTwitter;
   faTiktok = faTiktok;
+  formBuilder: any;
   
   constructor(
     private activatedRouter: ActivatedRoute,
     private catalogService: CatalogService,
     private titleService: Title,
     private meta: Meta,
-    private router: Router
+    private emailSender: EmailSenderService
   ) {}
 
   ngOnInit(): void {
@@ -76,4 +84,22 @@ export class CompanyCatalogComponent implements OnInit {
         return faTiktok;
     }
   }
+
+  createForm() {
+    this.sendMassageForm = this.formBuilder.group({
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      message: this.message
+    })
+  }
+
+  createRegistrationFormControls() {
+    this.name = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.phone = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
+    this.message = new FormControl('', [Validators.required]);
+  }
+
+  sendMessage() {}
 }

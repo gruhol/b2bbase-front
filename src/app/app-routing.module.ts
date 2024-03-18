@@ -27,7 +27,6 @@ import { UserPanelComponent } from './modules/user/user-panel/user-panel.compone
 import { HomePageComponent } from './modules/catalog/home-page/home-page.component';
 import { SearchComponent } from './modules/search/search/search.component';
 import { ViewpageComponent } from './modules/catalog/viewpage/viewpage.component';
-import { SitemapComponent } from './layouts/sitemap/sitemap.component';
 
 const routes: Routes = [
   {
@@ -61,8 +60,7 @@ const routes: Routes = [
       {path: 'edit-social-link/:id', title: 'Edytuj social link', component: EditSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]}
     ]
-  },
-  {path:'sitemap', title: 'Sitemap', component: SitemapComponent}
+  }
 ];
 
 @NgModule({

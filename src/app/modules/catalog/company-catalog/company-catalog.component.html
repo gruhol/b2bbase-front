@@ -105,32 +105,52 @@
         <div class="col-1"></div>
         <div class="col-4 border shadow-sm p-3 mb-3 rounded">
 
-            <form class="needs-validation p-3">
+            <form class="needs-validation p-3" [formGroup]="sendMassageForm" (submit)="sendMessage()">
                 <div class="row g-3">
 
                     <h4>Formularz kontaktowy</h4>
         
-                    <div class="col-12">
-                    <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" data-ddg-inputtype="identities.emailAddress" data-ddg-autofill="true" style="background-size: auto 24px !important; background-position: right center !important; background-repeat: no-repeat !important; background-origin: content-box !important; background-image: url(&quot;chrome-extension://bkdgflcldnnnapblkhphbgpggdiikppg/img/logo-small.svg&quot;) !important; transition: background 0s ease 0s !important;">
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
+                    <div class="col-md-12 col-lg-12">
+                        <label class="form-label">Imię: <strong style="color:brown">*</strong></label>
+                        <input type="text" class="form-control" [ngClass]="{
+                            'is-invalid': name.invalid && name.touched,
+                            'is-valid': name.valid && name.touched
+                          }" formControlName="name">
+                        <div *ngIf="name.touched && name.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
+                        <div *ngIf="name.touched && name.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
                     </div>
+
+                    <div class="col-md-12 col-lg-12">
+                        <label class="form-label">Adres e-mail: <strong style="color:brown">*</strong></label>
+                        <input type="text" class="form-control" [ngClass]="{
+                            'is-invalid': email.invalid && email.touched,
+                            'is-valid': email.valid && email.touched
+                          }" formControlName="email">
+                        <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
+                        <div *ngIf="email.touched && email.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12">
+                        <label class="form-label">Telefon: <strong style="color:brown">*</strong></label>
+                        <input type="text" class="form-control" [ngClass]="{
+                            'is-invalid': phone.invalid && phone.touched,
+                            'is-valid': phone.valid && phone.touched
+                          }" formControlName="phone">
+                        <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
+                        <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
                     </div>
         
                     <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label for="exampleFormControlTextarea1" class="form-label">Wiadomość:</label>
+                        <textarea class="form-control" [ngClass]="{
+                            'is-invalid': message.invalid && message.touched,
+                            'is-valid': message.valid && message.touched
+                          }" formControlName="message" formControlName="description" id="message" rows="5"></textarea>
                     </div>
-        
+                    
                 </div>
-        
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="same-address">
-                    <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-                </div>
-
-                <button class="w-100 btn btn-success btn-lg" type="submit">Continue to checkout</button>
+    
+                <button class="w-100 btn btn-success btn-lg" type="submit">Wyślij wiadomość</button>
                 </form>
 
         </div>
