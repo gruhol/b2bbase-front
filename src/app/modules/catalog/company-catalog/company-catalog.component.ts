@@ -8,6 +8,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { commonValues } from 'src/app/shared/common-values';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailSenderService } from '../../common/service/email-sender.service';
+import { EmailData } from './dto/EmailData';
 
 @Component({
   selector: 'app-company-catalog',
@@ -101,5 +102,27 @@ export class CompanyCatalogComponent implements OnInit {
     this.message = new FormControl('', [Validators.required]);
   }
 
-  sendMessage() {}
+  sendMessage() {
+    if(this.sendMassageForm.valid) {
+      this.emailSender.sendEmail({
+        name: this.name.value,
+        email: this.email.value,
+        phone: this.phone.value,
+        message: this.message.value
+      } as EmailData)
+      .subscribe({
+        next: response => {
+          
+        },
+        error: err => {
+          if(err.error.message) {
+            
+          }
+        }
+      });
+
+    } else {
+      this.sendMassageForm.markAllAsTouched();
+    }
+  }
 }

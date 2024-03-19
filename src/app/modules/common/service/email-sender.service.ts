@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EmailData } from '../../catalog/company-catalog/dto/EmailData';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class EmailSenderService {
 
   constructor(private http: HttpClient) { }
 
-  sendEmail(slug: string): Observable<any> {
-    return this.http.get<any>(`api/catalog/company/${slug}`);
+  sendEmail(emailData: EmailData): Observable<boolean> {
+    return this.http.get<boolean>(`api/catalog/company/${emailData}`);
   }
 }
