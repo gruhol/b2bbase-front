@@ -11,6 +11,6 @@ export class EmailSenderService {
   constructor(private http: HttpClient) { }
 
   sendEmail(emailData: EmailData): Observable<boolean> {
-    return this.http.get<boolean>(`api/catalog/company/${emailData}`);
+    return this.http.post<boolean>('api/sendEmail/contactForm', emailData);
   }
 }

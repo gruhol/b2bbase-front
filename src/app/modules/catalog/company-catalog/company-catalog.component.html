@@ -105,7 +105,7 @@
         <div class="col-1"></div>
         <div class="col-4 border shadow-sm p-3 mb-3 rounded">
 
-            <form class="needs-validation p-3" [formGroup]="sendMassageForm" (submit)="sendMessage()">
+            <form *ngIf="loggin" class="needs-validation p-3" [formGroup]="sendMassageForm" (submit)="sendMessage()">
                 <div class="row g-3">
 
                     <h4>Formularz kontaktowy</h4>
@@ -126,8 +126,8 @@
                             'is-invalid': email.invalid && email.touched,
                             'is-valid': email.valid && email.touched
                           }" formControlName="email">
-                        <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
-                        <div *ngIf="email.touched && email.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
+                        <div *ngIf="email.touched && email.hasError('required')" class="invalid-feedback">Pole email jest wymagane</div>
+                        <div *ngIf="email.touched && email.hasError('email')" class="invalid-feedback">Wpisz poprawny adres email</div>
                     </div>
 
                     <div class="col-md-12 col-lg-12">
@@ -136,8 +136,9 @@
                             'is-invalid': phone.invalid && phone.touched,
                             'is-valid': phone.valid && phone.touched
                           }" formControlName="phone">
-                        <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Pole Imię jest wymagane</div>
-                        <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Pole Imię musi zawierać min 3 znaki</div>
+                        <div *ngIf="phone.touched && phone.hasError('required')" class="invalid-feedback">Telefon do firmy jest wymagany</div>
+                        <div *ngIf="phone.touched && phone.hasError('pattern')" class="invalid-feedback">Prosze wprowadź tylko cyfry</div>
+                        <div *ngIf="phone.touched && phone.hasError('minlength')" class="invalid-feedback">Telefon musi zawierać min 9 cyfr</div>
                     </div>
         
                     <div class="mb-3">
@@ -145,13 +146,19 @@
                         <textarea class="form-control" [ngClass]="{
                             'is-invalid': message.invalid && message.touched,
                             'is-valid': message.valid && message.touched
-                          }" formControlName="message" formControlName="description" id="message" rows="5"></textarea>
-                    </div>
-                    
+                          }" formControlName="message" id="message" rows="5"></textarea>
+                          <div *ngIf="message.touched && message.hasError('required')" class="invalid-feedback">Pole wiadomość jest wymagane</div>
+                    </div>     
                 </div>
     
                 <button class="w-100 btn btn-success btn-lg" type="submit">Wyślij wiadomość</button>
-                </form>
+            </form>
+
+            <div *ngIf="loggin == false" class="row g-3">
+                <h4>Formularz kontaktowy</h4>
+
+                <p>Formularz kontaktowy dostępny jest tylko dla zalogowanych użytkowników.</p>
+            </div>
 
         </div>
     </div> 
