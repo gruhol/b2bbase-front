@@ -10,6 +10,9 @@ import { EmailSenderService } from '../../common/service/email-sender.service';
 import { EmailData } from './dto/EmailData';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JwtService } from '../../common/service/jwt.service';
+import { EditUserService } from '../../user/edit-user/edit-user.service';
+import { User } from '../../user/edit-user/dto/user';
+import { toHtml } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-company-catalog',
@@ -27,6 +30,8 @@ export class CompanyCatalogComponent implements OnInit {
   socials!: SocialToCatalog[];
   notFound: boolean = false;
   loggin: boolean = false;
+  user!: User;
+  info: string = "";
   //icons
   faFacebook = faFacebook;
   faLinkedin = faLinkedin;
@@ -42,16 +47,35 @@ export class CompanyCatalogComponent implements OnInit {
     private meta: Meta,
     private emailSender: EmailSenderService,
     private formBuilder: FormBuilder,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private userService: EditUserService
   ) {}
 
   ngOnInit(): void {
     let slug = this.activatedRouter.snapshot.params['slug'];
-
-    this.createRegistrationFormControls();
-    this.createForm();
-
+    this.userService.getUser()
+      .subscribe({
+        next: user => {
+          this.user = user;
+          this.createRegistrationFormControls();
+          this.createForm();
+        },
+        error: error => {
+          this.user = {
+            firstName: '',
+            lastName: '',
+            username: '',
+            phone: '',
+            emailAgreement: false,
+            smsAgreement: false
+          }
+          this.createRegistrationFormControls();
+          this.createForm();
+        }
+    });
+    
     this.loggin = this.jwtService.isLoggedIn();
+    
 
     this.catalogService.getCompany(slug)
       .subscribe({
@@ -67,8 +91,6 @@ export class CompanyCatalogComponent implements OnInit {
         },
         error: () => this.notFound = true
       });
-
-    
   }
 
   getSocials(id: number): void {
@@ -98,9 +120,9 @@ export class CompanyCatalogComponent implements OnInit {
   }
 
   createRegistrationFormControls() {
-    this.name = new FormControl("", [Validators.required, Validators.minLength(3)]);
-    this.email = new FormControl("", [Validators.required, Validators.email]);
-    this.phone = new FormControl("", [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
+    this.name = new FormControl(this.user.firstName, [Validators.required, Validators.minLength(3)]);
+    this.email = new FormControl(this.user.username, [Validators.required, Validators.email]);
+    this.phone = new FormControl(this.user.phone, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(9), Validators.maxLength(11)]);
     this.message = new FormControl("", [Validators.required]);
   }
 
@@ -124,10 +146,10 @@ export class CompanyCatalogComponent implements OnInit {
       } as EmailData)
       .subscribe({
         next: response => {
-          console.log("dziala")
+          this.info = "send";
         },
         error: err => {
-          console.log("nie dziala")
+          this.info = "error";
         }
       });
 
@@ -135,5 +157,9 @@ export class CompanyCatalogComponent implements OnInit {
       console.log("blad form");
       this.sendMassageForm.markAllAsTouched();
     }
+  }
+
+  resetForm() {
+    this.info = "";
   }
 }

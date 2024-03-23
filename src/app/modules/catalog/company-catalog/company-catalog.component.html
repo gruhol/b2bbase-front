@@ -104,15 +104,12 @@
         <div *ngIf="!company.description" class="col-7">Brak opisu firmy.</div>
         <div class="col-1"></div>
         <div class="col-4 border shadow-sm p-3 mb-3 rounded">
-
             <form *ngIf="loggin" class="needs-validation p-3" [formGroup]="sendMassageForm" (submit)="sendMessage()">
-                <div class="row g-3">
-
+                <div class="row g-3" *ngIf="info.length == 0">
                     <h4>Formularz kontaktowy</h4>
-        
                     <div class="col-md-12 col-lg-12">
                         <label class="form-label">Imię: <strong style="color:brown">*</strong></label>
-                        <input type="text" class="form-control" [ngClass]="{
+                        <input  type="text" class="form-control" [ngClass]="{
                             'is-invalid': name.invalid && name.touched,
                             'is-valid': name.valid && name.touched
                           }" formControlName="name">
@@ -148,16 +145,28 @@
                             'is-valid': message.valid && message.touched
                           }" formControlName="message" id="message" rows="5"></textarea>
                           <div *ngIf="message.touched && message.hasError('required')" class="invalid-feedback">Pole wiadomość jest wymagane</div>
-                    </div>     
+                    </div>
+                    
+                    <button class="w-100 btn btn-success btn-lg" type="submit">Wyślij wiadomość</button>
+                </div>
+                <div class="row g-3" *ngIf="info === 'send'">
+                    <h3>Wiadomość wysłana!</h3>
+                    <a href="javascript:void(0)" (click)="resetForm()">Wyślij ponownie</a>
+                </div>
+                <div class="row g-3" *ngIf="info === 'error'">
+                    <p>Wystąpił błąd podczas wysyłania wiadomości. Spróbuj jeszcze raz lub skontaktuj się z nami!</p>
+                    <a href="javascript:void(0)" (click)="resetForm()">Wyślij ponownie</a>
                 </div>
     
-                <button class="w-100 btn btn-success btn-lg" type="submit">Wyślij wiadomość</button>
+                
             </form>
 
-            <div *ngIf="loggin == false" class="row g-3">
-                <h4>Formularz kontaktowy</h4>
-
-                <p>Formularz kontaktowy dostępny jest tylko dla zalogowanych użytkowników.</p>
+            <div *ngIf="loggin == false" class="needs-validation p-3">
+                <div class="row g-3">
+                    <h4>Formularz kontaktowy</h4>
+                    <p>Formularz kontaktowy dostępny jest tylko dla zalogowanych użytkowników. <br><br>
+                    <a routerLink="/login">Zaloguj się</a> lub <a routerLink="/registration">zarejestruj!</a></p>
+                </div>
             </div>
 
         </div>
