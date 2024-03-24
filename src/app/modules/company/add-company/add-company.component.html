@@ -149,9 +149,7 @@
                         'is-invalid': wwwSite.invalid && wwwSite.touched,
                         'is-valid': wwwSite.valid && wwwSite.touched
                       }" formControlName="wwwSite">
-                      <div *ngIf="wwwSite.touched && wwwSite.hasError('required')" class="invalid-feedback">Pole wwwSite jest wymagane</div>
-                      <div *ngIf="wwwSite.touched && wwwSite.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url</div>
-                      <div *ngIf="wwwSite.touched && wwwSite.hasError('minlength')" class="invalid-feedback">Pole wwwSite musi zawierać min 2 znaki</div>
+                      <div *ngIf="wwwSite.touched && wwwSite.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url według wzoru: http://www.twojurl.pl</div>
                 </div>
                 <div class="col-md-12 col-lg-6">
                     <label class="form-label">Adres sklepu  www: </label>
@@ -159,9 +157,7 @@
                         'is-invalid': wwwStore.invalid && wwwStore.touched,
                         'is-valid': wwwStore.valid && wwwStore.touched
                       }" formControlName="wwwStore">
-                      <div *ngIf="wwwStore.touched && wwwStore.hasError('required')" class="invalid-feedback">Adres sklepu  www jest wymagane</div>
-                      <div *ngIf="wwwStore.touched && wwwStore.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url</div>
-                      <div *ngIf="wwwStore.touched && wwwStore.hasError('minlength')" class="invalid-feedback">Adres sklepu  www musi zawierać min 2 znaki</div>
+                      <div *ngIf="wwwStore.touched && wwwStore.hasError('pattern')" class="invalid-feedback">Wpisz poprawny adres url według wzoru: http://www.twojurl.pl</div>
                 </div>
             </div>
 

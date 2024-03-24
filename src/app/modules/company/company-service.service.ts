@@ -13,7 +13,7 @@ export class CompanyServiceService {
   constructor(private http: HttpClient) { }
 
   addCompany(company: CompanyDto): Observable<CompanyDto>{
-    return this.http.post<CompanyDto>("/api/company/add", company);
+    return this.http.post<CompanyDto>('/api/company/add', company);
   }
 
   getCompany(): Observable<CompanyToEditDto> {
