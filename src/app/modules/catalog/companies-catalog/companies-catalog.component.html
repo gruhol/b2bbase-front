@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
-        <div class="col-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
+
+        <div class="col-md-12 col-lg-3 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
             <h3 class="mt-2"><strong>Kategorie:</strong></h3>
             <mat-tree [dataSource]="categoryDataSource" [treeControl]="treeControl" class="example-tree">
                 <!-- This is the tree node template for leaf nodes -->
@@ -49,7 +50,7 @@
             </div>
 
         </div>
-        <div class="col-9">
+        <div class="col-md-12 col-lg-9">
             <p class="text-right px-4">Znaleziono {{page?.totalElements}} firm.</p>
 
             <div *ngFor="let company of page?.content" class="ms-3">
