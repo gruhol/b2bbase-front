@@ -161,7 +161,8 @@
                 </div>
             </div>
 
-            <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Dodaj firmę</button>
+            <button *ngIf="!buttonSend" class="w-100 btn btn-success btn-lg mt-3" type="submit">Dodaj firmę</button>
+            <button *ngIf="buttonSend" class="w-100 btn btn-success btn-lg mt-3" type="submit" disabled>Proszę czekać</button>
         </form>
         </div>
         <div class="col-md-12 col-lg-2"></div>

@@ -23,6 +23,7 @@ export class RegistrationComponent implements OnInit {
   smsAgreement!: FormControl;
   validationErrors = new Map<string, String>();
   REDIRECT_ROUTE: string = "/registered";
+  buttonSend: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +41,7 @@ export class RegistrationComponent implements OnInit {
     this.validationErrors.clear()
     if(this.registerForm.valid) {
       this.jwtService.deleteToken();
+      this.buttonSend = true;
       this.registrationService.register(this.registerForm.value)
       .subscribe({
         next: response => {

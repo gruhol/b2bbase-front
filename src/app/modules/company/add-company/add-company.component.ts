@@ -27,6 +27,8 @@ export class AddCompanyComponent {
   validationErrors = new Map<string, String>();
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
+  buttonSend: boolean = false;
+  
 
   REDIRECT_AFTER_ADD = "/";
 
@@ -76,6 +78,7 @@ export class AddCompanyComponent {
     
     if(this.registerCompanyForm.valid) {
       const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
+      this.buttonSend = true;
       this.companyService.addCompany({
         name: this.name.value,
         type: requestType,
