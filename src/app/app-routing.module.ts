@@ -27,6 +27,7 @@ import { UserPanelComponent } from './modules/user/user-panel/user-panel.compone
 import { HomePageComponent } from './modules/catalog/home-page/home-page.component';
 import { SearchComponent } from './modules/search/search/search.component';
 import { ViewpageComponent } from './modules/catalog/viewpage/viewpage.component';
+import { AddedCompanyComponent } from './modules/company/added-company/added-company/added-company.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
       {path: 'send-password/:token', title: 'Weryfikacja adresu email', component: SendPasswordComponent},
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
+      {path: 'added-company', title: 'Dodano firmę', component: AddedCompanyComponent},
       {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},

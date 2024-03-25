@@ -28,9 +28,8 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  
 
-  REDIRECT_AFTER_ADD = "/";
+  REDIRECT_AFTER_ADD = "/added-company";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -94,7 +93,7 @@ export class AddCompanyComponent {
       .subscribe({
         next: response => {
           if (response) {
-            this.router.navigate([this.REDIRECT_AFTER_ADD]);
+            this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
           }
         },
         error: err => {
