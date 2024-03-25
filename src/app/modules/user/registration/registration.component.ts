@@ -52,7 +52,7 @@ export class RegistrationComponent implements OnInit {
           }
 
           const gtmTag = {
-            event: 'registration-user',
+            event: 'registration_user',
           };
           this.gtmService.pushTag(gtmTag);
 
