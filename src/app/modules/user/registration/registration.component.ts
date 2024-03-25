@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { RegistrationService } from './registration.service';
 import { Router } from '@angular/router';
 import { JwtService } from '../../common/service/jwt.service';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
   selector: 'app-registration',
@@ -29,7 +30,8 @@ export class RegistrationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private jwtService: JwtService,
-    private router: Router
+    private router: Router,
+    private gtmService: GoogleTagManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +50,12 @@ export class RegistrationComponent implements OnInit {
           if (response) {
             this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
           }
+
+          const gtmTag = {
+            event: 'registration-user',
+          };
+          this.gtmService.pushTag(gtmTag);
+
         },
         error: err => {
           if(err.error.message) {
