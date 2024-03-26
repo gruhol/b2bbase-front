@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { validatePolish } from 'validate-polish';
 import { CompanyServiceService } from '../company-service.service';
 import { CompanyDto } from './dto/companyDto';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
   selector: 'app-add-company',
@@ -34,7 +35,8 @@ export class AddCompanyComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private companyService: CompanyServiceService
+    private companyService: CompanyServiceService,
+    private gtmService: GoogleTagManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,10 @@ export class AddCompanyComponent {
       .subscribe({
         next: response => {
           if (response) {
+            const gtmTag = {
+              event: 'add_company',
+            };
+            this.gtmService.pushTag(gtmTag);
             this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
           }
         },

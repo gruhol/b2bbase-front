@@ -47,14 +47,14 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(this.registerForm.value)
       .subscribe({
         next: response => {
-          if (response) {
-            this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
-          }
-
           const gtmTag = {
             event: 'registration_user',
           };
           this.gtmService.pushTag(gtmTag);
+
+          if (response) {
+            this.router.navigate([this.REDIRECT_ROUTE, {registration: 'yes'}]);
+          }
 
         },
         error: err => {
