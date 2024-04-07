@@ -1,1 +1,8 @@
-<p>blog-post works!</p>
+<div class="container" *ngIf="notFound">
+    <p>Strony nie znaleziono.</p>
+</div>
+<div class="container" *ngIf="!notFound">
+    <h1>{{title}}</h1>
+    <p>Ostatnia aktualizacja: {{editDate | date}}, Autor: {{fistName}} {{lastName}}</p>
+    <div *ngIf="content" class="col-12" [innerHTML]="content"></div>
+</div>

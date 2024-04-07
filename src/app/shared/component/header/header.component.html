@@ -7,6 +7,7 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><button href="#" class="nav-link px-2 link-body-emphasis" [routerLink]="['/catalog']">Hurtownie</button></li>
+          <li><button href="#" class="nav-link px-2 link-body-emphasis" [routerLink]="['/blog']">Blog</button></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" [formGroup]="searchForm" (ngSubmit)="search()">
@@ -26,7 +27,6 @@
             <button mat-menu-item [routerLink]="['/login']">Zaloguj</button>
             <button mat-menu-item [routerLink]="['/registration']">Zarejestruj</button>
           </mat-menu>
-
 
       </div>
     </div>

@@ -21,6 +21,8 @@ import { PaymentTypePipe } from 'src/app/shared/pipe/payment-type';
 import { PaymentStatusPipe } from 'src/app/shared/pipe/payment-status';
 import { ViewpageComponent } from 'src/app/modules/catalog/viewpage/viewpage.component';
 import { HomePageComponent } from 'src/app/modules/catalog/home-page/home-page.component';
+import { BlogPostComponent } from 'src/app/modules/blog/blog-post/blog-post.component';
+import { BlogPostListComponent } from 'src/app/modules/blog/blog-post-list/blog-post-list.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +42,9 @@ import { HomePageComponent } from 'src/app/modules/catalog/home-page/home-page.c
         UserPanelComponent,
         SearchComponent,
         ViewpageComponent,
-        HomePageComponent
+        HomePageComponent,
+        BlogPostComponent,
+        BlogPostListComponent
     ],
     imports: [
         CommonModule,
