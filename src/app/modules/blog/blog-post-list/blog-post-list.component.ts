@@ -32,7 +32,9 @@ export class BlogPostListComponent {
 
   private getCompanyPage(page: number, size: number) {
     this.blogService.getBlogPosts(page, size, this.categoryCheckedList)
-    .subscribe(page => this.page = page);
+    .subscribe(page => {
+      this.page = page;
+    });
   }
 
   onPageEvent(event: PageEvent) {

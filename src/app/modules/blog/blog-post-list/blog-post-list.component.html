@@ -18,7 +18,7 @@
                 <h2><a href="" class="link-success" [routerLink]="['/blog/' + blog.slug]">{{blog.title}}</a></h2>
                 <p>Autor: {{blog.author.firstName}} {{blog.author.lastName}}, Opublikowano dnia: {{blog.addDate | date}}</p>
                 <p>Kategoria: <strong>{{blog.category.name}} </strong></p>
-                <p>{{blog.content | slice:0:400}}...</p>
+                <div *ngIf="blog.content" class="col-12" [innerHTML]="blog.introduction.slice(0, 400) + '...'"></div>
                 <p><a href="" class="link-secondary" [routerLink]="['/blog/' + blog.slug]">czytaj więcej</a></p>
                 <hr>
             </div>
