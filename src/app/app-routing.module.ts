@@ -28,6 +28,8 @@ import { HomePageComponent } from './modules/catalog/home-page/home-page.compone
 import { SearchComponent } from './modules/search/search/search.component';
 import { ViewpageComponent } from './modules/catalog/viewpage/viewpage.component';
 import { AddedCompanyComponent } from './modules/company/added-company/added-company/added-company.component';
+import { BlogPostListComponent } from './modules/blog/blog-post-list/blog-post-list.component';
+import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component';
 
 const routes: Routes = [
   {
@@ -48,7 +50,9 @@ const routes: Routes = [
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
       {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent},
-      {path: 'page/:slug', title: 'Wyszukiwarka', component: ViewpageComponent}
+      {path: 'page/:slug', title: 'Wyszukiwarka', component: ViewpageComponent},
+      {path: 'blog', title: "Blog", component: BlogPostListComponent},
+      {path: 'blog/:slug', title: "Blog", component: BlogPostComponent}
     ]
   },
   {
