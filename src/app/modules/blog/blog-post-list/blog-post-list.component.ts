@@ -4,7 +4,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { BlogResponse } from '../dto/BlogResponse';
 import { Page } from '../../common/model/page';
 import { BlogCategory } from '../dto/BlogCategory';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-blog-post-list',

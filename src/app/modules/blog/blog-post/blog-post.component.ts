@@ -4,6 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { commonValues } from 'src/app/shared/common-values';
 import { BlogService } from '../blog.service';
 import { DOCUMENT } from '@angular/common';
+import { BlogCategory } from '../dto/BlogCategory';
 
 @Component({
   selector: 'app-blog-post',
@@ -21,6 +22,7 @@ export class BlogPostComponent implements OnInit {
   editDate!: Date;
   fistName: string = '';
   lastName: string = '';
+  category!: BlogCategory;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,6 +50,7 @@ export class BlogPostComponent implements OnInit {
         this.editDate = response.editDate;
         this.fistName = response.author.firstName;
         this.lastName = response.author.lastName;
+        this.category = response.category;
 
         this.titleService.setTitle( response.title + " - " + commonValues.userSite);
         const parser = new DOMParser();

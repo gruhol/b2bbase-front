@@ -1,7 +1,7 @@
 <div class="container">
     <p class="text-right">Znaleziono {{page?.totalElements}} wpisów.</p>
     <div class="row">
-        <div class="col-3">Kategorie:
+        <div class="col-md-12 col-lg-3">Kategorie:
             
             <div *ngFor="let category of categories">
                 <mat-checkbox name="categories"  [value]="category.id.toString()" (change)="toggleCategory(category.id.toString(), $event.checked)">{{category.name}}</mat-checkbox><br />
@@ -12,7 +12,7 @@
             </div>
 
         </div>
-        <div class="col-9">
+        <div class="col-md-12 col-lg-9">
 
             <div *ngFor="let blog of page?.content" class="ms-3">
                 <h2><a href="" class="link-success" [routerLink]="['/blog/' + blog.slug]">{{blog.title}}</a></h2>

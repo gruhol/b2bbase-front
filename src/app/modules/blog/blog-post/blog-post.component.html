@@ -2,7 +2,23 @@
     <p>Strony nie znaleziono.</p>
 </div>
 <div class="container" *ngIf="!notFound">
-    <h1>{{title}}</h1>
-    <p>Ostatnia aktualizacja: {{editDate | date}}, Autor: {{fistName}} {{lastName}}</p>
-    <div *ngIf="content" class="col-12" [innerHTML]="content"></div>
+    <div class="row">
+        <div class="col-md-12 col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" [routerLink]="['/blog']">Blog</a></li>
+                    <li class="breadcrumb-item" aria-current="page">{{category.name}}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                </ol>
+            </nav>
+            <hr>
+            <h1>{{title}}</h1>
+            <p><small>Ostatnia aktualizacja: {{editDate | date}}</small></p>
+            <div *ngIf="content" class="col-12" [innerHTML]="content"></div>
+            <hr>
+            <p>Autor: {{fistName}} {{lastName}}</p>
+        </div>
+        <div class="col-md-12 col-lg-2"></div>
+    </div>
 </div>
