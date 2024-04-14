@@ -30,6 +30,7 @@ import { ViewpageComponent } from './modules/catalog/viewpage/viewpage.component
 import { AddedCompanyComponent } from './modules/company/added-company/added-company/added-company.component';
 import { BlogPostListComponent } from './modules/blog/blog-post-list/blog-post-list.component';
 import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component';
+import { BlogCategoryComponent } from './modules/blog/blog-category/blog-category.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
       {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent},
       {path: 'page/:slug', title: 'Wyszukiwarka', component: ViewpageComponent},
       {path: 'blog', title: "Blog", component: BlogPostListComponent},
-      {path: 'blog/:slug', title: "Blog", component: BlogPostComponent}
+      {path: 'blog/:slug', title: "Blog", component: BlogPostComponent},
+      {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent}
     ]
   },
   {

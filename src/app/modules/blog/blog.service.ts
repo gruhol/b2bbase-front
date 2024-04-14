@@ -32,5 +32,12 @@ export class BlogService {
   getBlogPost(slug: string): Observable<BlogResponse> {
     return this.http.get<BlogResponse>("/api/blog/" + slug);
   }
+
+  getBlogPostByCategoryName(slug: string, page: number, size: number): Observable<Page<BlogResponse>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<Page<BlogResponse>>("/api/blog/category/" + slug, {params});
+  }
   
 }

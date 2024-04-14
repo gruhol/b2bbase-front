@@ -23,6 +23,7 @@ import { ViewpageComponent } from 'src/app/modules/catalog/viewpage/viewpage.com
 import { HomePageComponent } from 'src/app/modules/catalog/home-page/home-page.component';
 import { BlogPostComponent } from 'src/app/modules/blog/blog-post/blog-post.component';
 import { BlogPostListComponent } from 'src/app/modules/blog/blog-post-list/blog-post-list.component';
+import { BlogCategoryComponent } from 'src/app/modules/blog/blog-category/blog-category.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { BlogPostListComponent } from 'src/app/modules/blog/blog-post-list/blog-
         ViewpageComponent,
         HomePageComponent,
         BlogPostComponent,
+        BlogCategoryComponent,
         BlogPostListComponent
     ],
     imports: [
