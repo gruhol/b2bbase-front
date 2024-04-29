@@ -6,15 +6,14 @@
 
             <p class="introduction">Otwierasz coś swojego, a nie masz jeszcze sprawdzonych dostawców? Twój obecny dostawca znowu nawalił z wysyłką?  
             A może szukasz nowych produktów, ale w lepszych cenach.</p>
-            <p class="introduction"> Znamy te problemy bardzo dobrze, dlatego aby je zaradzić 
-            stworzyliśmy B2bPoint.pl, bazę hurtowni online w której nie tylko znajdziesz nowych dostawców, ale również wszystkie 
-            niezbędne informacje o nich, abyś nie szukał, nie dzwonił i nie tracił Swojego cennego czasu.</p>
+            <p class="introduction"> Znamy te problemy bardzo dobrze, dlatego stworzyliśmy B2bPoint.pl, bazę hurtowni online w której nie tylko 
+            znajdziesz nowych dostawców, ale również wszystkie niezbędne informacje o nich, abyś nie szukał, nie dzwonił i nie tracił Swojego cennego czasu.</p>
 
             <h2 class="text-success">B2BPoint.pl to:</h2>
             <ul>
             <li>baza hurtowni z aktualnymi danymi podzielona na użyteczne kategorie</li>
             <li>dokładna informacja o dostępnym formach współpracy w zakresie integracji oraz pobieranie oferty produktowej</li>
-            <li>Cały czas rozwijana o nowe funkcjonalności, aby łączyć w przyjemny sposób współpracę pomiędzy dostawcami a odbiorcami sklepami detalicznymi</li>
+            <li>Cały czas rozwijana o nowe funkcjonalności, aby łączyć w przyjemny sposób współpracę pomiędzy dostawcami a odbiorcami - sklepami detalicznymi</li>
             </ul>
         </div>
         <div class="col-md-12 col-lg-2"></div>
@@ -23,46 +22,45 @@
     <div class="row">
         <div class="col-md-12 col-lg-2"></div>
         <div class="col-md-12 col-lg-4">
-            <div class="card">
+            <div class="card bg-secondary-subtle">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Mam sklep i szukam dostawców</strong></h5>
+                    <h4 class="card-title"><strong>Mam sklep i szukam dostawców</strong></h4>
                     <p class="card-text">Znajdź swojego nowego dostawcę</p>
-                    <a href="#" class="btn btn-success">Przejdź do listy hurtowni</a>
+                    <a href="#" [routerLink]="['/catalog']" class="btn btn-success">Przejdź do listy hurtowni</a>
                 </div>
             </div>
         </div>
         <div class="col-md-12 col-lg-4">
-            <div class="card">
+            <div class="card bg-secondary-subtle">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Jestem hurtownią i chce dołączyć do b2bPoint.pl</strong></h5>
+                    <h4 class="card-title"><strong>Jestem hurtownią i chce dołączyć do b2bPoint.pl</strong></h4>
                     <p class="card-text">Sprawdź jak dodać swoją firmę do naszej bazy hurtowni.</p>
-                    <a href="#" class="btn btn-success">Dodaj hurtownię</a>
+                    <a href="#" class="btn btn-success">Zobacz zalety B2BPoint i dodaj hurtownię</a>
                 </div>
             </div>
         </div>
         <div class="col-md-12 col-lg-2"></div>
     </div>
 
-    <hr>
-
-    <div *ngIf="companies !== undefined && companies.length > 0">
-        <div class="mt-4"><h2>Ostatnie dodane firmy</h2></div>
-        <div  class="row">
-        <div *ngFor="let company of companies">
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">{{company.name}}</h3>
-                        <a class="card-link" [routerLink]="['/company/' + company.slug]">Zobacz więcej</a>
+    <div class="row">
+        <div class="col-md-12 col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">
+            <div *ngIf="companies !== undefined && companies.length > 0">
+                <div class="mt-4"><h2>Ostatnie dodane firmy:</h2></div>
+                <div  class="row">
+                <div class="col-md-6 col-lg-4" *ngFor="let company of companies">
+                    <div class="card mt-3">
+                        <div class="card-body company-list">
+                            <h3 class="card-title">{{company.name}}</h3>
+                            <a class="card-link" [routerLink]="['/company/' + company.slug]">Zobacz więcej</a>
+                        </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
-        </div>
+        <div class="col-md-12 col-lg-2"></div>
     </div>
-
-    
-
 
     <!-- <div class="row">
         <div class="col-md-12 col-lg-6">
