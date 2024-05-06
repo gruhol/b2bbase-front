@@ -15,6 +15,7 @@ export class LoginComponent {
   username!: FormControl;
   password!: FormControl;
   loginForm!: FormGroup;
+  message!: string;
   
   validationErrors = new Map<string, String>();
   loginError: String = "";
@@ -26,11 +27,14 @@ export class LoginComponent {
     private jwtService: JwtService,
     private router: Router,
     private loginStatusService: LoginStatusService,
-  ) {}
+  ) {
+    this.message = history.state.message;
+  }
 
   ngOnInit(): void {
     this.createRegistrationFormControls();
     this.createForm();
+    
   }
 
   createRegistrationFormControls() {
@@ -58,6 +62,10 @@ export class LoginComponent {
           error: err => this.loginError = err.error.message
         })
     }
+  }
+
+  hideMessage() {
+    this.message = "";
   }
 
 }

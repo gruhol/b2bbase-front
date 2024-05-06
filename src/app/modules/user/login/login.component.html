@@ -1,5 +1,13 @@
 <div class="container">
     <main>
+        <div *ngIf="message">
+            
+        </div>
+
+        <div *ngIf="message && message.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" (click)="hideMessage()" aria-label="Close"></button>
+        </div>
     <div class="row g-5">
         <div class="col-md-12 col-lg-6">
             <div class="pt-5 pb-1">

@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><strong>Jestem hurtownią i chce dołączyć do b2bPoint.pl</strong></h4>
                     <p class="card-text">Sprawdź jak dodać swoją firmę do naszej bazy hurtowni.</p>
-                    <a href="#" class="btn btn-success">Zobacz zalety B2BPoint i dodaj hurtownię</a>
+                    <a href="#" [routerLink]="['/add-company']" class="btn btn-success">Zobacz zalety B2BPoint i dodaj hurtownię</a>
                 </div>
             </div>
         </div>
@@ -61,37 +61,4 @@
         </div>
         <div class="col-md-12 col-lg-2"></div>
     </div>
-
-    <!-- <div class="row">
-        <div class="col-md-12 col-lg-6">
-            <h1 class="mt-5">B2B Point</h1>
-            <p>🛍️ Odkryj nową przestrzeń dla Twojej hurtowni na naszej platformie internetowej! 🚀</p>
-
-            <p>🌟 Czy jesteś właścicielem hurtowni szukającym nowych sposobów na dotarcie do klientów? 
-            🤝 Szukasz platformy, która pozwoli Ci efektywnie promować swoje produkty i usługi?</p>
-                
-            <p>👉 Nasza platforma to miejsce, gdzie Twoja hurtownia może zabłysnąć! Zapewniamy Ci nie 
-            tylko możliwość prezentacji swojej oferty, ale także szereg narzędzi, które pomogą Ci zbudować 
-            silną obecność online i przyciągnąć nowych klientów.</p>
-                
-            <p>🔍 Co zyskujesz, dołączając do naszej społeczności?</p>
-                
-            ✅ Możliwość prezentacji swoich produktów i usług w atrakcyjny sposób.<br>
-            ✅ Dostęp do szerokiej bazy klientów poszukujących hurtowniowych rozwiązań.<br>
-            ✅ Narzędzia marketingowe, które pomogą Ci dotrzeć do swojej docelowej grupy odbiorców.<br>
-            ✅ Możliwość nawiązywania nowych kontaktów biznesowych i współpracy z innymi hurtowniami.<br>
-            <br>
-            
-            <p>Nie czekaj dłużej! Dołącz do naszej platformy już dziś i rozwiń swoją hurtownię w nowy sposób! 💼💻</p>
-            <button class="btn btn-success btn-lg" [routerLink]="['/add-company']">Dodaj nową firmę</button>
-        </div>
-
-        
-
-        <div class="col-md-12 col-lg-6" *ngIf="companies !== undefined && companies.length == 0">
-            <h2>Ostatnie dodane firmy</h2>
-            <p>Nie dodano jeszcze żadnej nowej firmy. <a [routerLink]="['/add-company']">Dodaj ją pierwszy</a></p>
-        </div>
-        
-    </div> -->
 </div>
