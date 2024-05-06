@@ -7,7 +7,7 @@ import { Injectable, OnInit } from "@angular/core";
 export class RoleUserAuthorizeGuard  {
 
     private readonly role: string = "ROLE_USER";
-    private readonly message: string = "Dostęp tylko dla zalogowanych użytkowników";
+    private readonly message: string = "Dostęp tylko dla zalogowanych użytkowników!";
 
     constructor(
         private jwtService: JwtService,

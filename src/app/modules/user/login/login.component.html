@@ -1,9 +1,5 @@
 <div class="container">
     <main>
-        <div *ngIf="message">
-            
-        </div>
-
         <div *ngIf="message && message.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
             {{message}}
             <button type="button" class="btn-close" (click)="hideMessage()" aria-label="Close"></button>
@@ -12,10 +8,10 @@
         <div class="col-md-12 col-lg-6">
             <div class="pt-5 pb-1">
                 <h2>Logowanie</h2>
-                <p>Proszę wpisz swoje dane.</p>
+                <p>Proszę wpisz swoje dane:</p>
             </div>
 
-            <hr class="mt-1 mb-4">
+            <hr class="mt-1 mb-4 w-75">
 
             <div *ngIf="validationErrors.get('password')" class="alert alert-danger" role="alert">
                 {{validationErrors.get('password')}}
@@ -31,7 +27,7 @@
         
             <form [formGroup]="loginForm" (submit)="login()">
 
-                <div class="col-md-12 col-lg-12 mb-3">
+                <div class="col-md-12 col-lg-10 mb-3">
                     <label class="form-label">Twój adres e-mail:</label>
                     <div class="input-group">
                         
@@ -44,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 col-lg-12 mb-3">
+                <div class="col-md-12 col-lg-10 mb-3">
                     <label class="form-label">Hasło:</label>
                     <input type="password" class="form-control" [ngClass]="{
                         'is-invalid': password.invalid && password.touched,
@@ -54,15 +50,22 @@
                     <div *ngIf="password.touched && password.hasError('minlength')" class="invalid-feedback">Pole Nazwisko musi zawierać min 8 znaki</div>
                 </div>
 
-                <button class="w-100 btn btn-success btn-lg mt-3" type="submit">Zaloguj się</button>
+                <button class="w-75 btn btn-success btn-lg mt-3" type="submit">Zaloguj się</button>
             </form>
             <p class="mt-4"><a routerLink="/remember-password">Nie pamiętasz hasła? Kliknij tutaj.</a></p>
         </div>
         <div class="col-md-12 col-lg-6">
             <div class="top-50 start-50 text-center">
                 <div class="mt-5">.</div>
-                <h2>Nie masz jeszcze konta?</h2>
-                <p>Załóż je teraz za darmo</p>
+                <h2>Nie masz jeszcze konta użytkownika?</h2>
+                <p>Załóż je teraz za darmo, aby:</p>
+                <div class="w-lg-50 mx-auto text-start">
+                    <ul>
+                        <li>dodawać hurtownie/firmy do bazy</li>
+                        <li>aby komentować oraz dodawać opinie</li>
+                        <li>oraz inne funkcjonalności dedykowane tylko dla zalogowanych użytkowników</li>
+                    </ul>
+                </div>
                 <p><a routerLink="/registration" class="btn btn-lg btn-success">Zarejestruj się</a></p>
             </div>
         </div>
