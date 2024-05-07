@@ -1,4 +1,12 @@
 <div class="container">
-    <p *ngIf="tokenStatus">Werikacja zakończona</p>
-    <p *ngIf="!tokenStatus">Werikacja błędna lub link nieaktualny</p>
+    <div *ngIf="tokenStatus">
+        <h1>Werikacja zakończona</h1>
+        <p>Weryfikacja twojego adresu email została zakończona.<br>Możesz się zalogować na swoje konto przechodząc do strony <a routerLink="/login">logowania</a></p>
+        <p>Po zalogowaniu na swoim koncie będziesz mógł dodać nową firmę w panelu użytkownika.</p>
+    </div>
+    
+    <div *ngIf="!tokenStatus">
+        <h1>Werikacja błędna lub link nieaktualny.</h1>
+        <p>Prosimy o kontakt na adres kontakt&#64;b2bpoint.pl</p>
+    </div>
 </div>
