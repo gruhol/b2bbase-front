@@ -56,7 +56,7 @@ const routes: Routes = [
       {path: 'blog', title: "Blog", component: BlogPostListComponent},
       {path: 'blog/:slug', title: "Blog", component: BlogPostComponent},
       {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent},
-      {path: ':slug', title: "Html Page", component: HtmlPageComponent}
+      {path: 'pl/:slug', title: "Html Page", component: HtmlPageComponent}
     ]
   },
   {
