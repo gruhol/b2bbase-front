@@ -9,7 +9,7 @@ import { CompanyCatalogExtended } from '../dto/CompanyCatalogExtended';
 })
 export class HomePageComponent implements OnInit{
 
-  lastCompanyParametr: number = 5;
+  lastCompanyParametr: number = 6;
   companies!: Array<CompanyCatalogExtended>;
   
   constructor(

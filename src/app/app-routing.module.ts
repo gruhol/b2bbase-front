@@ -31,6 +31,7 @@ import { AddedCompanyComponent } from './modules/company/added-company/added-com
 import { BlogPostListComponent } from './modules/blog/blog-post-list/blog-post-list.component';
 import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component';
 import { BlogCategoryComponent } from './modules/blog/blog-category/blog-category.component';
+import { HtmlPageComponent } from './modules/catalog/html-page/html-page.component';
 
 const routes: Routes = [
   {
@@ -51,10 +52,11 @@ const routes: Routes = [
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
       {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'search/:keyword', title: 'Wyszukiwarka', component: SearchComponent},
-      {path: 'page/:slug', title: 'Wyszukiwarka', component: ViewpageComponent},
+      {path: 'page/:slug', title: 'Strona statyczna', component: ViewpageComponent},
       {path: 'blog', title: "Blog", component: BlogPostListComponent},
       {path: 'blog/:slug', title: "Blog", component: BlogPostComponent},
-      {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent}
+      {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent},
+      {path: ':slug', title: "Html Page", component: HtmlPageComponent}
     ]
   },
   {

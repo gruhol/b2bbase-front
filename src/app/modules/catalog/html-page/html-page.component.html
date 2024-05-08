@@ -1,0 +1,6 @@
+<div class="container" *ngIf="notFound">
+    <p>Strony nie znaleziono.</p>
+</div>
+<div class="container" *ngIf="!notFound">
+    <div *ngIf="content" class="col-12" [innerHTML]="content"></div>
+</div>

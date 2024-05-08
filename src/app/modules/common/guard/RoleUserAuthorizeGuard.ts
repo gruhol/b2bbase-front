@@ -7,16 +7,17 @@ import { Injectable, OnInit } from "@angular/core";
 export class RoleUserAuthorizeGuard  {
 
     private readonly role: string = "ROLE_USER";
+    private readonly message: string = "Dostęp tylko dla zalogowanych użytkowników!";
 
     constructor(
         private jwtService: JwtService,
         private router: Router
         ) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot, ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         
         if (!this.jwtService.isLoggedIn()) {
-            this.router.navigate(["/login"]);
+            this.router.navigate(['/login'], { state: { message: this.message } });
         }
 
         if (this.checkRole()) {
