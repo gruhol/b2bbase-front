@@ -1,6 +1,78 @@
 <div class="container">
     <main>
-    <div class="row g-5">
+    <div class="row g-5" id="subscriptiontype" *ngIf="companyDateFromComplited">
+        <div class="col-md-12 col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">Wybór płatności i formy subsrybpcji
+            
+            <div class="radio-tile-group">
+                <div class="input-container">
+                  <input id="walk" class="radio-button" type="radio" name="radio" />
+                  <div class="radio-tile">
+                    <label for="walk" class="radio-tile-label">Walk</label>
+                  </div>
+                </div>
+
+            
+                <div class="input-container">
+                  <input id="drive" class="radio-button" type="radio" name="radio" />
+                  <div class="radio-tile">
+                    <table class="table text-center">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>BASIC</th>
+                            <th>BIZNES</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row" class="text-start">Dane teleadresowe</th>
+                            <td>Tak</td>
+                            <td>Tak</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="text-start">Opis firmy</th>
+                            <td>Tak</td>
+                            <td>Tak</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="text-start">Logo firmy</th>
+                            <td>Tak</td>
+                            <td>Tak</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="text-start">Statystyki oglądalności</th>
+                            <td>Tak</td>
+                            <td>Tak</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="text-start">Promowanie na liście kategorii</th>
+                            <td>Nie</td>
+                            <td>Tak</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="text-start">Oferta produktowa</th>
+                            <td>Nie</td>
+                            <td>Tak</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <label for="drive" class="radio-tile-label">Drive</label>
+                  </div>
+                </div>
+            
+                <div class="input-container">
+                  <input id="fly" class="radio-button" type="radio" name="radio" disabled />
+                  <div class="radio-tile">
+                    <label for="fly" class="radio-tile-label">Fly</label>
+                  </div>
+                </div>
+                </div>
+
+        </div>
+        <div class="col-md-12 col-lg-2"></div>
+    </div>
+    <div class="row g-5" id="companydate" *ngIf="!companyDateFromComplited">
         <div class="col-md-12 col-lg-2"></div>
         <div class="col-md-12 col-lg-8">
         <div class="pt-2 pb-1">

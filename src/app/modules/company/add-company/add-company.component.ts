@@ -29,6 +29,7 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
+  companyDateFromComplited: boolean = true;
 
   REDIRECT_AFTER_ADD = "/added-company";
 
@@ -99,10 +100,12 @@ export class AddCompanyComponent {
               event: 'add_company',
             };
             this.gtmService.pushTag(gtmTag);
-            this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+            //this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+            this.companyDateFromComplited = true;
           }
         },
         error: err => {
+          this.buttonSend = false;
           if (typeof(err.error.fields) === 'object') {
             for (const errorfield of Object.keys(err.error.fields)) {
               this.validationErrors.set(errorfield, err.error.fields[errorfield]);
