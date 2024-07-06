@@ -31,6 +31,9 @@ export class AddCompanyComponent {
   buttonSend: boolean = false;
   companyDateFromComplited: boolean = true;
 
+  favoriteSeason!: string;
+  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+
   REDIRECT_AFTER_ADD = "/added-company";
 
   constructor(
