@@ -17,6 +17,10 @@
     color: $danger-color;
   }
 
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: rgba(0, 0, 0, .1) !important;
+  }
+
   .radio-tile-group {
     display: flex;
     flex-wrap: wrap;

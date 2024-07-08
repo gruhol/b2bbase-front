@@ -31,8 +31,8 @@ export class AddCompanyComponent {
   buttonSend: boolean = false;
   companyDateFromComplited: boolean = true;
 
-  favoriteSeason!: string;
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+  payment!: string;
+  paymentsMethod: string[] = ['BANK_TRANSFER', 'Spring'];
 
   REDIRECT_AFTER_ADD = "/added-company";
 

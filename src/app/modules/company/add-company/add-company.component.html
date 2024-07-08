@@ -3,7 +3,7 @@
     <div class="row g-5" id="subscriptiontype" *ngIf="companyDateFromComplited">
         
         <div class="col-md-12 col-lg-12">
-          <p>Wybór płatności i formy subsrybpcji</p>
+          <label class="mb-3">Wybór płatności i formy subsrybpcji</label>
             
             <div class="radio-tile-group row">
                 <div class="input-container col-md-12 col-lg-5">
@@ -84,18 +84,20 @@
                 
             </div>
 
-            <p>Wybierz płatność</p>
+            <label class="my-3">Wybierz płatność</label>
 
-            <label id="example-radio-group-label">Pick your favorite season</label>
-            <mat-radio-group
-              aria-labelledby="example-radio-group-label"
-              class="example-radio-group"
-              [(ngModel)]="favoriteSeason">
-              @for (season of seasons; track season) {
-                <mat-radio-button class="example-radio-button" [value]="season">{{season}}</mat-radio-button>
+            <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="payment">
+              @for (payment of paymentsMethod; track payment) {
+                <div class="card mt-1 w-50">
+                  <div class="card-body">
+                    <mat-radio-button  class="radio-button" color="primary" [value]="payment">{{payment}}</mat-radio-button>
+                  </div>
+                </div>
               }
+
             </mat-radio-group>
-            <div>Your favorite season is: {{favoriteSeason}}</div>
+            <hr>
+            <button class="btn btn-lg btn-success">Potwierdź i zakończ</button>
 
         </div>
     </div>
