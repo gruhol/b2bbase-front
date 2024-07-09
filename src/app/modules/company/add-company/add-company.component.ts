@@ -30,9 +30,10 @@ export class AddCompanyComponent {
   errorMessage!: string;
   buttonSend: boolean = false;
   companyDateFromComplited: boolean = true;
+  registerCompanyMoreInfo!: FormGroup;
+  paymentMethod!: FormControl;
 
-  payment!: string;
-  paymentsMethod: string[] = ['BANK_TRANSFER', 'Spring'];
+  paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
 
   REDIRECT_AFTER_ADD = "/added-company";
 
@@ -46,6 +47,8 @@ export class AddCompanyComponent {
   ngOnInit(): void {
     this.createRegistrationFormControls();
     this.createForm();
+    this.createAdditionalForm();
+    this.createAdditionalFormControls();
   }
 
   createRegistrationFormControls() {
@@ -62,6 +65,10 @@ export class AddCompanyComponent {
     this.wwwStore = new FormControl('', [Validators.pattern('^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$')]);
   }
 
+  createAdditionalFormControls() {
+    this.paymentMethod = new FormControl('', [Validators.required]);
+  }
+
   createForm() {
     this.registerCompanyForm = this.formBuilder.group({
       name: this.name,
@@ -76,6 +83,12 @@ export class AddCompanyComponent {
       wwwSite: this.wwwSite,
       wwwStore: this.wwwStore,
     }, {validators: [this.nipIsValid, this.regonIsValid, this.isCorrectLegalForm, this.isOneTypeSelect]})
+  }
+
+  createAdditionalForm() {
+    this.registerCompanyMoreInfo = this.formBuilder.group({
+      paymentMethod: this.paymentMethod
+    })
   }
 
   addCompany() {
@@ -123,6 +136,12 @@ export class AddCompanyComponent {
     }
   }
 
+  addCompanyMoreInfo() {
+    if(this.registerCompanyMoreInfo.valid) {
+      console.log(this.registerCompanyMoreInfo.get('paymentMethod')?.value)
+    }
+  }
+
   createLegalFormList(): Map<string, string> {
     let legalFormMap = new Map<string, string>();
     legalFormMap.set("JDG", "Jednoosobowa działalność gospodarcza");
@@ -135,6 +154,12 @@ export class AddCompanyComponent {
     legalFormMap.set("PSA", "Prosta spółka akcyjna");
     legalFormMap.set("SA", "Spółka akcyjna");
     return legalFormMap;
+  }
+
+  createPaymentMethods() {
+    let paymentMethods = new Map<string, string>();
+    paymentMethods.set("BANK_TRANSFER", "Przelew bankowy");
+    return paymentMethods;
   }
 
   nipIsValid(c: AbstractControl): {nipValid: boolean} | null {

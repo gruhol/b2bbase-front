@@ -3,102 +3,107 @@
     <div class="row g-5" id="subscriptiontype" *ngIf="companyDateFromComplited">
         
         <div class="col-md-12 col-lg-12">
-          <label class="mb-3">Wybór płatności i formy subsrybpcji</label>
-            
+          <form [formGroup]="registerCompanyMoreInfo" (submit)="addCompanyMoreInfo()">
+            <label class="mb-3">Wybór płatności i formy subsrybpcji</label>
+              
             <div class="radio-tile-group row">
-                <div class="input-container col-md-12 col-lg-5">
-                  <input id="walk" class="radio-button" type="radio" name="radio" />
-                  <div class="radio-tile">
-                    <label for="walk" class="radio-tile-label">Basic</label>
-                    <p>59 zł/rok</p>
-                    <p class="my-2">Podstawowy pakiet dla Twojej hurtowni. Zawiera niezbęcne elementy, aby zwiększyć widoczność twojej firmy w internecie.</p>
-                    <table class="table text-center">
-                      <tbody>
-                        <tr>
-                          <td scope="row" class="text-start">Dane teleadresowe</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Opis firmy</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Logo firmy</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Statystyki oglądalności</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Promowanie na liście kategorii</td>
-                          <td class="no">Nie</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Oferta produktowa</td>
-                          <td class="no">Nie</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+              <div class="input-container col-md-12 col-lg-5">
+                <input id="walk" class="radio-button" type="radio" name="radio" />
+                <div class="radio-tile">
+                  <label for="walk" class="radio-tile-label">Basic</label>
+                  <p>59 zł/rok</p>
+                  <p class="my-2">Podstawowy pakiet dla Twojej hurtowni. Zawiera niezbęcne elementy, aby zwiększyć widoczność twojej firmy w internecie.</p>
+                  <table class="table text-center">
+                    <tbody>
+                      <tr>
+                        <td scope="row" class="text-start">Dane teleadresowe</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Opis firmy</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Logo firmy</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Statystyki oglądalności</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Promowanie na liście kategorii</td>
+                        <td class="no">Nie</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Oferta produktowa</td>
+                        <td class="no">Nie</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
 
-            
-                <div class="input-container col-md-12 col-lg-5">
-                  <input id="walk" class="radio-button" type="radio" name="radio" disabled/>
-                  <div class="radio-tile">
-                    <label for="walk" class="radio-tile-label">Biznes</label>
-                    <p>- zł/rok</p>
-                    <p class="no">Czasowo niedostępne</p>
-                    <p class="my-2">Wszystkie funkcje z pakietu BASIC oraz baza produktowa</p>
-                    <table class="table text-center">
-                      <tbody>
-                        <tr>
-                          <td scope="row" class="text-start">Dane teleadresowe</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Opis firmy</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Logo firmy</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Statystyki oglądalności</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Promowanie na liście kategorii</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                        <tr>
-                          <td scope="row" class="text-start">Oferta produktowa</td>
-                          <td class="yes">Tak</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+              <div class="input-container col-md-12 col-lg-5">
+                <input id="walk" class="radio-button" type="radio" name="radio" disabled/>
+                <div class="radio-tile">
+                  <label for="walk" class="radio-tile-label">Biznes</label>
+                  <p>- zł/rok</p>
+                  <p class="no">Czasowo niedostępne</p>
+                  <p class="my-2">Wszystkie funkcje z pakietu BASIC oraz baza produktowa</p>
+                  <table class="table text-center">
+                    <tbody>
+                      <tr>
+                        <td scope="row" class="text-start">Dane teleadresowe</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Opis firmy</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Logo firmy</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Statystyki oglądalności</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Promowanie na liście kategorii</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                      <tr>
+                        <td scope="row" class="text-start">Oferta produktowa</td>
+                        <td class="yes">Tak</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
                 
             </div>
 
             <label class="my-3">Wybierz płatność</label>
 
-            <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="payment">
-              @for (payment of paymentsMethod; track payment) {
-                <div class="card mt-1 w-50">
-                  <div class="card-body">
-                    <mat-radio-button  class="radio-button" color="primary" [value]="payment">{{payment}}</mat-radio-button>
-                  </div>
+            <mat-radio-group aria-labelledby="radio-group-label" formControlName="paymentMethod" class="radio-group">
+              <div class="card mt-1 w-50">
+                <div class="card-body">
+                  <mat-radio-button
+                    *ngFor="let paymentMethod of paymentsMethodMap | keyvalue" 
+                    class="radio-button" color="primary" 
+                    [ngClass]="{
+                      'is-invalid': legalForm.invalid && legalForm.touched,
+                      'is-valid': legalForm.valid && legalForm.touched
+                    }"
+                    [value]="paymentMethod.key">
+                    {{paymentMethod.value}}</mat-radio-button>
                 </div>
-              }
-
+              </div>
             </mat-radio-group>
             <hr>
-            <button class="btn btn-lg btn-success">Potwierdź i zakończ</button>
-
+            <button class="btn btn-lg btn-success" type="submit">Potwierdź i zakończ</button>
+          </form>
         </div>
     </div>
     <div class="row g-5" id="companydate" *ngIf="!companyDateFromComplited">
