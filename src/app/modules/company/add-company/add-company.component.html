@@ -4,11 +4,10 @@
         
         <div class="col-md-12 col-lg-12">
           <form [formGroup]="registerCompanyMoreInfo" (submit)="addCompanyMoreInfo()">
-            <label class="mb-3">Wybór płatności i formy subsrybpcji</label>
-              
-            <div class="radio-tile-group row">
+            <label class="mb-3">Wybór płatności i formy subsrybpcji</label>  
+            <div formControlName="subscriptionType" class="radio-tile-group row">
               <div class="input-container col-md-12 col-lg-5">
-                <input id="walk" class="radio-button" type="radio" name="radio" />
+                <input id="basic" class="radio-button" formControlName="subscriptionType" name="subscriptionType" type="radio" value="BASIC" />
                 <div class="radio-tile">
                   <label for="walk" class="radio-tile-label">Basic</label>
                   <p>59 zł/rok</p>
@@ -45,7 +44,7 @@
               </div>
 
               <div class="input-container col-md-12 col-lg-5">
-                <input id="walk" class="radio-button" type="radio" name="radio" disabled/>
+                <!-- <input id="business" class="radio-button" type="radio" formControlName="subscriptionType" value="BUSINESS" [disabled]="true"> -->
                 <div class="radio-tile">
                   <label for="walk" class="radio-tile-label">Biznes</label>
                   <p>- zł/rok</p>
@@ -90,14 +89,14 @@
               <div class="card mt-1 w-50">
                 <div class="card-body">
                   <mat-radio-button
-                    *ngFor="let paymentMethod of paymentsMethodMap | keyvalue" 
+                    *ngFor="let payMethod of paymentsMethodMap | keyvalue" 
                     class="radio-button" color="primary" 
                     [ngClass]="{
-                      'is-invalid': legalForm.invalid && legalForm.touched,
-                      'is-valid': legalForm.valid && legalForm.touched
+                      'is-invalid': paymentMethod.invalid && paymentMethod.touched,
+                      'is-valid': paymentMethod.valid && paymentMethod.touched
                     }"
-                    [value]="paymentMethod.key">
-                    {{paymentMethod.value}}</mat-radio-button>
+                    [value]="payMethod.key">
+                    {{payMethod.value}}</mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>

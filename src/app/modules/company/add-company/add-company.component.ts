@@ -32,6 +32,7 @@ export class AddCompanyComponent {
   companyDateFromComplited: boolean = true;
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
+  subscriptionType!: FormControl;
 
   paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
 
@@ -66,6 +67,7 @@ export class AddCompanyComponent {
   }
 
   createAdditionalFormControls() {
+    this.subscriptionType = new FormControl('', [Validators.required]);
     this.paymentMethod = new FormControl('', [Validators.required]);
   }
 
@@ -87,6 +89,7 @@ export class AddCompanyComponent {
 
   createAdditionalForm() {
     this.registerCompanyMoreInfo = this.formBuilder.group({
+      subscriptionType: this.subscriptionType,
       paymentMethod: this.paymentMethod
     })
   }
@@ -139,6 +142,7 @@ export class AddCompanyComponent {
   addCompanyMoreInfo() {
     if(this.registerCompanyMoreInfo.valid) {
       console.log(this.registerCompanyMoreInfo.get('paymentMethod')?.value)
+      console.log(this.registerCompanyMoreInfo.get('subscriptionType')?.value)
     }
   }
 
