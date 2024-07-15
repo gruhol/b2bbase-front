@@ -1,4 +1,5 @@
 export interface CompanyDto{
+    id: number;
     name: string,
     type: string,
     legalForm: string,

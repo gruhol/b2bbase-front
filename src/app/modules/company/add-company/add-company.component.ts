@@ -5,6 +5,7 @@ import { validatePolish } from 'validate-polish';
 import { CompanyServiceService } from '../company-service.service';
 import { CompanyDto } from './dto/companyDto';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
+import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
 
 @Component({
   selector: 'app-add-company',
@@ -29,10 +30,11 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = true;
+  companyDateFromComplited: boolean = false;
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
   subscriptionType!: FormControl;
+  companyId!: number;
 
   paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
 
@@ -115,11 +117,7 @@ export class AddCompanyComponent {
       .subscribe({
         next: response => {
           if (response) {
-            const gtmTag = {
-              event: 'add_company',
-            };
-            this.gtmService.pushTag(gtmTag);
-            //this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+            this.companyId = response.id;
             this.companyDateFromComplited = true;
           }
         },
@@ -141,8 +139,37 @@ export class AddCompanyComponent {
 
   addCompanyMoreInfo() {
     if(this.registerCompanyMoreInfo.valid) {
-      console.log(this.registerCompanyMoreInfo.get('paymentMethod')?.value)
-      console.log(this.registerCompanyMoreInfo.get('subscriptionType')?.value)
+    
+      this.companyService.addSubscription({
+        companyId: this.companyId,
+        type: this.subscriptionType.value,
+        year: 1,
+        paymentType: this.subscriptionType.value
+      } as SubscriptionCompanyDto)
+      .subscribe({
+        next: response => {
+          if (response) {
+            const gtmTag = {
+              event: 'add_company',
+            };
+            this.gtmService.pushTag(gtmTag);
+            this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+            this.companyDateFromComplited = true;
+          }
+        },
+        error: err => {
+          this.buttonSend = false;
+          if (typeof(err.error.fields) === 'object') {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            }
+          } else if( typeof(err.error.message) === 'string') {
+            this.errorMessage = err.error.message;
+          }
+        }
+      });
+    } else {
+      this.registerCompanyForm.markAllAsTouched();
     }
   }
 

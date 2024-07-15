@@ -4,16 +4,22 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CompanyToEditDto } from './add-company/dto/CompanyToEditDto';
 import { AdditionalData } from './add-company/dto/AdditionalData';
+import { SubscriptionCompanyDto } from './add-company/dto/SubscriptionCompanyDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyServiceService {
   
+  
   constructor(private http: HttpClient) { }
 
   addCompany(company: CompanyDto): Observable<CompanyDto>{
     return this.http.post<CompanyDto>('/api/company/add', company);
+  }
+
+  addSubscription(subscriptionCompanyDto: SubscriptionCompanyDto):Observable<SubscriptionCompanyDto> {
+    return this.http.post<SubscriptionCompanyDto>('/api/subscription/add', subscriptionCompanyDto);
   }
 
   getCompany(): Observable<CompanyToEditDto> {
