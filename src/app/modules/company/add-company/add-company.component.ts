@@ -30,12 +30,12 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = false;
+  companyDateFromComplited: boolean = true;
+
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
   subscriptionType!: FormControl;
   companyId!: number;
-
   paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
 
   REDIRECT_AFTER_ADD = "/added-company";
@@ -50,8 +50,8 @@ export class AddCompanyComponent {
   ngOnInit(): void {
     this.createRegistrationFormControls();
     this.createForm();
-    this.createAdditionalForm();
     this.createAdditionalFormControls();
+    this.createAdditionalForm();
   }
 
   createRegistrationFormControls() {
@@ -69,8 +69,8 @@ export class AddCompanyComponent {
   }
 
   createAdditionalFormControls() {
-    this.subscriptionType = new FormControl('', [Validators.required]);
-    this.paymentMethod = new FormControl('', [Validators.required]);
+    this.subscriptionType = new FormControl('', Validators.required);
+    this.paymentMethod = new FormControl('', Validators.required);
   }
 
   createForm() {
@@ -97,7 +97,7 @@ export class AddCompanyComponent {
   }
 
   addCompany() {
-    //this.validationErrors.clear()
+    this.validationErrors.clear()
     
     if(this.registerCompanyForm.valid) {
       const requestType = this.createType(this.typeCustomer.value, this.typeWholesaler.value);
@@ -139,37 +139,42 @@ export class AddCompanyComponent {
 
   addCompanyMoreInfo() {
     if(this.registerCompanyMoreInfo.valid) {
-    
-      this.companyService.addSubscription({
-        companyId: this.companyId,
-        type: this.subscriptionType.value,
-        year: 1,
-        paymentType: this.subscriptionType.value
-      } as SubscriptionCompanyDto)
-      .subscribe({
-        next: response => {
-          if (response) {
-            const gtmTag = {
-              event: 'add_company',
-            };
-            this.gtmService.pushTag(gtmTag);
-            this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
-            this.companyDateFromComplited = true;
-          }
-        },
-        error: err => {
-          this.buttonSend = false;
-          if (typeof(err.error.fields) === 'object') {
-            for (const errorfield of Object.keys(err.error.fields)) {
-              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
-            }
-          } else if( typeof(err.error.message) === 'string') {
-            this.errorMessage = err.error.message;
-          }
-        }
-      });
+      console.log(this.subscriptionType)
+      console.log(this.paymentMethod)
+      console.log(this.registerCompanyMoreInfo)
+      // this.companyService.addSubscription({
+      //   companyId: this.companyId,
+      //   type: this.subscriptionType.value,
+      //   year: 1,
+      //   paymentType: this.paymentMethod.value
+      // } as SubscriptionCompanyDto)
+      // .subscribe({
+      //   next: response => {
+      //     if (response) {
+      //       const gtmTag = {
+      //         event: 'add_company',
+      //       };
+      //       this.gtmService.pushTag(gtmTag);
+      //       this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+      //       this.companyDateFromComplited = true;
+      //     }
+      //   },
+      //   error: err => {
+      //     this.buttonSend = false;
+      //     if (typeof(err.error.fields) === 'object') {
+      //       for (const errorfield of Object.keys(err.error.fields)) {
+      //         this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+      //       }
+      //     } else if( typeof(err.error.message) === 'string') {
+      //       this.errorMessage = err.error.message;
+      //     }
+      //   }
+      // });
     } else {
-      this.registerCompanyForm.markAllAsTouched();
+      console.log(this.subscriptionType)
+      console.log(this.paymentMethod)
+      console.log(this.registerCompanyMoreInfo)
+      this.registerCompanyMoreInfo.markAllAsTouched();
     }
   }
 
