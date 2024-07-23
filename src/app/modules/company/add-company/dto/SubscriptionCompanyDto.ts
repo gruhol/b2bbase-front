@@ -1,6 +1,6 @@
 export interface SubscriptionCompanyDto{
     companyId: number,
-    type: string,
+    subscriptionType: string,
     year: number,
     paymentType: string;
 }

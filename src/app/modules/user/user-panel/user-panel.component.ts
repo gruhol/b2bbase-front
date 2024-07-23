@@ -4,6 +4,7 @@ import { CompanyToEditDto } from 'src/app/modules/company/add-company/dto/Compan
 import { EditUserService } from '../edit-user/edit-user.service';
 import { User } from '../edit-user/dto/user';
 import { PackageOrderToCatalog } from './dto/PackageOrderToCatalog';
+import { PreferenceService } from 'src/app/shared/preference.service';
 
 @Component({
   selector: 'app-user-panel',
@@ -15,16 +16,27 @@ export class UserPanelComponent implements OnInit{
   company!: CompanyToEditDto | undefined;
   user!:  User | undefined;
   orders!: PackageOrderToCatalog[] | undefined;
+  bankAccount!: string;
 
   constructor(
     private userPanelService: UserPanelService,
     private editUserService: EditUserService,
+    private preferencesService: PreferenceService
   ) {}
 
   ngOnInit(): void {
     this.getUser();
     this.getCompany();
     this.getOrders();
+    this.preferencesService.getPreferemce("bank_account")
+      .subscribe({
+        next: data => {
+          this.bankAccount = data;
+        },
+        error: data => {
+          this.bankAccount = "Brak danych"
+        }
+      })
   }
 
   getUser() {

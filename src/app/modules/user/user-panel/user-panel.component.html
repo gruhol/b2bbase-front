@@ -31,15 +31,26 @@
     <div class="row" *ngIf="orders">
         <div class="col">
             <h2>Aktualne zamówione abonamenty</h2>
-            <table *ngFor="let order of orders" class="table table-bordered">
-                <tr>
-                    <td>Abonament {{order.packageType}}</td>
-                    <td>{{order.startDate | date}}</td>
-                    <td>{{order.endDate | date}}</td>
-                    <td>{{order.paymentType | paymenttype}}</td>
-                    <td>{{order.paymentStatus | paymentstatus}}</td>
-                </tr>
-            </table>
+            <div *ngFor="let order of orders">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Nr. zam.: {{order.id}}</td>
+                        <td>Abonament {{order.packageType}}</td>
+                        <td>Cena: {{order.price}} zł</td>
+                        <td>{{order.startDate | date}}</td>
+                        <td>{{order.endDate | date}}</td>
+                        <td>{{order.paymentType | paymenttype}}</td>
+                        <td>{{order.paymentStatus | paymentstatus}}</td>
+                    </tr>
+                </table>
+                <p  class="alert alert-warning" *ngIf="order.paymentStatus == 'NOTPAID'">
+                    Aby opłacić subskrypcje prosimy o przelew w wysokości:
+                    <br><strong>{{order.price}} zł</strong> na konto: <strong>{{bankAccount}}</strong>
+                    <br> z tytyłem przelewu: "<strong>{{company?.name}}, zamówienie nr {{order.id}}</strong>"
+                </p>
+            </div>
+
+            
         </div>
     </div>
     

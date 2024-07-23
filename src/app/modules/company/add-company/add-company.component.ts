@@ -30,7 +30,7 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = true;
+  companyDateFromComplited: boolean = false;
 
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
@@ -142,38 +142,34 @@ export class AddCompanyComponent {
       console.log(this.subscriptionType)
       console.log(this.paymentMethod)
       console.log(this.registerCompanyMoreInfo)
-      // this.companyService.addSubscription({
-      //   companyId: this.companyId,
-      //   type: this.subscriptionType.value,
-      //   year: 1,
-      //   paymentType: this.paymentMethod.value
-      // } as SubscriptionCompanyDto)
-      // .subscribe({
-      //   next: response => {
-      //     if (response) {
-      //       const gtmTag = {
-      //         event: 'add_company',
-      //       };
-      //       this.gtmService.pushTag(gtmTag);
-      //       this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
-      //       this.companyDateFromComplited = true;
-      //     }
-      //   },
-      //   error: err => {
-      //     this.buttonSend = false;
-      //     if (typeof(err.error.fields) === 'object') {
-      //       for (const errorfield of Object.keys(err.error.fields)) {
-      //         this.validationErrors.set(errorfield, err.error.fields[errorfield]);
-      //       }
-      //     } else if( typeof(err.error.message) === 'string') {
-      //       this.errorMessage = err.error.message;
-      //     }
-      //   }
-      // });
+      this.companyService.addSubscription({
+        companyId: this.companyId,
+        subscriptionType: this.subscriptionType.value,
+        year: 1,
+        paymentType: this.paymentMethod.value
+      } as SubscriptionCompanyDto)
+      .subscribe({
+        next: response => {
+          if (response) {
+            const gtmTag = {
+              event: 'add_company',
+            };
+            this.gtmService.pushTag(gtmTag);
+            this.router.navigate([this.REDIRECT_AFTER_ADD, {added: 'yes'}]);
+          }
+        },
+        error: err => {
+          this.buttonSend = false;
+          if (typeof(err.error.fields) === 'object') {
+            for (const errorfield of Object.keys(err.error.fields)) {
+              this.validationErrors.set(errorfield, err.error.fields[errorfield]);
+            }
+          } else if( typeof(err.error.message) === 'string') {
+            this.errorMessage = err.error.message;
+          }
+        }
+      });
     } else {
-      console.log(this.subscriptionType)
-      console.log(this.paymentMethod)
-      console.log(this.registerCompanyMoreInfo)
       this.registerCompanyMoreInfo.markAllAsTouched();
     }
   }

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CompanyToEditDto } from './add-company/dto/CompanyToEditDto';
 import { AdditionalData } from './add-company/dto/AdditionalData';
 import { SubscriptionCompanyDto } from './add-company/dto/SubscriptionCompanyDto';
+import { SubscriptionOrder } from './add-company/dto/SubscriptionOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class CompanyServiceService {
     return this.http.post<CompanyDto>('/api/company/add', company);
   }
 
-  addSubscription(subscriptionCompanyDto: SubscriptionCompanyDto):Observable<SubscriptionCompanyDto> {
-    return this.http.post<SubscriptionCompanyDto>('/api/subscription/add', subscriptionCompanyDto);
+  addSubscription(subscriptionCompanyDto: SubscriptionCompanyDto): Observable<SubscriptionOrder> {
+    return this.http.post<SubscriptionOrder>('/api/subscription/add', subscriptionCompanyDto);
   }
 
   getCompany(): Observable<CompanyToEditDto> {
