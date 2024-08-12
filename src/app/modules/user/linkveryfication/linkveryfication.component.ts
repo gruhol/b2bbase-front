@@ -11,7 +11,7 @@ import { LoginStatusService } from '../../common/service/login-status.service';
 })
 export class LinkveryficationComponent implements OnInit {
 
-  public tokenStatus: boolean = true;
+  public tokenStatus!: boolean;
 
   constructor(
     private router: ActivatedRoute,
@@ -22,18 +22,18 @@ export class LinkveryficationComponent implements OnInit {
   
   ngOnInit(): void {
     let token = this.router.snapshot.params['token'];
-    // this.linkveryfication.checktoken(token)
-    //   .subscribe(result => {
-    //     if (result.verified === true) {
-    //       this.tokenStatus = true;
-    //       this.jwtService.setToken(result.token);
-    //       this.loginStatusService.setLoginStatus(true);
-    //       console.log(this.tokenStatus);
-    //       console.log(this.jwtService.getToken());
-    //     } else {
-    //       this.tokenStatus = false;
-    //     }
-    //   })
+    this.linkveryfication.checktoken(token)
+      .subscribe(result => {
+        if (result.verified === true) {
+          this.tokenStatus = true;
+          this.jwtService.setToken(result.token);
+          this.loginStatusService.setLoginStatus(true);
+          console.log(this.tokenStatus);
+          console.log(this.jwtService.getToken());
+        } else {
+          this.tokenStatus = false;
+        }
+      })
   }
 
 
