@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LinkveryficationService } from './linkveryfication.service';
+import { JwtService } from '../../common/service/jwt.service';
+import { LoginStatusService } from '../../common/service/login-status.service';
 
 @Component({
   selector: 'app-linkveryfication',
@@ -9,23 +11,29 @@ import { LinkveryficationService } from './linkveryfication.service';
 })
 export class LinkveryficationComponent implements OnInit {
 
-  public tokenStatus!: boolean;
+  public tokenStatus: boolean = true;
 
   constructor(
     private router: ActivatedRoute,
-    private linkveryfication: LinkveryficationService
+    private linkveryfication: LinkveryficationService,
+    private jwtService: JwtService,
+    private loginStatusService: LoginStatusService
   ) {}
   
   ngOnInit(): void {
     let token = this.router.snapshot.params['token'];
-    this.linkveryfication.checktoken(token)
-      .subscribe(result => {
-        if (result === true) {
-          this.tokenStatus = true;
-        } else {
-          this.tokenStatus = false;
-        }
-      })
+    // this.linkveryfication.checktoken(token)
+    //   .subscribe(result => {
+    //     if (result.verified === true) {
+    //       this.tokenStatus = true;
+    //       this.jwtService.setToken(result.token);
+    //       this.loginStatusService.setLoginStatus(true);
+    //       console.log(this.tokenStatus);
+    //       console.log(this.jwtService.getToken());
+    //     } else {
+    //       this.tokenStatus = false;
+    //     }
+    //   })
   }
 
 

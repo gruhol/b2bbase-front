@@ -1,8 +1,15 @@
 <div class="container">
     <div *ngIf="tokenStatus">
         <h1>Werikacja zakończona</h1>
-        <p>Weryfikacja twojego adresu email została zakończona.<br>Możesz się zalogować na swoje konto przechodząc do strony <a routerLink="/login">logowania</a></p>
-        <p>Po zalogowaniu na swoim koncie będziesz mógł dodać nową firmę w panelu użytkownika.</p>
+        <p>Weryfikacja twojego adresu email została zakończona.</p>
+        <p>Proces rejestracji użytkownika został zakończony.</p>
+        <hr>
+        <p>Co możesz teraz zrobić:</p>
+        <div class="row">
+            <div class="col-md-12 col-lg-6"><a class="btn btn-success" routerLink="/add-company">Dodać nową firmę</a></div>
+            <div class="col-md-12 col-lg-6"><a routerLink="/">Przejść do strony głównej</a></div>
+        </div>
+        
     </div>
     
     <div *ngIf="!tokenStatus">
