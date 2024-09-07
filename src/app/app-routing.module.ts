@@ -32,6 +32,7 @@ import { BlogPostListComponent } from './modules/blog/blog-post-list/blog-post-l
 import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component';
 import { BlogCategoryComponent } from './modules/blog/blog-category/blog-category.component';
 import { HtmlPageComponent } from './modules/catalog/html-page/html-page.component';
+import { CategoryCatalogComponent } from './modules/catalog/category-catalog/category-catalog.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'added-company', title: 'Dodano firmę', component: AddedCompanyComponent},
       {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
+      {path: 'category/:slug', title: 'Kategoria Hurtownie', component: CategoryCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
       {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},

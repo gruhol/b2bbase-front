@@ -1,13 +1,13 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { Page } from '../../common/model/page';
-import { CompanyCatalog } from '../dto/CompanyCatalog';
-import { PageEvent } from '@angular/material/paginator';
 import { CatalogService } from '../catalog-service';
 import { CategoryCatalog } from '../dto/CategoryCatalog';
-import { ActivatedRoute } from '@angular/router';
+import { CompanyCatalog } from '../dto/CompanyCatalog';
 
 interface CategoryNode {
   name: string;
@@ -20,12 +20,13 @@ interface CategoryNode {
 }
 
 @Component({
-  selector: 'app-companies-catalog',
-  templateUrl: './companies-catalog.component.html',
-  styleUrls: ['./companies-catalog.component.scss']
+  selector: 'app-category-catalog',
+  standalone: true,
+  imports: [],
+  templateUrl: './category-catalog.component.html',
+  styleUrl: './category-catalog.component.scss'
 })
-export class CompaniesCatalogComponent {
-
+export class CategoryCatalogComponent {
   treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
   categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
   searchString = '';
@@ -39,7 +40,8 @@ export class CompaniesCatalogComponent {
   selectCategory: number[] = [];
 
   constructor(
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private activatedRouter: ActivatedRoute,
   ) {
     this.catalogService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
@@ -52,6 +54,8 @@ export class CompaniesCatalogComponent {
   }
 
   ngOnInit(): void {
+    let slug = this.activatedRouter.snapshot.params['slug'];
+    console.log(slug)
     this.getCompanies()
     this.voivodeship = this.createVoivodeshipList();
   }
@@ -195,5 +199,4 @@ export class CompaniesCatalogComponent {
       this.isProductFileCooperation = undefined;
     }
   }
-
 }
