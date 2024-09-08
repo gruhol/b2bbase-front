@@ -59,7 +59,7 @@ export class CatalogService {
     return this.http.get<Page<CompanyCatalog>>("api/catalog/wholesales", { params });
   }
 
-  getCompaniesWithSlug(slug: string | undefined, page: number, size: number, categories: number[], voivodeshipSlugs: string[], 
+  getCompaniesWithSlug(slug: string | undefined, page: number, size: number, voivodeshipSlugs: string[], 
     isEdiCooperation?: boolean, isApiCooperation?: boolean, isProductFileCooperation?: boolean)
     : Observable<CategoriesWithCompanies> 
   {
@@ -67,9 +67,6 @@ export class CatalogService {
       .set('page', page.toString())
       .set('size', size.toString());
 
-    if (categories.length > 0) {
-      params = params.set('categories', categories.join(','));
-    }
     if (voivodeshipSlugs.length > 0) {
       params = params.set('voivodeshipSlugs', voivodeshipSlugs.join(','));
     }

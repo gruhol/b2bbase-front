@@ -68,11 +68,13 @@ export class CategoryCatalogComponent {
   }
 
   private getCompanyPage(slug: string | undefined, page: number, size: number) {
-    this.catalogService.getCompaniesWithSlug(slug, page, size, this.selectCategory, this.voivodeshipCheckedList)
+    this.catalogService.getCompaniesWithSlug(slug, page, size, this.voivodeshipCheckedList)
     .subscribe(result => {
       this.page = result.listCompany
       if (result.categoryExtended === undefined) {
         this.router.navigate([this.PAGE_404, {url: this.slug}]);
+      } else {
+        this.category = result.categoryExtended;
       }
     });
   }
