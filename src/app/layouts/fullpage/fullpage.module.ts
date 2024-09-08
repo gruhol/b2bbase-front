@@ -25,6 +25,8 @@ import { BlogPostComponent } from 'src/app/modules/blog/blog-post/blog-post.comp
 import { BlogPostListComponent } from 'src/app/modules/blog/blog-post-list/blog-post-list.component';
 import { BlogCategoryComponent } from 'src/app/modules/blog/blog-category/blog-category.component';
 import { HtmlPageComponent } from 'src/app/modules/catalog/html-page/html-page.component';
+import { CategoryCatalogComponent } from 'src/app/modules/catalog/category-catalog/category-catalog.component';
+import { Page404Component } from 'src/app/modules/catalog/page404/page404.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +50,9 @@ import { HtmlPageComponent } from 'src/app/modules/catalog/html-page/html-page.c
         BlogPostComponent,
         BlogCategoryComponent,
         BlogPostListComponent,
-        HtmlPageComponent
+        HtmlPageComponent,
+        CategoryCatalogComponent,
+        Page404Component
     ],
     imports: [
         CommonModule,

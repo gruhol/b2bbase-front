@@ -33,6 +33,7 @@ import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component'
 import { BlogCategoryComponent } from './modules/blog/blog-category/blog-category.component';
 import { HtmlPageComponent } from './modules/catalog/html-page/html-page.component';
 import { CategoryCatalogComponent } from './modules/catalog/category-catalog/category-catalog.component';
+import { Page404Component } from './modules/catalog/page404/page404.component';
 
 const routes: Routes = [
   {
@@ -58,7 +59,8 @@ const routes: Routes = [
       {path: 'blog', title: "Blog", component: BlogPostListComponent},
       {path: 'blog/:slug', title: "Blog", component: BlogPostComponent},
       {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent},
-      {path: 'pl/:slug', title: "Html Page", component: HtmlPageComponent}
+      {path: 'pl/:slug', title: "Html Page", component: HtmlPageComponent},
+      {path: '404', title: "Html Page", component: Page404Component}
     ]
   },
   {

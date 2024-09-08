@@ -2,12 +2,13 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Page } from '../../common/model/page';
 import { CatalogService } from '../catalog-service';
 import { CategoryCatalog } from '../dto/CategoryCatalog';
 import { CompanyCatalog } from '../dto/CompanyCatalog';
+import { CategoryExtended } from '../dto/CategoryExtended';
 
 interface CategoryNode {
   name: string;
@@ -21,8 +22,6 @@ interface CategoryNode {
 
 @Component({
   selector: 'app-category-catalog',
-  standalone: true,
-  imports: [],
   templateUrl: './category-catalog.component.html',
   styleUrl: './category-catalog.component.scss'
 })
@@ -38,10 +37,14 @@ export class CategoryCatalogComponent {
   isApiCooperation: boolean | undefined;
   isProductFileCooperation: boolean | undefined;
   selectCategory: number[] = [];
+  slug: string | undefined;
+  category: CategoryExtended | undefined;
+  PAGE_404: string = "/404";
 
   constructor(
     private catalogService: CatalogService,
     private activatedRouter: ActivatedRoute,
+    private router: Router
   ) {
     this.catalogService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
@@ -54,22 +57,28 @@ export class CategoryCatalogComponent {
   }
 
   ngOnInit(): void {
-    let slug = this.activatedRouter.snapshot.params['slug'];
-    console.log(slug)
+    this.slug = this.activatedRouter.snapshot.params['slug'];
+    console.log(this.slug)
     this.getCompanies()
     this.voivodeship = this.createVoivodeshipList();
   }
 
   getCompanies() {
-    this.getCompanyPage(0, 10);    
+    this.getCompanyPage(this.slug, 0, 10);    
   }
 
-  private getCompanyPage(page: number, size: number) {
-    this.catalogService.getCompanies(page, size, this.selectCategory, this.voivodeshipCheckedList).subscribe(page => this.page = page);
+  private getCompanyPage(slug: string | undefined, page: number, size: number) {
+    this.catalogService.getCompaniesWithSlug(slug, page, size, this.selectCategory, this.voivodeshipCheckedList)
+    .subscribe(result => {
+      this.page = result.listCompany
+      if (result.categoryExtended === undefined) {
+        this.router.navigate([this.PAGE_404, {url: this.slug}]);
+      }
+    });
   }
 
   onPageEvent(event: PageEvent) {
-    this.getCompanyPage(event.pageIndex, event.pageSize);
+    this.getCompanyPage(this.slug, event.pageIndex, event.pageSize);
   }
 
   createVoivodeshipList(): Map<string, string> {
