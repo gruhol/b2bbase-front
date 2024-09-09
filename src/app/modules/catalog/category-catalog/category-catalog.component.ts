@@ -71,10 +71,10 @@ export class CategoryCatalogComponent {
     this.catalogService.getCompaniesWithSlug(slug, page, size, this.voivodeshipCheckedList)
     .subscribe(result => {
       this.page = result.listCompany
-      if (result.categoryExtended === undefined) {
+      if (result.category === undefined) {
         this.router.navigate([this.PAGE_404, {url: this.slug}]);
       } else {
-        this.category = result.categoryExtended;
+        this.category = result.category;
       }
     });
   }
@@ -178,8 +178,8 @@ export class CategoryCatalogComponent {
       [] as number[]
     );
 
-    this.catalogService.getCompanies(0, 10, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
-      .subscribe(page => this.page = page);
+    this.catalogService.getCompaniesWithSlug(this.slug, 0, 10, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+      .subscribe(response => this.page = response.listCompany);
   }
 
   toggleVoivodeship(key: string, isChecked: boolean) {

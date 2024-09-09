@@ -3,6 +3,6 @@ import { CategoryExtended } from "./CategoryExtended";
 import { CompanyCatalog } from "./CompanyCatalog";
 
 export interface CategoriesWithCompanies {
-    categoryExtended: CategoryExtended,
+    category: CategoryExtended,
     listCompany: Page<CompanyCatalog>
 }
