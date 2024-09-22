@@ -9,6 +9,8 @@ import { CatalogService } from '../catalog-service';
 import { CategoryCatalog } from '../dto/CategoryCatalog';
 import { CompanyCatalog } from '../dto/CompanyCatalog';
 import { CategoryExtended } from '../dto/CategoryExtended';
+import { Meta, Title } from '@angular/platform-browser';
+import { commonValues } from 'src/app/shared/common-values';
 
 interface CategoryNode {
   name: string;
@@ -44,7 +46,9 @@ export class CategoryCatalogComponent {
   constructor(
     private catalogService: CatalogService,
     private activatedRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private titleService: Title,
+    private meta: Meta
   ) {
     this.catalogService.getCategory()
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
@@ -75,6 +79,10 @@ export class CategoryCatalogComponent {
         this.router.navigate([this.PAGE_404, {url: this.slug}]);
       } else {
         this.category = result.category;
+        this.titleService.setTitle(result.category.title + " - " + commonValues.userSite);
+        const parser = new DOMParser();
+        const decodedString = parser.parseFromString(`<!doctype html><body>${result.category.shortDescription}`, 'text/html').body.textContent;
+        this.meta.updateTag({ name: 'description', content: decodedString!.substring(0, 170) });
       }
     });
   }

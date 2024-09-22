@@ -3,5 +3,7 @@ export interface CategoryExtended {
     name: string,
     slug: string,
     description: string,
-    shortDescription: string
+    shortDescription: string,
+    h1: string,
+    title: string;
 }
