@@ -24,6 +24,10 @@ export class CatalogService {
     return this.http.get<CategoryCatalog[]>("api/catalog/category");
   }
 
+  getCategoryBySlug(slug: string): Observable<CategoryCatalog[]> {
+    return this.http.get<CategoryCatalog[]>("api/catalog/category/" + slug);
+  }
+
   getLastCompanies(howMany: number): Observable<Array<CompanyCatalogExtended>> {
     return this.http.get<Array<CompanyCatalogExtended>>("api/catalog/company/last/" + howMany);
   }

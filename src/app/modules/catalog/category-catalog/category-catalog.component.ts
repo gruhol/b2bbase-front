@@ -50,7 +50,15 @@ export class CategoryCatalogComponent {
     private titleService: Title,
     private meta: Meta
   ) {
-    this.catalogService.getCategory()
+    
+  }
+
+  ngOnInit(): void {
+    this.slug = this.activatedRouter.snapshot.params['slug'];
+    this.getCompanies()
+    this.voivodeship = this.createVoivodeshipList();
+
+    this.catalogService.getCategoryBySlug(this.activatedRouter.snapshot.params['slug'])
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
       .subscribe(data => {
         this.categoryDataSource.data = data;
@@ -58,13 +66,6 @@ export class CategoryCatalogComponent {
           this.setParent(this.categoryDataSource.data[i], null);
         }
       });
-  }
-
-  ngOnInit(): void {
-    this.slug = this.activatedRouter.snapshot.params['slug'];
-    console.log(this.slug)
-    this.getCompanies()
-    this.voivodeship = this.createVoivodeshipList();
   }
 
   getCompanies() {
