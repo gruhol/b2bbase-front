@@ -42,6 +42,8 @@ export class CategoryCatalogComponent {
   slug: string | undefined;
   category: CategoryExtended | undefined;
   PAGE_404: string = "/404";
+  categoryIdsWithChildren: number[] = [];
+  notChildren: boolean = true;
 
   constructor(
     private catalogService: CatalogService,
@@ -61,11 +63,23 @@ export class CategoryCatalogComponent {
     this.catalogService.getCategoryBySlug(this.activatedRouter.snapshot.params['slug'])
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
       .subscribe(data => {
+        console.log(data)
         this.categoryDataSource.data = data;
         for(let i = 0; i < this.categoryDataSource.data.length; i++) {
           this.setParent(this.categoryDataSource.data[i], null);
+          this.categoryIdsWithChildren.push(this.categoryDataSource.data[i].id);
+          console.log(this.categoryDataSource.data[i].children)
+          if (this.categoryDataSource.data[i].children != undefined) {
+            let childeren = this.categoryDataSource.data[i].children
+            for (let j = 0; childeren?.length; j++) {
+              this.categoryIdsWithChildren.push(childeren[j].id);
+            }
+            if (this.categoryDataSource.data[i].children?.length == 0) this.notChildren = false
+          }
         }
       });
+
+      console.log(this.notChildren)
   }
 
   getCompanies() {
@@ -187,8 +201,15 @@ export class CategoryCatalogComponent {
       [] as number[]
     );
 
-    this.catalogService.getCompaniesWithSlug(this.slug, 0, 10, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
-      .subscribe(response => this.page = response.listCompany);
+    console.log("Wybrane categorie: " + this.selectCategory)
+    console.log("CO jest w this.categoryIdsWithChildren : " + this.categoryIdsWithChildren)
+
+    let categoris = this.selectCategory.length == 0 ? this.categoryIdsWithChildren : this.selectCategory
+
+    console.log("Co poszło do requesta: " + categoris)
+
+    this.catalogService.getCompanies(0, 10, categoris, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+      .subscribe(response => this.page = response);
   }
 
   toggleVoivodeship(key: string, isChecked: boolean) {
