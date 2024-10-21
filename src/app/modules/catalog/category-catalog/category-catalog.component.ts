@@ -34,7 +34,6 @@ export class CategoryCatalogComponent {
   showOnlySelected = false;
   page?: Page<CompanyCatalog>;
   voivodeship!: Map<string, string>;
-  voivodeshipCheckedList: string[] = [];
   isEdiCooperation: boolean | undefined;
   isApiCooperation: boolean | undefined;
   isProductFileCooperation: boolean | undefined;
@@ -44,6 +43,8 @@ export class CategoryCatalogComponent {
   PAGE_404: string = "/404";
   categoryIdsWithChildren: number[] = [];
   notChildren: boolean = true;
+
+  selectedVoivodeships: string[] = [];
 
   constructor(
     private catalogService: CatalogService,
@@ -78,11 +79,12 @@ export class CategoryCatalogComponent {
           
           if (this.categoryDataSource.data[i].children) {
             let childeren = this.categoryDataSource.data[i].children
-            
-            for (let j = 0; childeren?.length; j++) {
-              this.categoryIdsWithChildren.push(childeren[j].id);
+            if (childeren) {
+              for (let j = 0; j < childeren.length; j++) {
+                this.categoryIdsWithChildren.push(childeren[j].id);
+              }
+              if (this.categoryDataSource.data[i].children?.length == 0) this.notChildren = false
             }
-            if (this.categoryDataSource.data[i].children?.length == 0) this.notChildren = false
           }
         }
       });
@@ -93,7 +95,7 @@ export class CategoryCatalogComponent {
   }
 
   private getCompanyPage(slug: string | undefined, page: number, size: number) {
-    this.catalogService.getCompaniesWithSlug(slug, page, size, this.voivodeshipCheckedList)
+    this.catalogService.getCompaniesWithSlug(slug, page, size, this.selectedVoivodeships)
     .subscribe(result => {
       this.page = result.listCompany
       if (result.category === undefined) {
@@ -207,26 +209,9 @@ export class CategoryCatalogComponent {
       [] as number[]
     );
 
-    console.log("Wybrane categorie: " + this.selectCategory)
-    console.log("CO jest w this.categoryIdsWithChildren : " + this.categoryIdsWithChildren)
-
     let categoris = this.selectCategory.length == 0 ? this.categoryIdsWithChildren : this.selectCategory
-
-    console.log("Co poszło do requesta: " + categoris)
-
-    this.catalogService.getCompanies(0, 10, categoris, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+    this.catalogService.getCompanies(0, 10, categoris, this.selectedVoivodeships, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
       .subscribe(response => this.page = response);
-  }
-
-  toggleVoivodeship(key: string, isChecked: boolean) {
-    if (isChecked) {
-      this.voivodeshipCheckedList.push(key);
-    } else {
-      const index = this.voivodeshipCheckedList.indexOf(key);
-      if (index !== -1) {
-        this.voivodeshipCheckedList.splice(index, 1);
-      }
-    }
   }
 
   toggleCooperation(fieldName: string, event: any) {

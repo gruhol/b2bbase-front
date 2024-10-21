@@ -44,9 +44,12 @@
             </div>
 
             <h3 class="mt-2"><strong>Województwo: </strong></h3>
-            <div *ngFor="let vs of voivodeship | keyvalue">
-                <mat-checkbox name="voivo"  [value]="vs.key" (change)="toggleVoivodeship(vs.key, $event.checked)">{{vs.value}}</mat-checkbox><br />
-            </div>
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Wybierz województwa</mat-label>
+                <mat-select [(ngModel)]="selectedVoivodeships" multiple>
+                  <mat-option *ngFor="let vs of voivodeship | keyvalue" [value]="vs.key">{{vs.value}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <h3 class="mt-2"><strong>Forma współpracy poprzez:</strong></h3>
             <div>
