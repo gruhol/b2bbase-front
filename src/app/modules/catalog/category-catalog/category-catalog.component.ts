@@ -39,7 +39,7 @@ export class CategoryCatalogComponent {
   isApiCooperation: boolean | undefined;
   isProductFileCooperation: boolean | undefined;
   selectCategory: number[] = [];
-  slug: string | undefined;
+  slug: string = ""
   category: CategoryExtended | undefined;
   PAGE_404: string = "/404";
   categoryIdsWithChildren: number[] = [];
@@ -51,26 +51,34 @@ export class CategoryCatalogComponent {
     private router: Router,
     private titleService: Title,
     private meta: Meta
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.slug = this.activatedRouter.snapshot.params['slug'];
+    this.activatedRouter.params.subscribe(params => {
+      this.slug = params['slug']
+      this.loadCategoryCatalogData(this.slug);
+    });
+  }
+
+  loadCategoryCatalogData(slug: string) {
+
+    this.categoryIdsWithChildren = [];
+    this.notChildren = true;
+
     this.getCompanies()
     this.voivodeship = this.createVoivodeshipList();
-
-    this.catalogService.getCategoryBySlug(this.activatedRouter.snapshot.params['slug'])
+    this.catalogService.getCategoryBySlug(slug)
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
       .subscribe(data => {
-        console.log(data)
         this.categoryDataSource.data = data;
+
         for(let i = 0; i < this.categoryDataSource.data.length; i++) {
           this.setParent(this.categoryDataSource.data[i], null);
           this.categoryIdsWithChildren.push(this.categoryDataSource.data[i].id);
-          console.log(this.categoryDataSource.data[i].children)
-          if (this.categoryDataSource.data[i].children != undefined) {
+          
+          if (this.categoryDataSource.data[i].children) {
             let childeren = this.categoryDataSource.data[i].children
+            
             for (let j = 0; childeren?.length; j++) {
               this.categoryIdsWithChildren.push(childeren[j].id);
             }
@@ -78,8 +86,6 @@ export class CategoryCatalogComponent {
           }
         }
       });
-
-      console.log(this.notChildren)
   }
 
   getCompanies() {

@@ -17,7 +17,8 @@
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle
                     [style.display]="showOnlySelected && !node.selected || this.searchString && hideLeafNode(node) ? 'none' : 'block'">
                     <li class="mat-tree-node">
-                        <mat-checkbox class="checklist-leaf-node" (change)="itemToggle($event.checked,node)" [checked]="node.selected">{{node.name}}</mat-checkbox>
+                        <mat-checkbox class="checklist-leaf-node" (change)="itemToggle($event.checked,node)" [checked]="node.selected"></mat-checkbox>
+                        <a [routerLink]="['/category/', node.slug]">{{node.name}}</a>
                     </li>
                     </mat-tree-node>
                 
@@ -31,9 +32,8 @@
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                             </mat-icon>
                         </button>
-                            <mat-checkbox [checked]="node.selected" [indeterminate]="node.indeterminate && !node.selected" (change)="itemToggle($event.checked,node)">
-                                {{node.name}}
-                            </mat-checkbox>
+                            <mat-checkbox [checked]="node.selected" [indeterminate]="node.indeterminate && !node.selected" (change)="itemToggle($event.checked,node)"></mat-checkbox>
+                            <a [routerLink]="['/category/', node.slug]">{{node.name}}</a>
                         </div>
                         <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                             <ng-container matTreeNodeOutlet></ng-container>
