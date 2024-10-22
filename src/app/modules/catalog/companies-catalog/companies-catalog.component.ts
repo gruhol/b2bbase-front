@@ -7,7 +7,6 @@ import { CompanyCatalog } from '../dto/CompanyCatalog';
 import { PageEvent } from '@angular/material/paginator';
 import { CatalogService } from '../catalog-service';
 import { CategoryCatalog } from '../dto/CategoryCatalog';
-import { ActivatedRoute } from '@angular/router';
 
 interface CategoryNode {
   name: string;
@@ -32,11 +31,12 @@ export class CompaniesCatalogComponent {
   showOnlySelected = false;
   page?: Page<CompanyCatalog>;
   voivodeship!: Map<string, string>;
-  voivodeshipCheckedList: string[] = [];
   isEdiCooperation: boolean | undefined;
   isApiCooperation: boolean | undefined;
   isProductFileCooperation: boolean | undefined;
   selectCategory: number[] = [];
+
+  selectedVoivodeships: string[] = [];
 
   constructor(
     private catalogService: CatalogService
@@ -61,7 +61,7 @@ export class CompaniesCatalogComponent {
   }
 
   private getCompanyPage(page: number, size: number) {
-    this.catalogService.getCompanies(page, size, this.selectCategory, this.voivodeshipCheckedList).subscribe(page => this.page = page);
+    this.catalogService.getCompanies(page, size, this.selectCategory, this.selectedVoivodeships).subscribe(page => this.page = page);
   }
 
   onPageEvent(event: PageEvent) {
@@ -163,19 +163,8 @@ export class CompaniesCatalogComponent {
       [] as number[]
     );
 
-    this.catalogService.getCompanies(0, 10, this.selectCategory, this.voivodeshipCheckedList, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+    this.catalogService.getCompanies(0, 10, this.selectCategory, this.selectedVoivodeships, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
       .subscribe(page => this.page = page);
-  }
-
-  toggleVoivodeship(key: string, isChecked: boolean) {
-    if (isChecked) {
-      this.voivodeshipCheckedList.push(key);
-    } else {
-      const index = this.voivodeshipCheckedList.indexOf(key);
-      if (index !== -1) {
-        this.voivodeshipCheckedList.splice(index, 1);
-      }
-    }
   }
 
   toggleCooperation(fieldName: string, event: any) {

@@ -49,7 +49,7 @@ const routes: Routes = [
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'added-company', title: 'Dodano firmę', component: AddedCompanyComponent},
-      {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
+      {path: 'catalog', title: 'Baza Hurtowni', component: CompaniesCatalogComponent},
       {path: 'category/:slug', title: 'Kategoria Hurtownie', component: CategoryCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
