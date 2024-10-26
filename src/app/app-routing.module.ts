@@ -32,6 +32,8 @@ import { BlogPostListComponent } from './modules/blog/blog-post-list/blog-post-l
 import { BlogPostComponent } from './modules/blog/blog-post/blog-post.component';
 import { BlogCategoryComponent } from './modules/blog/blog-category/blog-category.component';
 import { HtmlPageComponent } from './modules/catalog/html-page/html-page.component';
+import { CategoryCatalogComponent } from './modules/catalog/category-catalog/category-catalog.component';
+import { Page404Component } from './modules/catalog/page404/page404.component';
 
 const routes: Routes = [
   {
@@ -47,7 +49,8 @@ const routes: Routes = [
       {path: 'edit-user', title: 'Edycja użytkownika', component: EditUserComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-company', title: 'Dodawanie nowej firmy', component: AddCompanyComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'added-company', title: 'Dodano firmę', component: AddedCompanyComponent},
-      {path: 'catalog', title: 'Hurtownie', component: CompaniesCatalogComponent},
+      {path: 'catalog', title: 'Baza Hurtowni', component: CompaniesCatalogComponent},
+      {path: 'category/:slug', title: 'Kategoria Hurtownie', component: CategoryCatalogComponent},
       {path: 'company/:slug', title: 'Hurtownia', component: CompanyCatalogComponent},
       {path: 'logout', title: 'Wylogowano', component: LogoutComponent},
       {path: 'user-panel', title: 'Panel użytkownika', component: UserPanelComponent, canActivate: [RoleUserAuthorizeGuard]},
@@ -56,7 +59,8 @@ const routes: Routes = [
       {path: 'blog', title: "Blog", component: BlogPostListComponent},
       {path: 'blog/:slug', title: "Blog", component: BlogPostComponent},
       {path: 'blog/category/:slug', title: "Blog - Kategoria", component: BlogCategoryComponent},
-      {path: 'pl/:slug', title: "Html Page", component: HtmlPageComponent}
+      {path: 'pl/:slug', title: "Html Page", component: HtmlPageComponent},
+      {path: '404', title: "Html Page", component: Page404Component}
     ]
   },
   {

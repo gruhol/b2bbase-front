@@ -1,12 +1,16 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Page } from '../../common/model/page';
-import { CompanyCatalog } from '../dto/CompanyCatalog';
-import { PageEvent } from '@angular/material/paginator';
 import { CatalogService } from '../catalog-service';
 import { CategoryCatalog } from '../dto/CategoryCatalog';
+import { CompanyCatalog } from '../dto/CompanyCatalog';
+import { CategoryExtended } from '../dto/CategoryExtended';
+import { Meta, Title } from '@angular/platform-browser';
+import { commonValues } from 'src/app/shared/common-values';
 
 interface CategoryNode {
   name: string;
@@ -19,12 +23,11 @@ interface CategoryNode {
 }
 
 @Component({
-  selector: 'app-companies-catalog',
-  templateUrl: './companies-catalog.component.html',
-  styleUrls: ['./companies-catalog.component.scss']
+  selector: 'app-category-catalog',
+  templateUrl: './category-catalog.component.html',
+  styleUrl: './category-catalog.component.scss'
 })
-export class CompaniesCatalogComponent {
-
+export class CategoryCatalogComponent {
   treeControl = new NestedTreeControl<CategoryNode>((node) => node.children);
   categoryDataSource = new MatTreeNestedDataSource<CategoryNode>();
   searchString = '';
@@ -35,37 +38,80 @@ export class CompaniesCatalogComponent {
   isApiCooperation: boolean | undefined;
   isProductFileCooperation: boolean | undefined;
   selectCategory: number[] = [];
+  slug: string = ""
+  category: CategoryExtended | undefined;
+  PAGE_404: string = "/404";
+  categoryIdsWithChildren: number[] = [];
+  notChildren: boolean = true;
 
   selectedVoivodeships: string[] = [];
 
   constructor(
-    private catalogService: CatalogService
-  ) {
-    this.catalogService.getCategory()
+    private catalogService: CatalogService,
+    private activatedRouter: ActivatedRoute,
+    private router: Router,
+    private titleService: Title,
+    private meta: Meta
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRouter.params.subscribe(params => {
+      this.slug = params['slug']
+      this.loadCategoryCatalogData(this.slug);
+    });
+  }
+
+  loadCategoryCatalogData(slug: string) {
+
+    this.categoryIdsWithChildren = [];
+    this.notChildren = true;
+
+    this.getCompanies()
+    this.voivodeship = this.createVoivodeshipList();
+    this.catalogService.getCategoryBySlug(slug)
       .pipe(map(node => this.mapCategoryResponsesToCategoryNode(node)))
       .subscribe(data => {
         this.categoryDataSource.data = data;
+
         for(let i = 0; i < this.categoryDataSource.data.length; i++) {
           this.setParent(this.categoryDataSource.data[i], null);
+          this.categoryIdsWithChildren.push(this.categoryDataSource.data[i].id);
+          
+          if (this.categoryDataSource.data[i].children) {
+            let childeren = this.categoryDataSource.data[i].children
+            if (childeren) {
+              for (let j = 0; j < childeren.length; j++) {
+                this.categoryIdsWithChildren.push(childeren[j].id);
+              }
+              if (this.categoryDataSource.data[i].children?.length == 0) this.notChildren = false
+            }
+          }
         }
       });
   }
 
-  ngOnInit(): void {
-    this.getCompanies()
-    this.voivodeship = this.createVoivodeshipList();
-  }
-
   getCompanies() {
-    this.getCompanyPage(0, 10);    
+    this.getCompanyPage(this.slug, 0, 10);    
   }
 
-  private getCompanyPage(page: number, size: number) {
-    this.catalogService.getCompanies(page, size, this.selectCategory, this.selectedVoivodeships).subscribe(page => this.page = page);
+  private getCompanyPage(slug: string | undefined, page: number, size: number) {
+    this.catalogService.getCompaniesWithSlug(slug, page, size, this.selectedVoivodeships)
+    .subscribe(result => {
+      this.page = result.listCompany
+      if (result.category === undefined) {
+        this.router.navigate([this.PAGE_404, {url: this.slug}]);
+      } else {
+        this.category = result.category;
+        this.titleService.setTitle(result.category.title + " - " + commonValues.userSite);
+        const parser = new DOMParser();
+        const decodedString = parser.parseFromString(`<!doctype html><body>${result.category.shortDescription}`, 'text/html').body.textContent;
+        this.meta.updateTag({ name: 'description', content: decodedString!.substring(0, 170) });
+      }
+    });
   }
 
   onPageEvent(event: PageEvent) {
-    this.getCompanyPage(event.pageIndex, event.pageSize);
+    this.getCompanyPage(this.slug, event.pageIndex, event.pageSize);
   }
 
   createVoivodeshipList(): Map<string, string> {
@@ -163,8 +209,9 @@ export class CompaniesCatalogComponent {
       [] as number[]
     );
 
-    this.catalogService.getCompanies(0, 10, this.selectCategory, this.selectedVoivodeships, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
-      .subscribe(page => this.page = page);
+    let categoris = this.selectCategory.length == 0 ? this.categoryIdsWithChildren : this.selectCategory
+    this.catalogService.getCompanies(0, 10, categoris, this.selectedVoivodeships, this.isEdiCooperation, this.isApiCooperation, this.isProductFileCooperation)
+      .subscribe(response => this.page = response);
   }
 
   toggleCooperation(fieldName: string, event: any) {
@@ -184,5 +231,4 @@ export class CompaniesCatalogComponent {
       this.isProductFileCooperation = undefined;
     }
   }
-
 }
