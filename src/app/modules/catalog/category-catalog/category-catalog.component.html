@@ -1,7 +1,7 @@
 <div class="container">
     
     <div class="row">
-        <div class="col-md-12 col-lg-3 mb-1">
+        <div class="col-md-12 col-lg-12 mb-1">
             <h1>{{category?.h1}}</h1>
             <p>{{category?.shortDescription}}</p>
         </div>
@@ -94,7 +94,9 @@
             <div class="row" *ngIf="page?.content?.length === 0">
                 <div class="col-12">
                     <div class="w-100 border rounded-1 shadow-sm bg-light-subtle p-4 mr-1 mb-3">
-                        <p>Brak firm dla podanych kryterów wyszukiwania</p>
+                        <p>Brak firm dla podanych kryterów wyszukiwania.</p>
+                        <p><strong>Bądź pierwszą firmą w ten kategori!</strong></p>
+                        <p><a href="/pl/o-b2bpoint">Sprawdź dlaczego warto dodać firmę do B2BPoint</a></p>
                     </div>
                 </div>
             </div>
@@ -109,9 +111,9 @@
         (page)="onPageEvent($event)">
     </mat-paginator>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-12 col-lg-12">
-            <div *ngIf="category?.description" class="col-md-12 col-lg-7" [innerHTML]="category?.description"></div>
+            <div *ngIf="category?.description" class="col-md-12 col-lg-12" [innerHTML]="category?.description"></div>
         </div>
     </div>
 </div>
