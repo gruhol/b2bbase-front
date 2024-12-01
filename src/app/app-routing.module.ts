@@ -34,6 +34,7 @@ import { BlogCategoryComponent } from './modules/blog/blog-category/blog-categor
 import { HtmlPageComponent } from './modules/catalog/html-page/html-page.component';
 import { CategoryCatalogComponent } from './modules/catalog/category-catalog/category-catalog.component';
 import { Page404Component } from './modules/catalog/page404/page404.component';
+import { SitemapComponent } from './modules/sitemap/sitemap.component';
 
 const routes: Routes = [
   {
@@ -74,7 +75,9 @@ const routes: Routes = [
       {path: 'edit-social-link/:id', title: 'Edytuj social link', component: EditSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]},
       {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]}
     ]
-  }
+  },
+  { path: 'sitemap.xml', component: SitemapComponent, resolve: { url: () => window.location.href = '/api/sitemap.xml' } }
+
 ];
 
 @NgModule({
