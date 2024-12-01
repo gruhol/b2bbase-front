@@ -1,8 +1,0 @@
-<pre>{{ xmlContent | json }}</pre>
-
-<!-- Wyświetlaj elementy XML -->
-<div *ngIf="xmlContent && xmlContent.length > 0">
-  <div *ngFor="let url of xmlContent">
-    <p>{{ url.getElementsByTagName('loc')[0]?.textContent || 'Brak lokalizacji' }}</p>
-  </div>
-</div>

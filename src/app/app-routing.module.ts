@@ -76,7 +76,7 @@ const routes: Routes = [
       {path: 'add-social-link', title: 'Add social link', component: AddSocialLinkComponent, canActivate: [RoleUserAuthorizeGuard]}
     ]
   },
-  {path:'sitemap.xml', title: 'Site Map', component: SitemapComponent}
+  { path: 'sitemap.xml', component: SitemapComponent, resolve: { url: () => window.location.href = '/api/sitemap.xml' } }
 
 ];
 
