@@ -8,10 +8,10 @@
             <label class="mb-3">Wybór płatności i formy subsrybpcji</label>  
             <div class="radio-tile-group row">
               <div class="input-container col-md-12 col-lg-5">
-                <input id="basic" class="radio-button" formControlName="subscriptionType" name="subscriptionType" type="radio" value="BASIC" />
+                <input id="basic" class="radio-button" formControlName="subscriptionType" name="subscriptionType" type="radio" value="BASIC" (change)="getPriceValue()" />
                 <div class="radio-tile">
                   <label for="walk" class="radio-tile-label">Basic</label>
-                  <p>59 zł/rok</p>
+                  <p>{{ basicPrice }}</p>
                   <p class="my-2">Podstawowy pakiet dla Twojej hurtowni. Zawiera niezbęcne elementy, aby zwiększyć widoczność twojej firmy w internecie.</p>
                   <table class="table text-center">
                     <tbody>
@@ -103,9 +103,9 @@
             <div class="card" style="width: 50%">
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Typ subskrypcji: {{ getSubscriptionValue() }}</li>
-                <li class="list-group-item">Cena: {{ getPriceValue() }} </li>
-                <li class="list-group-item">Sposób płatności: {{ getPaymentValue() }}</li>
+                <li class="list-group-item">Typ subskrypcji: <strong>{{ getSubscriptionValue() }}</strong></li>
+                <li class="list-group-item">Cena: <strong>{{ price }}</strong></li>
+                <li class="list-group-item">Sposób płatności: <strong>{{ getPaymentValue() | paymenttype }}</strong></li>
               </ul>
             </div>
 

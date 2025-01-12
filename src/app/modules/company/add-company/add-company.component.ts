@@ -6,6 +6,7 @@ import { CompanyServiceService } from '../company-service.service';
 import { CompanyDto } from './dto/companyDto';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
+import { PricelistService } from 'src/app/shared/pricelist.service';
 
 @Component({
   selector: 'app-add-company',
@@ -14,6 +15,8 @@ import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
 })
 export class AddCompanyComponent {
 
+  price: string = "";
+  basicPrice: string = "";
   registerCompanyForm!: FormGroup;
   name!: FormControl;
   typeWholesaler!: FormControl;
@@ -30,7 +33,7 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = true;
+  companyDateFromComplited: boolean = false;
 
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
@@ -45,6 +48,7 @@ export class AddCompanyComponent {
     private router: Router,
     private companyService: CompanyServiceService,
     private gtmService: GoogleTagManagerService,
+    private prcelistService: PricelistService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +56,7 @@ export class AddCompanyComponent {
     this.createForm();
     this.createAdditionalFormControls();
     this.createAdditionalForm();
+    this.getPriceSuBscription();
   }
 
   createRegistrationFormControls() {
@@ -94,6 +99,21 @@ export class AddCompanyComponent {
       subscriptionType: this.subscriptionType,
       paymentMethod: this.paymentMethod
     })
+  }
+
+  getPriceSuBscription() {
+    this.prcelistService.getPrice("SUBSCRIPTION_BASIC").subscribe({
+      next: response => {
+        if (response.promotionPrice) {
+          this.basicPrice = response.price + " PLN - Cena promocyjna / rok";
+        } else {
+          this.basicPrice = response.price + " PLN / rok";
+        }
+      },
+      error: err => {
+        this.basicPrice = "Błąd pobierania ceny";
+      }
+    });
   }
 
   addCompany() {
@@ -244,9 +264,20 @@ export class AddCompanyComponent {
   getPriceValue() {
     const subscriptionType = this.registerCompanyMoreInfo.get('subscriptionType')?.value;
     if (subscriptionType) {
-      return ""
+      this.prcelistService.getPrice("SUBSCRIPTION_" + subscriptionType).subscribe({
+        next: response => {
+          if (response.promotionPrice) {
+            this.price = response.price + " PLN - Cena promocyjna";
+          } else {
+            this.price = response.price + " PLN";
+          }
+        },
+        error: err => {
+          this.price = "Błąd pobierania ceny";
+        }
+      });
     } else {
-      return "Nie wybran subskrypcji"
+      this.price = "Błąd pobierania ceny2";
     }
   }
 }
