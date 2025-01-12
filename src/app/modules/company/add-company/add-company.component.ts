@@ -30,7 +30,7 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = false;
+  companyDateFromComplited: boolean = true;
 
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
@@ -230,6 +230,23 @@ export class AddCompanyComponent {
       return 'WHOLESALER';
     } else {
       return '';
+    }
+  }
+
+  getSubscriptionValue() {
+    return this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+  }
+
+  getPaymentValue() {
+    return this.registerCompanyMoreInfo.get('paymentMethod')?.value;
+  }
+
+  getPriceValue() {
+    const subscriptionType = this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+    if (subscriptionType) {
+      return ""
+    } else {
+      return "Nie wybran subskrypcji"
     }
   }
 }
