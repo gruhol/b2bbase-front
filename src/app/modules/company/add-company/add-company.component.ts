@@ -277,7 +277,7 @@ export class AddCompanyComponent {
         }
       });
     } else {
-      this.price = "Błąd pobierania ceny2";
+      this.price = "Nie udało się pobrać typu subskrypcji";
     }
   }
 }
