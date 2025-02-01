@@ -33,13 +33,17 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = false;
+  companyDateFromComplited: boolean = true;
+  codeForm: boolean = false;
 
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
   subscriptionType!: FormControl;
   companyId!: number;
   paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
+
+  discountCodeForm!: FormGroup;
+  code!: FormControl;
 
   REDIRECT_AFTER_ADD = "/added-company";
 
@@ -57,6 +61,8 @@ export class AddCompanyComponent {
     this.createAdditionalFormControls();
     this.createAdditionalForm();
     this.getPriceSuBscription();
+    this.createDiscountCodeFormControls();
+    this.createDiscountCodeForm();
   }
 
   createRegistrationFormControls() {
@@ -99,6 +105,17 @@ export class AddCompanyComponent {
       subscriptionType: this.subscriptionType,
       paymentMethod: this.paymentMethod
     })
+  }
+
+  createDiscountCodeFormControls() {
+    this.code = new FormControl('', [Validators.minLength(2), Validators.maxLength(10)]);
+    
+  }
+  
+  createDiscountCodeForm() {
+    this.discountCodeForm = this.formBuilder.group({
+      code: this.code
+    })  
   }
 
   getPriceSuBscription() {
@@ -279,6 +296,14 @@ export class AddCompanyComponent {
     } else {
       this.price = "Nie udało się pobrać typu subskrypcji";
     }
+  }
+
+  showCodeForm() {
+    this.codeForm  = !this.codeForm;
+  }
+
+  checkDiscountCode() {
+
   }
 }
 

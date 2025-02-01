@@ -17,6 +17,10 @@
     color: $danger-color;
   }
 
+  .link-underline-primary {
+    cursor: pointer;
+  }
+
   .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
     background-color: rgba(0, 0, 0, .1) !important;
   }
