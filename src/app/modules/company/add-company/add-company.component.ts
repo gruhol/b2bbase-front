@@ -7,6 +7,7 @@ import { CompanyDto } from './dto/companyDto';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
 import { PricelistService } from 'src/app/shared/pricelist.service';
+import { DiscountCodeService } from '../discount-code.service';
 
 @Component({
   selector: 'app-add-company',
@@ -15,7 +16,7 @@ import { PricelistService } from 'src/app/shared/pricelist.service';
 })
 export class AddCompanyComponent {
 
-  price: string = "";
+  price: any = 0;
   basicPrice: string = "";
   registerCompanyForm!: FormGroup;
   name!: FormControl;
@@ -44,6 +45,9 @@ export class AddCompanyComponent {
 
   discountCodeForm!: FormGroup;
   code!: FormControl;
+  codeError: string = "";
+  codeOk: string = "";
+  priceWithCode: any
 
   REDIRECT_AFTER_ADD = "/added-company";
 
@@ -52,7 +56,8 @@ export class AddCompanyComponent {
     private router: Router,
     private companyService: CompanyServiceService,
     private gtmService: GoogleTagManagerService,
-    private prcelistService: PricelistService
+    private pricelistService: PricelistService,
+    private discountCodeService: DiscountCodeService
   ) {}
 
   ngOnInit(): void {
@@ -119,7 +124,7 @@ export class AddCompanyComponent {
   }
 
   getPriceSuBscription() {
-    this.prcelistService.getPrice("SUBSCRIPTION_BASIC").subscribe({
+    this.pricelistService.getPrice("SUBSCRIPTION_BASIC").subscribe({
       next: response => {
         if (response.promotionPrice) {
           this.basicPrice = response.price + " PLN - Cena promocyjna / rok";
@@ -176,9 +181,6 @@ export class AddCompanyComponent {
 
   addCompanyMoreInfo() {
     if(this.registerCompanyMoreInfo.valid) {
-      console.log(this.subscriptionType)
-      console.log(this.paymentMethod)
-      console.log(this.registerCompanyMoreInfo)
       this.companyService.addSubscription({
         companyId: this.companyId,
         subscriptionType: this.subscriptionType.value,
@@ -281,12 +283,12 @@ export class AddCompanyComponent {
   getPriceValue() {
     const subscriptionType = this.registerCompanyMoreInfo.get('subscriptionType')?.value;
     if (subscriptionType) {
-      this.prcelistService.getPrice("SUBSCRIPTION_" + subscriptionType).subscribe({
+      this.pricelistService.getPrice("SUBSCRIPTION_" + subscriptionType).subscribe({
         next: response => {
           if (response.promotionPrice) {
-            this.price = response.price + " PLN - Cena promocyjna";
+            this.price = response.price;
           } else {
-            this.price = response.price + " PLN";
+            this.price = response.price;
           }
         },
         error: err => {
@@ -303,7 +305,30 @@ export class AddCompanyComponent {
   }
 
   checkDiscountCode() {
+    this.codeError = "";
+    this.codeOk = "";
+    
+    const userCode = this.discountCodeForm.get('code')?.value;
+    const subName = "SUBSCRIPTION_" + this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+    if(this.discountCodeForm.valid) {
+  
+      this.discountCodeService.getCode(userCode).subscribe({
+        next: response => {
+          if (response) {
+            if (response.subscriptionName === subName) {
+              this.priceWithCode = this.price * response.discountAmount
+              this.codeOk = "Kod rabatowy aktywowany"
+            } else {
+              this.codeError = "Kod rabatowy niepoprawny";
+            }
+          }
+        },
+        error: err => {
+          this.codeError = "Kod rabatowy niepoprawny";
+        }
+      })
 
+    }
   }
 }
 
