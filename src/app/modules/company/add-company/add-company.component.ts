@@ -34,7 +34,7 @@ export class AddCompanyComponent {
   legalFormList: Map<string, string> = this.createLegalFormList();
   errorMessage!: string;
   buttonSend: boolean = false;
-  companyDateFromComplited: boolean = true;
+  companyDateFromComplited: boolean = false;
   codeForm: boolean = false;
 
   registerCompanyMoreInfo!: FormGroup;
@@ -185,7 +185,8 @@ export class AddCompanyComponent {
         companyId: this.companyId,
         subscriptionType: this.subscriptionType.value,
         year: 1,
-        paymentType: this.paymentMethod.value
+        paymentType: this.paymentMethod.value,
+        discountCode: this.discountCodeForm.get('code')?.value
       } as SubscriptionCompanyDto)
       .subscribe({
         next: response => {
@@ -307,6 +308,7 @@ export class AddCompanyComponent {
   checkDiscountCode() {
     this.codeError = "";
     this.codeOk = "";
+    this.priceWithCode = ""
     
     const userCode = this.discountCodeForm.get('code')?.value;
     const subName = "SUBSCRIPTION_" + this.registerCompanyMoreInfo.get('subscriptionType')?.value;
@@ -324,7 +326,13 @@ export class AddCompanyComponent {
           }
         },
         error: err => {
-          this.codeError = "Kod rabatowy niepoprawny";
+          if (err.status == 400) {
+            this.priceWithCode = "";
+            this.codeError = "Kod rabatowy niepoprawny";
+          } else {
+            this.codeError = "Wystąpił błąd serwera";
+          }
+          
         }
       })
 

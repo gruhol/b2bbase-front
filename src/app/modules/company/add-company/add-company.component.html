@@ -106,7 +106,8 @@
                   
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Typ subskrypcji: <strong>{{ getSubscriptionValue() }}</strong></li>
-                    <li class="list-group-item">Cena: <span [ngClass]="{'text-decoration-line-through': priceWithCode}">{{ price | formatPrice }}</span> <span>{{priceWithCode | formatPrice}}</span></li>
+                    <li class="list-group-item">Cena: <span [ngClass]="{'text-decoration-line-through': priceWithCode}">{{ price | formatPrice }} </span> 
+                      <span *ngIf="priceWithCode" class="text-success"><strong>{{priceWithCode | formatPrice}}</strong></span></li>
                     <li class="list-group-item">Sposób płatności: <strong>{{ getPaymentValue() | paymenttype }}</strong></li>
                   </ul>
                 </div>
