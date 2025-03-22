@@ -27,6 +27,7 @@ import { BlogCategoryComponent } from 'src/app/modules/blog/blog-category/blog-c
 import { HtmlPageComponent } from 'src/app/modules/catalog/html-page/html-page.component';
 import { CategoryCatalogComponent } from 'src/app/modules/catalog/category-catalog/category-catalog.component';
 import { Page404Component } from 'src/app/modules/catalog/page404/page404.component';
+import { FormatPricePipe } from "../../shared/pipe/format-price.pipe";
 
 @NgModule({
     declarations: [
@@ -55,13 +56,14 @@ import { Page404Component } from 'src/app/modules/catalog/page404/page404.compon
         Page404Component
     ],
     imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        SharedModule,
-        FormsModule,
-        PaymentTypePipe,
-        PaymentStatusPipe
-    ]
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    SharedModule,
+    FormsModule,
+    PaymentTypePipe,
+    PaymentStatusPipe,
+    FormatPricePipe
+]
 })
 export class FullpageModule { }

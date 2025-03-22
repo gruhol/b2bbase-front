@@ -31,19 +31,33 @@
     <div class="row" *ngIf="orders">
         <div class="col">
             <h2>Aktualne zamówione abonamenty</h2>
+            <h3>Lista zamówień</h3>
             <div *ngFor="let order of orders">
                 <table class="table table-bordered">
-                    <tr>
-                        <td>Nr. zam.: {{order.id}}</td>
-                        <td>Abonament {{order.packageType}}</td>
-                        <td>Cena: {{order.price}} zł</td>
-                        <td>{{order.startDate | date}}</td>
-                        <td>{{order.endDate | date}}</td>
-                        <td>{{order.paymentType | paymenttype}}</td>
-                        <td>{{order.paymentStatus | paymentstatus}}</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Nr. zam.</th>
+                            <th>Typ abonamentu</th>
+                            <th>Cena</th>
+                            <th>Data rozpoczęcia</th>
+                            <th>Data zakończenia</th>
+                            <th>Typ płatności</th>
+                            <th>Status płatności</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{order.id}}</td>
+                            <td>Abonament {{order.packageType}}</td>
+                            <td>{{order.price}} zł</td>
+                            <td>{{order.startDate | date}}</td>
+                            <td>{{order.endDate | date}}</td>
+                            <td>{{order.paymentType | paymenttype}}</td>
+                            <td>{{order.paymentStatus | paymentstatus}}</td>
+                        </tr>
+                    </tbody>
                 </table>
-                <p  class="alert alert-warning" *ngIf="order.paymentStatus == 'NOTPAID'">
+                <p class="alert alert-warning" *ngIf="order.paymentStatus == 'NOTPAID'">
                     Aby opłacić subskrypcje prosimy o przelew w wysokości:
                     <br><strong>{{order.price}} zł</strong> na konto: <strong>{{bankAccount}}</strong>
                     <br> z tytyłem przelewu: "<strong>{{company?.name}}, zamówienie nr {{order.id}}</strong>"

@@ -11,6 +11,6 @@ export class PricelistService {
   constructor(private http: HttpClient) { }
 
   getPrice(name: String): Observable<PriceList> {
-    return this.http.post<PriceList>('api/pricelist/getPrice', name);
+    return this.http.get<PriceList>('api/pricelist/getPrice/' + name);
   }
 }

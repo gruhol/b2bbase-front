@@ -6,6 +6,8 @@ import { CompanyServiceService } from '../company-service.service';
 import { CompanyDto } from './dto/companyDto';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
+import { PricelistService } from 'src/app/shared/pricelist.service';
+import { DiscountCodeService } from '../discount-code.service';
 
 @Component({
   selector: 'app-add-company',
@@ -14,6 +16,8 @@ import { SubscriptionCompanyDto } from './dto/SubscriptionCompanyDto';
 })
 export class AddCompanyComponent {
 
+  price: any = 0;
+  basicPrice: string = "";
   registerCompanyForm!: FormGroup;
   name!: FormControl;
   typeWholesaler!: FormControl;
@@ -31,12 +35,19 @@ export class AddCompanyComponent {
   errorMessage!: string;
   buttonSend: boolean = false;
   companyDateFromComplited: boolean = false;
+  codeForm: boolean = false;
 
   registerCompanyMoreInfo!: FormGroup;
   paymentMethod!: FormControl;
   subscriptionType!: FormControl;
   companyId!: number;
   paymentsMethodMap: Map<string, string> = this.createPaymentMethods();
+
+  discountCodeForm!: FormGroup;
+  code!: FormControl;
+  codeError: string = "";
+  codeOk: string = "";
+  priceWithCode: any
 
   REDIRECT_AFTER_ADD = "/added-company";
 
@@ -45,6 +56,8 @@ export class AddCompanyComponent {
     private router: Router,
     private companyService: CompanyServiceService,
     private gtmService: GoogleTagManagerService,
+    private pricelistService: PricelistService,
+    private discountCodeService: DiscountCodeService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +65,9 @@ export class AddCompanyComponent {
     this.createForm();
     this.createAdditionalFormControls();
     this.createAdditionalForm();
+    this.getPriceSuBscription();
+    this.createDiscountCodeFormControls();
+    this.createDiscountCodeForm();
   }
 
   createRegistrationFormControls() {
@@ -94,6 +110,32 @@ export class AddCompanyComponent {
       subscriptionType: this.subscriptionType,
       paymentMethod: this.paymentMethod
     })
+  }
+
+  createDiscountCodeFormControls() {
+    this.code = new FormControl('', [Validators.minLength(2), Validators.maxLength(10)]);
+    
+  }
+  
+  createDiscountCodeForm() {
+    this.discountCodeForm = this.formBuilder.group({
+      code: this.code
+    })  
+  }
+
+  getPriceSuBscription() {
+    this.pricelistService.getPrice("SUBSCRIPTION_BASIC").subscribe({
+      next: response => {
+        if (response.promotionPrice) {
+          this.basicPrice = response.price + " PLN - Cena promocyjna / rok";
+        } else {
+          this.basicPrice = response.price + " PLN / rok";
+        }
+      },
+      error: err => {
+        this.basicPrice = "Błąd pobierania ceny";
+      }
+    });
   }
 
   addCompany() {
@@ -139,14 +181,12 @@ export class AddCompanyComponent {
 
   addCompanyMoreInfo() {
     if(this.registerCompanyMoreInfo.valid) {
-      console.log(this.subscriptionType)
-      console.log(this.paymentMethod)
-      console.log(this.registerCompanyMoreInfo)
       this.companyService.addSubscription({
         companyId: this.companyId,
         subscriptionType: this.subscriptionType.value,
         year: 1,
-        paymentType: this.paymentMethod.value
+        paymentType: this.paymentMethod.value,
+        discountCode: this.discountCodeForm.get('code')?.value
       } as SubscriptionCompanyDto)
       .subscribe({
         next: response => {
@@ -230,6 +270,72 @@ export class AddCompanyComponent {
       return 'WHOLESALER';
     } else {
       return '';
+    }
+  }
+
+  getSubscriptionValue() {
+    return this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+  }
+
+  getPaymentValue() {
+    return this.registerCompanyMoreInfo.get('paymentMethod')?.value;
+  }
+
+  getPriceValue() {
+    const subscriptionType = this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+    if (subscriptionType) {
+      this.pricelistService.getPrice("SUBSCRIPTION_" + subscriptionType).subscribe({
+        next: response => {
+          if (response.promotionPrice) {
+            this.price = response.price;
+          } else {
+            this.price = response.price;
+          }
+        },
+        error: err => {
+          this.price = "Błąd pobierania ceny";
+        }
+      });
+    } else {
+      this.price = "Nie udało się pobrać typu subskrypcji";
+    }
+  }
+
+  showCodeForm() {
+    this.codeForm  = !this.codeForm;
+  }
+
+  checkDiscountCode() {
+    this.codeError = "";
+    this.codeOk = "";
+    this.priceWithCode = ""
+    
+    const userCode = this.discountCodeForm.get('code')?.value;
+    const subName = "SUBSCRIPTION_" + this.registerCompanyMoreInfo.get('subscriptionType')?.value;
+    if(this.discountCodeForm.valid) {
+  
+      this.discountCodeService.getCode(userCode).subscribe({
+        next: response => {
+          if (response) {
+            if (response.subscriptionName === subName) {
+              this.priceWithCode = this.price * response.discountAmount
+              this.codeOk = "Kod rabatowy aktywowany"
+            } else {
+              this.codeError = "Kod rabatowy niepoprawny";
+            }
+          }
+        },
+        error: err => {
+          if (err.status == 400) {
+            this.priceWithCode = "";
+            this.codeError = "Kod rabatowy niepoprawny";
+          } else {
+            this.codeError = "Wystąpił błąd serwera";
+          }
+          
+        }
+      })
+
     }
   }
 }

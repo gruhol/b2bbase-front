@@ -8,10 +8,10 @@
             <label class="mb-3">Wybór płatności i formy subsrybpcji</label>  
             <div class="radio-tile-group row">
               <div class="input-container col-md-12 col-lg-5">
-                <input id="basic" class="radio-button" formControlName="subscriptionType" name="subscriptionType" type="radio" value="BASIC" />
+                <input id="basic" class="radio-button" formControlName="subscriptionType" name="subscriptionType" type="radio" value="BASIC" (change)="getPriceValue()" />
                 <div class="radio-tile">
                   <label for="walk" class="radio-tile-label">Basic</label>
-                  <p>59 zł/rok</p>
+                  <p>{{ basicPrice }}</p>
                   <p class="my-2">Podstawowy pakiet dla Twojej hurtowni. Zawiera niezbęcne elementy, aby zwiększyć widoczność twojej firmy w internecie.</p>
                   <table class="table text-center">
                     <tbody>
@@ -97,6 +97,44 @@
                 </div>
               </div>
             </mat-radio-group>
+          
+            <hr>
+            <div class="row">
+              <div class="col-6">
+                <label class="mt-3 mb-2">Podsumowanie</label>
+                <div class="card" style="width: 70%">
+                  
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Typ subskrypcji: <strong>{{ getSubscriptionValue() }}</strong></li>
+                    <li class="list-group-item">Cena: <span [ngClass]="{'text-decoration-line-through': priceWithCode}">{{ price | formatPrice }} </span> 
+                      <span *ngIf="priceWithCode" class="text-success"><strong>{{priceWithCode | formatPrice}}</strong></span></li>
+                    <li class="list-group-item">Sposób płatności: <strong>{{ getPaymentValue() | paymenttype }}</strong></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-6">
+                <a class="link-underline-primary" (click)="showCodeForm()">Czy posiadasz kod rabatowy?</a>
+                
+                <div *ngIf="codeForm">
+                  <form [formGroup]="discountCodeForm" (submit)="checkDiscountCode()">
+
+                    <div class="row gy-3 mt-1 mb-1">
+                      <div class="col-md-12 col-lg-7">
+                          <label class="form-label">Twój kod: <strong style="color:brown">*</strong></label>
+                          <input type="text" class="form-control" formControlName="code">
+                            <button class="btn btn-secondary btn-sm mt-3" type="submit">Sprzawdź kod</button>
+                          <div *ngIf="code.touched && code.hasError('minlength')" class="invalid-feedback">Kod rabatowy musi zawierać min 2 znaki</div>
+                          <div *ngIf="code.touched && code.hasError('maxlength')" class="invalid-feedback">Kod rabatowy musi maksymlanie 10 znaków</div>
+                      </div>
+                    </div>
+                    <p *ngIf="codeError" class="text-danger">{{codeError}}</p>
+                    <p *ngIf="codeOk" class="text-success">{{codeOk}}</p>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <hr>
             <button class="btn btn-lg btn-success" type="submit">Potwierdź i zakończ</button>
           </form>

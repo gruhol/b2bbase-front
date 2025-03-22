@@ -13,7 +13,7 @@ export class AddedCompanyComponent {
 
   constructor(
     private activatedRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
   
   ngOnInit() {
